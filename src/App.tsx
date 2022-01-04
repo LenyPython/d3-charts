@@ -1,11 +1,15 @@
 import './App.css';
+import Main from './components/Main';
+import Navbar from './components/Navbar';
+import Transactions from './components/Transactions';
 
-function App() {
-  return (
-    <div className="App">
-      <h1>helloword</h1>
-    </div>
-  );
-}
+const App = () => (
+    <>
+      <Navbar />
+      <Main />
+      <Transactions />
+    </>
+  )
+
 
 export default App;

@@ -1,0 +1,21 @@
+#indexes {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  min-width: 200px;
+  max-width: 350px;
+  resize: horizontal;
+  overflow-x: auto;
+  border: 1px solid grey;
+}
+#indexes p {
+  width: 100%;
+  margin-bottom: 0.2em;
+  border-bottom: 1px dotted grey;
+}
+
+.closed {
+  transform: translateX(-100%);
+}
+
+/*# sourceMappingURL=indexes.css.map */
