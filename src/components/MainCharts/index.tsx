@@ -1,10 +1,11 @@
 import './maincharts.css'
 import Chart from "../Chart"
+import ChartsList from '../ChartsList'
 
 const MainCharts = () => {
   return (
     <div id="main-charts">
-      <h1>Preview</h1>
+      <ChartsList />
       <Chart />
     </div>
   )
