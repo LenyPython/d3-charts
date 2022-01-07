@@ -4,11 +4,10 @@ import Chart from "../Chart"
 const ChartsList = () => {
   return (
     <div id="chart-list">
-      <Chart />
-      <Chart />
-      <Chart />
-      <Chart />
-      <Chart />
+      <Chart data={[]}/>
+      <Chart data={[]}/>
+      <Chart data={[]}/>
+      <Chart data={[]}/>
     </div>
   )
 
