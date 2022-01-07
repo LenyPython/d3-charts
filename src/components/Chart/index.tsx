@@ -13,6 +13,8 @@ const Chart: React.FC<{
   const MARGIN = 10
   const svgWidth = dimensions? dimensions.width: '100%'
   const svgHeight = dimensions? dimensions.height: '100%'
+  const downColor = 'red'
+  const upColor = 'green'
 
   useEffect(()=>{
     if(!data) return
@@ -40,23 +42,39 @@ const Chart: React.FC<{
     const xScale = d3.scaleBand()
         .domain(data.map(d=>d.Date))
         .range([MARGIN, SvgWidth - 50 - MARGIN])
-        .padding(0.2)
+        .padding(0.3)
     const xAxis = d3.axisBottom(xScale)
     //append x axis to svg chart
     SVG.append('g')
     .attr('transform',`translate(${xScalePosX},${xScalePosY})`)
     .call(xAxis)
     //draw data candlesticks
-    //draw candle body 'rect'
-    SVG.selectAll('rect')
+    //append data to group candle element
+    const candlesticks = SVG.append('g')
+    .attr('transform', `translate(${xScale.bandwidth() * 0.5 + MARGIN})`)
+      .selectAll('g')
       .data(data)
       .enter()
-      .append('rect')
-      .attr('x', d => xScale(d.Date)!)
-      .attr('y', d => d.Open > d.Close ? yScale(d.Open)!: yScale(d.Close)!)
-      .attr('width', xScale.bandwidth())
-      .attr('height', d => Math.abs(yScale(d.Close)! - yScale(d.Open)!))
-      .attr('fill', d => d.Open > d.Close? 'red':'blue')
+    //draw candle body 'rect'
+    candlesticks.append('line')
+      .attr('stroke', d => d.Open > d.Close ? downColor: upColor)
+      .attr('stroke-width', xScale.bandwidth())
+      //the same xAxis tick/date
+      .attr('x1', d => xScale(d.Date)!)
+      .attr('x2', d => xScale(d.Date)!)
+      //yAxis price-size
+      .attr('y1', d => yScale(d.Open))
+      .attr('y2', d => yScale(d.Close))
+    //draw candlestick highs and lows
+    candlesticks.append('line')
+      .attr('stroke', d => d.Open > d.Close ? downColor: upColor)
+      .attr('stroke-width', xScale.bandwidth() * 0.3)
+      //the same xAxis tick/date
+      .attr('x1', d => xScale(d.Date)!)
+      .attr('x2', d => xScale(d.Date)!)
+      //yAxis price-size
+      .attr('y1', d => yScale(d.High))
+      .attr('y2', d => yScale(d.Low))
 
   },[data])
   return (

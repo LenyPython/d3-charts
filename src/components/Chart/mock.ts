@@ -11,8 +11,8 @@ export const DATA = [
 	{
 		Date:'12/31/21',
 		Open:2,
-		High:3.5,
-		Low:0.2,
+		High:2.3567,
+		Low:1.2,
 		Close:1.5
 	},
 {
