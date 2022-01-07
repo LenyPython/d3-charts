@@ -21,7 +21,7 @@ export const useDrawCandleStickChart = (
     const SvgWidth= chartRef.current.clientWidth
     //yScale and Axis
     const maxPrice = d3.max<PriceData, number>(data, d => d.High + 0.3)!
-    const minPrice = d3.max<PriceData, number>(data, d => d.Low - 0.3)!
+    const minPrice = d3.min<PriceData, number>(data, d => d.Low - 0.3)!
     //get height and width directly from svg
     const yScaleHeight = SvgHeight - 50 - MARGIN
     const yScalePosX = SvgWidth - 50
@@ -46,6 +46,12 @@ export const useDrawCandleStickChart = (
     SVG.append('g')
     .attr('transform',`translate(${xScalePosX},${xScalePosY})`)
     .call(xAxis)
+    //rotate ticks of called axis
+    .selectAll("text")  
+            .style("text-anchor", "end")
+            .attr("dx", "-.8em")
+            .attr("dy", "-.5em")
+            .attr("transform", "rotate(-90)" )
     //draw data candlesticks
     //append data to group candle element
     const candlesticks = SVG.append('g')

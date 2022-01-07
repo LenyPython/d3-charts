@@ -1,15 +1,14 @@
 import './maincharts.css'
 import Chart from "../Chart"
 import ChartsList from '../ChartsList'
-import {DATA} from '../Chart/mock'
+import {createData} from '../Chart/mock'
 
 const MainCharts = () => {
-  const mock = DATA
 
   return (
     <div id="main-charts">
       <ChartsList />
-      <Chart data={mock}/>
+      <Chart data={createData()}/>
     </div>
   )
 

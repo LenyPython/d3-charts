@@ -6,8 +6,10 @@ import {useDrawCandleStickChart} from './hooks'
 
 const Chart: React.FC<{
   data: PriceData[]
-}> = ({data}) => {
+  limit?: number
+}> = ({data, limit}) => {
 
+  if(limit) data = data.slice(-limit)
   const chartRef = useRef<SVGSVGElement>(null!)
   useDrawCandleStickChart(chartRef, data)
 
