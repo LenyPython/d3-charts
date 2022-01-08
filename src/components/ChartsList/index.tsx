@@ -1,15 +1,22 @@
 import './charts.css'
 import Chart from "../Chart"
-import {createData} from '../Chart/mock'
+import {priceDataSet} from '../../app/hooks'
+import {PriceData} from '../../types'
 
-const ChartsList = () => {
+const ChartsList: React.FC<{
+  chartsData: PriceData[][]
+  setChart: priceDataSet
+}> = ({ setChart, chartsData }) => {
   return (
     <div id="chart-list">
-      <Chart data={createData()} limit={30}/>
-      <Chart data={createData()} limit={30}/>
-      <Chart data={createData()} limit={30}/>
-      <Chart data={createData()} limit={30}/>
-      <Chart data={createData()} limit={30}/>
+      {
+        chartsData.map((data, id)=> <Chart 
+                       key={id}
+                       data={data}
+                       onClick={setChart}
+                       limit={30}
+                       />)
+      }
     </div>
   )
 
