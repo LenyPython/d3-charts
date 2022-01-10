@@ -6,11 +6,18 @@ export interface PriceData {
 	Low: number
 }
 
-type COMMAND = "login"
-type LoginCredentials = {
+export enum COMMAND {
+	login = 'login'
+}
+
+export type LoginCredentials = {
 		userId: string
 		password: string
 		appName?: string
+}
+export interface wsRequest {
+	command: COMMAND
+	arguments?: any
 }
 export interface JSONLogin {
 	command: COMMAND
