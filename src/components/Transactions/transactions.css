@@ -1,10 +1,18 @@
-#Transactions {
+#lower-panel {
   width: 100%;
   min-height: 200px;
   display: flex;
-  flex-direction: column;
   padding: 0.3em;
   border-top: 3px solid grey;
+}
+#lower-panel div {
+  border: 1px solid grey;
+  display: flex;
+  flex-flow: column;
+}
+
+#logger {
+  width: 25%;
 }
 
 /*# sourceMappingURL=transactions.css.map */
