@@ -34,10 +34,10 @@ export const useDrawCandleStickChart = (
     //append y axis to svg chart
     //clear all group elements
     SVG.selectAll('g')
-    .remove()
+      .remove()
     SVG.append('g')
-    .attr('transform',`translate(${yScalePosX},${yScalePosY})`)
-    .call(yAxis)
+      .attr('transform',`translate(${yScalePosX},${yScalePosY})`)
+      .call(yAxis)
     //xScale and Axis
     const xScalePosY = SvgHeight - 50
     const xScalePosX = MARGIN
@@ -48,8 +48,8 @@ export const useDrawCandleStickChart = (
     const xAxis = d3.axisBottom(xScale)
     //append x axis to svg chart
     SVG.append('g')
-    .attr('transform',`translate(${xScalePosX},${xScalePosY})`)
-    .call(xAxis)
+      .attr('transform',`translate(${xScalePosX},${xScalePosY})`)
+      .call(xAxis)
 
     //rotate ticks of called axis
     .selectAll("text")  
