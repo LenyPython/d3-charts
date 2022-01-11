@@ -1,0 +1,38 @@
+
+
+#login-form{
+	position: fixed;
+	inset: 5% 5% 5% 5%;
+	background: hsla(0, 100%, 1%, .7);
+	form{
+		padding: 5em;
+		background: black;
+		input {
+			min-width:300px;
+			font-size: 1.5rem;
+			padding: .4em;
+		}
+	}
+}
+button {
+	font-size: 1.4rem;
+	padding: .3em 1em;
+	border: none;
+	border-radius: 10px;
+	background: blue;
+	color: white;
+}
+.flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-flow: column;
+}
+
+.close-btn {
+	position: absolute;
+	top: 25px;
+	right: 25px;
+	background: red;
+	color: white;
+}
