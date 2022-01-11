@@ -1,0 +1,22 @@
+
+#Navigation {
+	width: 100%;
+	height: 50px;
+	background: var(--background-color);
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	.login {
+		padding: 1em;
+		border: none;
+		background: transparent;
+		color: white;
+		font-weight: 600;
+		letter-spacing: .3em;
+		cursor: pointer;
+		&:hover{
+			background: hsla(0, 100%, 100%, .3);
+			color: hsla(0, 100%, 50%,.5)
+		}
+	}
+}

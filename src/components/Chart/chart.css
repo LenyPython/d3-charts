@@ -1,0 +1,11 @@
+.chart {
+  background: #171717;
+  width: 100%;
+  flex: 1 1;
+}
+
+svg {
+  fill: white;
+}
+
+/*# sourceMappingURL=chart.css.map */

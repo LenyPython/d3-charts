@@ -1,0 +1,16 @@
+
+#lower-panel {
+	width: 100%;
+	min-height: 200px;
+	display: flex;
+	padding: .3em;
+	border-top: 3px solid grey;
+	div{
+		border: 1px solid grey;
+		display: flex;
+		flex-flow: column;
+	}
+}
+#logger {
+	width: 25%;
+}
