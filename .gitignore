@@ -4,7 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-*.map
 
 # testing
 /coverage
@@ -13,7 +12,10 @@
 /build
 
 # misc
+**.css.map 
+.map
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
