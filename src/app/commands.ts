@@ -1,4 +1,4 @@
-import {JSONLogin, COMMAND, LoginCredentials} from '../types/'
+import {JSONLogin, COMMAND, LoginCredentials, wsRequest} from '../types/'
 
 export class LoginCommand implements JSONLogin {
   command = COMMAND.login
@@ -10,4 +10,8 @@ export class LoginCommand implements JSONLogin {
     appName
     }
   }
+}
+
+export class Disconnect implements wsRequest {
+  command = COMMAND.logout
 }

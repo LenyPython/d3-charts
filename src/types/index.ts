@@ -8,6 +8,7 @@ export interface PriceData {
 
 export enum COMMAND {
 	login = 'login',
+	logout = 'logout',
 	getAllSymbols = 'getAllSymbols'
 }
 

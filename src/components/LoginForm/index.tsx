@@ -1,15 +1,23 @@
 import './LoginForm.css'
 import {Dispatch, SetStateAction, useState} from 'react'
+import {useAppDispatch} from '../../app/hooks'
+import {WebSocketConnect} from '../../sagas/actions'
 
 
 const LoginForm:React.FC<{
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }> = ({ setIsOpen }) => {
-  const [user, setUser] = useState('')
-  const [password, setPassword] = useState('')
+  const dispatch = useAppDispatch()
+  const [user, setUser] = useState(process.env.REACT_APP_USER!)
+  const [password, setPassword] = useState(process.env.REACT_APP_PASS!)
 
-  const login = () => {
-
+  const login = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    dispatch(WebSocketConnect({
+      userId: user,
+      password
+      })) 
+    setIsOpen(false)
   }
   
   return(
