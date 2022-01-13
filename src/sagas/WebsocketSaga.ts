@@ -1,11 +1,10 @@
-import { takeLeading, take, put, call, Effect } from 'redux-saga/effects'
+import { takeLeading, fork, take, put, call, Effect } from 'redux-saga/effects'
 import {addLog} from '../slices/WebSocket'
 import { WSACTIONS } from './types'
 import {LoginCredentials} from '../types'
 import {send} from '../utils/websocket'
 import {Disconnect, LoginCommand} from '../app/commands'
 import {eventChannel} from 'redux-saga'
-import {fork} from 'child_process'
 
 
 let WS: WebSocket | null = null
@@ -23,7 +22,7 @@ function* WebSocketConnectWorker(action: Effect<WSACTIONS, LoginCredentials>){
 	try{
 		if(!URL) throw new Error('You forgot to declare REACT_APP_SOCKET_URL')
 		if(WS === null) WS = new WebSocket(URL)
-		yield fork(WebSocketEventWatcher)
+		const eventWatcherTask = yield fork(WebSocketEventWatcher)
 			WS.onopen = () => {
 				//create login command/credentials and send login request
 				const msg = new LoginCommand(userId, password, appName)
@@ -45,9 +44,9 @@ const createWebSocketChannel = (socket: WebSocket) => {
 			console.log('error', e)
 			emit(addLog(`[Error]`))
 		}
-		const closeHandler = (e: any) => {
+		const closeHandler = (e: CloseEvent) => {
 			console.log('close', e)
-			emit(addLog(`[Socket Close]`))
+			emit(addLog(`[Socket Close]: ${e.reason ? e.reason : `code: ${e.code}`}`))
 		}
 
 		socket.onerror = errorHandler
