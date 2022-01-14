@@ -6,10 +6,14 @@ import './indexes.css'
 const Indexes = () => {
   const [isOpen, setIsOpen] = useState(true)
   const indexes = useAppSelector(getIndexes)
+  //get global group names
+  const GroupNames = Object.keys(indexes)
+  //get specific group subgroup
+
 
   return (
       <div id="indexes" className={isOpen?'open':'closed'}>
-        {indexes.map((item: string)=><div key={item}>{item}</div>)}
+        {GroupNames.map((item: string)=><div key={item}>{item}</div>)}
       </div>
   )
 }

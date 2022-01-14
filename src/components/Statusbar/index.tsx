@@ -1,10 +1,9 @@
-import {useCallback} from "react"
 import {useAppDispatch, useAppSelector} from "../../app/hooks"
 import {WebSocketDisconnect} from "../../sagas/actions"
 import {getSessionId} from "../../slices/WebSocket"
 
 const Statusbar = () => {
-  const dispatch = useCallback(useAppDispatch(),[])
+  const dispatch = useAppDispatch()
   const sessionId = useAppSelector(getSessionId)
   const logout = () => dispatch(WebSocketDisconnect())
   return (
