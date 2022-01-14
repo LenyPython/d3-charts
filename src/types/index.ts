@@ -35,5 +35,5 @@ export interface instrumentCategory extends instrumentInfo{
 	groupName: string
 }
 export interface HashedInstruments{
-	[key: string]: { [key: string]: instrumentInfo}
+	[key: string]: { [key: string]: instrumentInfo[]}
 }

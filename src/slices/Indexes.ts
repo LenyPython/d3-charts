@@ -18,7 +18,7 @@ export const Indexes = createSlice({
   reducers: {
     setIndexes: (state, action: PayloadAction<HashedInstruments>) => {
       state.indexes = action.payload
-    }
+    },
   },
 })
 
