@@ -1,21 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../app/store'
+import {HashedInstruments} from '../types'
 
 // Define a type for the slice state
 interface indexesInterface {
-  indexes: string[]
+  indexes: HashedInstruments
 }
 
 // Define the initial state using that type
 const initialState: indexesInterface = {
-  indexes: [] as string[]
+  indexes: {} as HashedInstruments
 }
 
 export const Indexes = createSlice({
   name: 'indexes',
   initialState,
   reducers: {
-    setIndexes: (state, action: PayloadAction<string[]>) => {
+    setIndexes: (state, action: PayloadAction<HashedInstruments>) => {
       state.indexes = action.payload
     }
   },
