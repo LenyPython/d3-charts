@@ -1,0 +1,13 @@
+.group-list h4 {
+  background: #262626;
+  color: white;
+  padding: 0.3em;
+  margin: 0.1em auto;
+  cursor: pointer;
+}
+.group-list .closed {
+  height: 0;
+  overflow: hidden;
+}
+
+/*# sourceMappingURL=GroupList.css.map */

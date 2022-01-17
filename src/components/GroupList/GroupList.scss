@@ -1,0 +1,13 @@
+.group-list {
+	h4{
+		background: hsl(0, 0%, 15%);
+		color: hsl(0, 0%, 100%);
+		padding: .3em;
+		margin: .1em auto;
+		cursor: pointer;
+	}
+	.closed{
+		height: 0;
+		overflow: hidden;
+	}
+}

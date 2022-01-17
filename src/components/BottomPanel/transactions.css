@@ -1,0 +1,23 @@
+#lower-panel {
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.3em;
+}
+#lower-panel .hidden {
+  overflow: hidden;
+  height: 0;
+}
+#lower-panel div {
+  border: 1px solid grey;
+  display: flex;
+  padding: 0.1em;
+  flex-flow: column;
+}
+
+#logger {
+  width: 25%;
+}
+
+/*# sourceMappingURL=transactions.css.map */

@@ -1,0 +1,21 @@
+
+#lower-panel {
+	width: 100%;
+	min-height: 200px;
+	display: flex;
+	flex-direction: column;
+	padding: .3em;
+	.hidden {
+		overflow: hidden;
+		height: 0;
+	}
+	div{
+		border: 1px solid grey;
+		display: flex;
+		padding: .1em;
+		flex-flow: column;
+	}
+}
+#logger {
+	width: 25%;
+}

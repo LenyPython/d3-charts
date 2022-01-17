@@ -1,7 +1,7 @@
 import './App.css';
 import Main from './components/Main';
 import Navbar from './components/Navbar';
-import Transactions from './components/Transactions';
+import BottomPanel from './components/BottomPanel';
 
 
 const App = () => {
@@ -9,7 +9,7 @@ const App = () => {
     <>
       <Navbar />
       <Main />
-      <Transactions />
+      <BottomPanel />
     </>
   )
 
