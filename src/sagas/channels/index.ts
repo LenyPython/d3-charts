@@ -1,10 +1,8 @@
 import {eventChannel} from 'redux-saga'
-import {select} from 'redux-saga/effects'
-import {GetBalance, KeepAlive, LoginCommand} from '../../app/commands'
-import {addLog, getSessionId} from '../../slices/WebSocket'
+import {GetBalance, LoginCommand} from '../../commands/commands'
+import {addLog} from '../../slices/WebSocket'
 import {LoginCredentials} from '../../types'
 import {handleResponse, handleStream, send} from '../../utils/websocket'
-import {WebSocketStreamConnect} from '../actions'
 
 const appName = process.env.REACT_APP_APP_NAME
 
@@ -21,7 +19,7 @@ export const createWebSocketAPIChannel = (
 		socket.onclose = closeHandler
 		socket.onopen = () => {
 			//create login command/credentials and send login request
-			const msg = new LoginCommand(userId, password, appName)
+			const msg = LoginCommand(userId, password, appName)
 			send(socket, msg)
 		}
 		socket.onmessage = (event: MessageEvent<any>) => {

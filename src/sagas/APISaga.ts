@@ -1,10 +1,10 @@
-import {put, call, take, Effect, fork} from 'redux-saga/effects'
+import {put, call, take, Effect} from 'redux-saga/effects'
 import {send} from '../utils/websocket'
 import {addLog, setSessionId} from '../slices/WebSocket'
-import {Disconnect} from '../app/commands'
 import {LoginCredentials} from '../types'
 import {WSACTIONS} from './types'
 import {createWebSocketAPIChannel} from './channels'
+import {Disconnect} from '../commands/commands'
 
 let WS: WebSocket | null = null
 const URL = process.env.REACT_APP_SOCKET_URL

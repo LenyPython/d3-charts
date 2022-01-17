@@ -1,3 +1,5 @@
+import {ANSWERS, COMMAND} from "../commands";
+
 export interface PriceData {
 	Date: string
 	Open: number
@@ -5,11 +7,13 @@ export interface PriceData {
 	High: number
 	Low: number
 }
-
-export enum COMMAND {
-	login = 'login',
-	logout = 'logout',
-	getAllSymbols = 'getAllSymbols'
+export interface BalanceResponse {
+balance: number
+equity: number
+equityFX: number
+margin: number
+marginFree: number
+marginLevel: number
 }
 
 export type LoginCredentials = {
@@ -20,6 +24,16 @@ export type LoginCredentials = {
 export interface wsRequest {
 	command: COMMAND
 	arguments?: any
+	streamSessionId?: string
+}
+export interface wsResponse {
+	status: boolean
+	command?: ANSWERS
+	returnData?: any
+	streamSessionId?: string
+	data?: any
+	errorCode?: string
+	errorDescr?: string
 }
 export interface JSONLogin {
 	command: COMMAND
