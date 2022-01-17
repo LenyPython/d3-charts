@@ -10,5 +10,16 @@ export const WebSocketConnect = (payload: LoginCredentials): {
 })
 
 
-export const WebSocketDisconnect = (): { type: WSACTIONS } => ({	type: WSACTIONS.disconnect })
+export const WebSocketDisconnect = (): { 
+	type: WSACTIONS
+} => ({	
+	type: WSACTIONS.disconnect
+})
+export const WebSocketStreamConnect = (id: string): { 
+	type: WSACTIONS
+	payload: string
+} => ({	
+	type: WSACTIONS.connectStream,
+	payload: id
+})
 
