@@ -21,8 +21,8 @@ export const useDrawCandleStickChart = (
     const SvgHeight = chartRef.current.clientHeight
     const SvgWidth= chartRef.current.clientWidth
     //yScale and Axis
-    const maxPrice = d3.max<PriceData, number>(data, d => d.High + 0.3)!
-    const minPrice = d3.min<PriceData, number>(data, d => d.Low - 0.3)!
+    const maxPrice = d3.max<PriceData, number>(data, d => d.high + 0.3)!
+    const minPrice = d3.min<PriceData, number>(data, d => d.low - 0.3)!
     //get height and width directly from svg
     const yScaleHeight = SvgHeight - 50 - MARGIN
     const yScalePosX = SvgWidth - 50
@@ -42,7 +42,7 @@ export const useDrawCandleStickChart = (
     const xScalePosY = SvgHeight - 50
     const xScalePosX = MARGIN
     const xScale = d3.scaleBand()
-        .domain(data.map(d=>d.Date))
+        .domain(data.map(d=>d.ctmString))
         .range([MARGIN, SvgWidth - 50 - MARGIN])
         .padding(0.3)
     const xAxis = d3.axisBottom(xScale)
@@ -66,24 +66,24 @@ export const useDrawCandleStickChart = (
       .enter()
     //draw candle body 'rect'
     candlesticks.append<SVGLineElement>('line')
-      .attr('stroke', d => d.Open > d.Close ? downColor: upColor)
+      .attr('stroke', d => d.open > d.close ? downColor: upColor)
       .attr('stroke-width', xScale.bandwidth())
       //the same xAxis tick/date
-      .attr('x1', d => xScale(d.Date)!)
-      .attr('x2', d => xScale(d.Date)!)
+      .attr('x1', d => xScale(d.ctmString)!)
+      .attr('x2', d => xScale(d.ctmString)!)
       //yAxis price-size
-      .attr('y1', d => yScale(d.Open))
-      .attr('y2', d => yScale(d.Close))
+      .attr('y1', d => yScale(d.open))
+      .attr('y2', d => yScale(d.close))
     //draw candlestick highs and lows
     candlesticks.append<SVGLineElement>('line')
-      .attr('stroke', d => d.Open > d.Close ? downColor: upColor)
+      .attr('stroke', d => d.open > d.close ? downColor: upColor)
       .attr('stroke-width', xScale.bandwidth() * 0.3)
       //the same xAxis tick/date
-      .attr('x1', d => xScale(d.Date)!)
-      .attr('x2', d => xScale(d.Date)!)
+      .attr('x1', d => xScale(d.ctmString)!)
+      .attr('x2', d => xScale(d.ctmString)!)
       //yAxis price-size
-      .attr('y1', d => yScale(d.High))
-      .attr('y2', d => yScale(d.Low))
+      .attr('y1', d => yScale(d.high))
+      .attr('y2', d => yScale(d.low))
 
   },[data,downColor, upColor])
 

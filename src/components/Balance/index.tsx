@@ -9,7 +9,7 @@ const Balance: React.FC<{
   
   return (
     <div id='balance' onClick={onClick}>
-      {`Balance: ${balance.balance} equity: ${balance.equity} Margin: ${balance.margin} MarginFree: ${balance.marginFree} MarginLevel: ${balance.marginLevel}`}
+      {`Balance: ${balance.balance} Equity: ${balance.equity} Margin: ${balance.margin}% MarginFree: ${balance.marginFree}% MarginLevel: ${balance.marginLevel}%`}
     </div>
   )
 }

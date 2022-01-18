@@ -22,4 +22,10 @@ export const WebSocketStreamConnect = (id: string): {
 	type: WSACTIONS.connectStream,
 	payload: id
 })
-
+export const getChartData = (symbol: string): {
+	type: WSACTIONS
+	payload: string
+} => ({
+	type: WSACTIONS.getChartData,
+	payload: symbol
+})

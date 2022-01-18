@@ -7,8 +7,8 @@ const Transactions = () => {
   const [isOpen, setIsOpen] = useState(true)
   return (
     <div id="lower-panel">
-      <Balance  onClick={()=>setIsOpen(!isOpen)} />
       <InfoPanel isOpen={isOpen} />
+      <Balance  onClick={()=>setIsOpen(!isOpen)} />
     </div>
   )
 

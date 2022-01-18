@@ -2,11 +2,12 @@ import './maincharts.css'
 import Chart from "../Chart"
 import ChartsList from '../ChartsList'
 import {createData} from '../Chart/mock'
-import {usePriceData} from '../../app/hooks'
+import {useAppSelector} from '../../app/hooks'
 import {useMemo} from 'react'
+import {getMainChartData} from '../../slices/Indexes'
 
 const MainCharts = () => {
-  const [mainChartData, setMainChartData] = usePriceData(createData())
+  const mainChartData = useAppSelector(getMainChartData)
   const chartsData = useMemo(()=>[
    createData(),
    createData(),
@@ -16,8 +17,8 @@ const MainCharts = () => {
   ], [])
   return (
     <div id="main-charts">
-      <ChartsList chartsData={chartsData} setChart={setMainChartData}/>
-      <Chart data={mainChartData}/>
+      <ChartsList chartsData={chartsData} />
+      <Chart data={mainChartData} limit={65} />
     </div>
   )
 

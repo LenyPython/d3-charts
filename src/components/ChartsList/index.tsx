@@ -1,12 +1,18 @@
 import './charts.css'
 import Chart from "../Chart"
-import {priceDataSet} from '../../app/hooks'
 import {PriceData} from '../../types'
+import {useAppDispatch} from '../../app/hooks'
+import {setMainChartData} from '../../slices/Indexes'
 
 const ChartsList: React.FC<{
   chartsData: PriceData[][]
-  setChart: priceDataSet
-}> = ({ setChart, chartsData }) => {
+}> = ({ chartsData }) => {
+  const dispatch = useAppDispatch()
+
+  const setChart = (data: PriceData[]) => {
+    dispatch(setMainChartData(data))
+  }
+
   return (
     <div id="chart-list">
       {

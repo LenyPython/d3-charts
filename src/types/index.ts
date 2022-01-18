@@ -1,11 +1,13 @@
 import {ANSWERS, COMMAND} from "../commands";
 
 export interface PriceData {
-	Date: string
-	Open: number
-	Close: number
-	High: number
-	Low: number
+	ctmString: string
+	ctm: number
+	open: number
+	close: number
+	high: number
+	low: number
+	vol: number
 }
 export interface BalanceResponse {
 balance: number
@@ -17,14 +19,15 @@ marginLevel: number
 }
 
 export type LoginCredentials = {
-		userId: string
-		password: string
-		appName?: string
+	userId: string
+	password: string
+	appName?: string
 }
 export interface wsRequest {
 	command: COMMAND
 	arguments?: any
 	streamSessionId?: string
+	symbol?: string
 }
 export interface wsResponse {
 	status: boolean

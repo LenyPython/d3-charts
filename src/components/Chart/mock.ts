@@ -21,13 +21,15 @@ export const createData = (num = 70): PriceData[]=>{
 		let close = lastClose + upOrDown * Math.random() * 0.2
 		let rand = Math.random() * 0.02
 		data.push({
-			Date: `${j}/${month}/${year}`,
-			Open: lastClose,
-			Close: close,
-			High: upOrDown > 0 ? close + rand: lastClose + rand,
-			Low: upOrDown > 0 ? lastClose - rand: close - rand,
+			ctmString: `${j}/${month}/${year}`,
+			open: lastClose,
+			close: close,
+			high: upOrDown > 0 ? close + rand: lastClose + rand,
+			low: upOrDown > 0 ? lastClose - rand: close - rand,
+			vol: 10,
+			ctm: 1245
 		})
-		lastClose = data[data.length - 1].Close
+		lastClose = data[data.length - 1].close
 	}
 	return data
 }
