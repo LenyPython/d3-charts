@@ -1,4 +1,4 @@
-import {put, call, take, takeLatest, Effect} from 'redux-saga/effects'
+import {put, call, take, Effect} from 'redux-saga/effects'
 import {send} from '../utils/websocket'
 import {addLog, setSessionId} from '../slices/WebSocket'
 import {LoginCredentials} from '../types'
@@ -17,7 +17,6 @@ export function* WebSocketAPIWatcher(action: Effect<WSACTIONS, LoginCredentials>
 		const socketChannel = yield call(createWebSocketAPIChannel, WS!, action.payload)
 
 		while(WS.readyState !== WS.CLOSED){
-				yield takeLatest(WSACTIONS.getChartData, getChartDataWorker)
 				const action = yield take(socketChannel)
 				yield put(action)
 		}
@@ -25,11 +24,11 @@ export function* WebSocketAPIWatcher(action: Effect<WSACTIONS, LoginCredentials>
 		if(e instanceof Error) put(addLog(`[Main Error]: ${e.message}`))
 	}
 }
-const getChartDataWorker = (action: Effect) =>{
+export const getChartDataWorker = (action: Effect) =>{
 	const symbol = action.payload
 	const msg = GetChartDataCommand(symbol)
 	console.log(msg)
-	send(WS!, msg)
+	if(WS !== null) send(WS, msg)
 }
 
 export function* WebSocketDisconnectWorker(){
