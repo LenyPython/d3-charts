@@ -1,7 +1,8 @@
 import {takeLeading} from 'redux-saga/effects'
 import { WSACTIONS } from './types'
-import {getChartDataWorker, WebSocketAPIWatcher, WebSocketDisconnectWorker} from './APISaga'
+import {WebSocketAPIWatcher, WebSocketDisconnectWorker} from './APISaga'
 import {WebSocketStreamWatcher} from './StreamSaga'
+import getChartDataWorker from './GetFullPeriodChartDataSaga'
 
 
 export default function* WebSocketSaga() {

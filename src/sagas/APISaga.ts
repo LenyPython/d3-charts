@@ -1,12 +1,12 @@
 import {put, call, take, Effect} from 'redux-saga/effects'
 import {send} from '../utils/websocket'
 import {addLog, setSessionId} from '../slices/WebSocket'
-import {LoginCredentials} from '../types'
+import {LoginCredentials} from '../types/RequestResponseTypes'
 import {WSACTIONS} from './types'
 import {createWebSocketAPIChannel} from './channels'
-import {Disconnect, GetChartDataCommand} from '../commands/commands'
+import {Disconnect} from '../commands/commands'
 
-let WS: WebSocket | null = null
+export let WS: WebSocket | null = null
 const URL = process.env.REACT_APP_SOCKET_URL
 
 export function* WebSocketAPIWatcher(action: Effect<WSACTIONS, LoginCredentials>){
@@ -23,12 +23,6 @@ export function* WebSocketAPIWatcher(action: Effect<WSACTIONS, LoginCredentials>
 	} catch(e) {
 		if(e instanceof Error) put(addLog(`[Main Error]: ${e.message}`))
 	}
-}
-export const getChartDataWorker = (action: Effect) =>{
-	const symbol = action.payload
-	const msg = GetChartDataCommand(symbol)
-	console.log(msg)
-	if(WS !== null) send(WS, msg)
 }
 
 export function* WebSocketDisconnectWorker(){

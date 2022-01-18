@@ -1,6 +1,6 @@
 import './GroupList.css'
 import {useState} from "react"
-import {instrumentInfo} from "../../types"
+import {instrumentInfo} from "../../types/PriceDataTypes"
 import {getChartData} from '../../sagas/actions'
 import {useAppDispatch} from "../../app/hooks"
 

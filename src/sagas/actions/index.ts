@@ -1,4 +1,4 @@
-import {LoginCredentials} from "../../types"
+import {LoginCredentials} from "../../types/RequestResponseTypes"
 import {WSACTIONS} from "../types"
 
 export const WebSocketConnect = (payload: LoginCredentials): {

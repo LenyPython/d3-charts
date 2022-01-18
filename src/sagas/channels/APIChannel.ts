@@ -1,7 +1,7 @@
 import {eventChannel} from 'redux-saga'
 import {LoginCommand, PING} from '../../commands/commands'
 import {addLog} from '../../slices/WebSocket'
-import {LoginCredentials} from '../../types'
+import {LoginCredentials} from '../../types/RequestResponseTypes'
 import {handleResponse, send} from '../../utils/websocket'
 
 const appName = process.env.REACT_APP_APP_NAME

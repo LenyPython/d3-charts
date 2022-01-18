@@ -1,9 +1,10 @@
 import {ANSWERS} from "../../commands";
-import {GetAllSymbols, GetChartDataCommand} from "../../commands/commands";
+import {GetAllSymbols} from "../../commands/commands";
 import {WebSocketStreamConnect} from "../../sagas/actions";
 import {setIndexes, setMainChartData, setBalance} from "../../slices/Indexes";
 import {addLog, setSessionId} from "../../slices/WebSocket";
-import {HashedInstruments, instrumentCategory, PriceData, wsRequest, wsResponse} from "../../types";
+import { wsRequest, wsResponse} from "../../types/RequestResponseTypes"
+import {HashedInstruments, instrumentCategory, PriceData,} from '../../types/PriceDataTypes'
 
 
 export const send = (ws: WebSocket, msg: wsRequest): void => {
@@ -38,9 +39,6 @@ export const handleResponse = (
 				emit(setSessionId(response.streamSessionId))
 				emit(WebSocketStreamConnect(response.streamSessionId))
 				send(WS, GetAllSymbols())
-				setTimeout(()=>{
-					send(WS, GetChartDataCommand("EURUSD"))
-				}, 500)
 			}
 			else {
 				//need to refactor all logic to manage responses

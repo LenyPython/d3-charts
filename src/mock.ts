@@ -1,4 +1,4 @@
-import {PriceData} from "../../types"
+import {PriceData} from "./types/PriceDataTypes"
 
 let lastClose = Math.random() * 2 + 1
 let month = Math.floor(Math.random() * 11) + 1

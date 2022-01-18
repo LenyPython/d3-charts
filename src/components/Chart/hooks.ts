@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import {RefObject, useLayoutEffect} from 'react'
-import {PriceData} from '../../types'
+import {PriceData} from '../../types/PriceDataTypes'
 
 
 export const useDrawCandleStickChart = (

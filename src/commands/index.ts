@@ -6,7 +6,7 @@ export enum COMMAND {
 	getBalance = 'getBalance',
 	getKeepAlive = 'getKeepAlive',
 	getCandles = 'getCandles',
-	getChartLastRequest = "getChartLastRequest",
+	getChartRangeRequest = "getChartRangeRequest",
 	ping = 'ping'
 }
 
@@ -16,14 +16,15 @@ export enum ANSWERS {
 	candle = 'candle',
 }
 
-export enum PERIOD {
-	MIN = 1,
-	MIN_5 = 5,
-	MIN_15 = 15,
-	MIN_30 = 30,
-	HOUR_1 = 60,
-	HOUR_4 = 240,
-	DAY = 1440,
-	WEEK = 10080,
-	MONTH = 43200,
+//comented out not interesting times periods
+export const PERIOD: Record<string, number> = {
+	'MIN_15' : 15,
+	'HOUR_1' : 60,
+	'HOUR_4' : 240,
+	'DAY' : 1440,
+	'WEEK' : 10080,
+	//MIN = 1,
+	//MIN_5 = 5,
+	//MIN_30 = 30,
+	//MONTH = 43200,
 }

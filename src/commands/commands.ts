@@ -1,5 +1,5 @@
 import {COMMAND, PERIOD} from '../commands'
-import {JSONLogin, LoginCredentials, wsRequest} from '../types/'
+import {JSONLogin, LoginCredentials, wsRequest} from '../types/RequestResponseTypes'
 
 export const LoginCommand = (
   userId: string,
@@ -18,17 +18,24 @@ export const Disconnect = (): wsRequest => ({command:COMMAND.logout })
 export const GetAllSymbols = (): wsRequest=>({ command: COMMAND.getAllSymbols })
 export const PING = (): wsRequest => ({ command: COMMAND.ping })
 //basic daily chart info
-export const GetChartDataCommand = (symbol: string): wsRequest =>({
-  command: COMMAND.getChartLastRequest,
-  arguments:{
-    info:{
-      period: PERIOD.DAY,
-      start: 1262944112000, //three months
-      symbol
-    }
+export const GetChartDataCommand = (symbol: string): wsRequest[] =>{
+  let chartsRequests = [] as wsRequest[]
+  for(let period in PERIOD){
+    chartsRequests.push({
+      command: COMMAND.getChartRangeRequest,
+      arguments:{
+        info:{
+          period: PERIOD[period],
+          start: Date.now(), //three months
+          end: Date.now(), //three months
+          ticks: -75,
+          symbol
+        }
+      }
+    })
   }
-
-})
+  return chartsRequests
+}
 export const PING_STREAM = (streamSessionId: string): wsRequest => ({
   command: COMMAND.ping,
   streamSessionId

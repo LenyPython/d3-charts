@@ -1,6 +1,6 @@
 import './chart.css'
 import {useRef} from "react"
-import {PriceData} from '../../types'
+import {PriceData} from '../../types/PriceDataTypes'
 import {useDrawCandleStickChart} from './hooks'
 
 
