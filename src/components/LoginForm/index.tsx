@@ -8,8 +8,8 @@ const LoginForm:React.FC<{
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }> = ({ setIsOpen }) => {
   const dispatch = useAppDispatch()
-  const [user, setUser] = useState(process.env.REACT_APP_USER!)
-  const [password, setPassword] = useState(process.env.REACT_APP_PASS!)
+  const [user, setUser] = useState('')
+  const [password, setPassword] = useState('')
 
   const login = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
