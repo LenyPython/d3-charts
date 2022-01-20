@@ -3,13 +3,15 @@ import {Dispatch, SetStateAction, useState} from 'react'
 import {useAppDispatch} from '../../app/hooks'
 import {WebSocketConnect} from '../../sagas/actions'
 
+const USER = process.env.REACT_APP_USER
+const PASS = process.env.REACT_APP_PASS 
 
 const LoginForm:React.FC<{
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }> = ({ setIsOpen }) => {
   const dispatch = useAppDispatch()
-  const [user, setUser] = useState('')
-  const [password, setPassword] = useState('')
+  const [user, setUser] = useState(USER?USER:'')
+  const [password, setPassword] = useState(PASS?PASS:'')
 
   const login = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()

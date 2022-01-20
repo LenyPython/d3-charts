@@ -21,8 +21,8 @@ export const useDrawCandleStickChart = (
     const SvgHeight = chartRef.current.clientHeight
     const SvgWidth= chartRef.current.clientWidth
     //yScale and Axis
-    const maxPrice = d3.max<PriceData, number>(data, d => d.high + 0.3)!
-    const minPrice = d3.min<PriceData, number>(data, d => d.low - 0.3)!
+    const maxPrice = d3.max<PriceData, number>(data, d => d.high)!
+    const minPrice = d3.min<PriceData, number>(data, d => d.low)!
     //get height and width directly from svg
     const yScaleHeight = SvgHeight - 50 - MARGIN
     const yScalePosX = SvgWidth - 50

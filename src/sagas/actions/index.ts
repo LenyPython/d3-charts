@@ -1,3 +1,4 @@
+import {PriceData} from "../../types/PriceDataTypes"
 import {LoginCredentials} from "../../types/RequestResponseTypes"
 import {WSACTIONS} from "../types"
 
@@ -28,4 +29,11 @@ export const getChartData = (symbol: string): {
 } => ({
 	type: WSACTIONS.getChartData,
 	payload: symbol
+})
+export const saveChartData = (data: PriceData[]): {
+	type: WSACTIONS
+	payload: PriceData[]
+} => ({
+	type: WSACTIONS.saveChartData,
+	payload: data
 })

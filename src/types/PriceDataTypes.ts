@@ -8,8 +8,13 @@ export interface PriceData {
 	low: number
 	vol: number
 }
+export interface ChartsDataPayload {
+  period: number
+  prices: PriceData[]
+}
 interface stringMap { [key: string]: any }
 export interface SmallChartsData extends stringMap{
+	'Month': PriceData[]
 	'Day': PriceData[]
 	'Hour4': PriceData[]
 	'Hour1': PriceData[]

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../app/store'
 import {createData} from '../mock'
-import {BalanceResponse, HashedInstruments, PriceData, SmallChartsData} from '../types/PriceDataTypes'
+import {BalanceResponse, ChartsDataPayload, HashedInstruments, PriceData, SmallChartsData} from '../types/PriceDataTypes'
 
 // Define a type for the slice state
 interface indexesInterface {
@@ -17,6 +17,7 @@ const initialState: indexesInterface = {
   indexes: {} as HashedInstruments,
   mainChartData: [] as PriceData[],
   smallCharts:{
+    Month: createData(),
     Day: createData(),
     Hour4: createData(),
     Hour1: createData(),
@@ -45,12 +46,32 @@ export const Indexes = createSlice({
     //how to set correct data in correct charts
     setMainChartData: (state, action: PayloadAction<PriceData[]>) =>{
       state.mainChartData = action.payload
+    },
+    setSmallChartData: (state, action: PayloadAction<ChartsDataPayload>)=>{
+      const {period, prices} = action.payload
+      console.log(action.payload)
+      switch(period){
+        case 15:
+          state.smallCharts.Min15 = prices
+          break
+        case 60:
+          state.smallCharts.Hour1 = prices
+          break
+        case 240:
+          state.smallCharts.Hour4 = prices
+          break
+        case 1440:
+          state.smallCharts.Day = prices
+          break
+        case 10080:
+          state.smallCharts.Month = prices
+          break
+      }
     }
-
   },
 })
 
-export const {setIndexes, setMainChartData, setBalance} = Indexes.actions
+export const {setIndexes, setMainChartData, setBalance, setSmallChartData} = Indexes.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const getIndexes = (state: RootState) => state.indexes.indexes

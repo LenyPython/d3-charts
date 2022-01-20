@@ -10,7 +10,7 @@ const Chart: React.FC<{
   onClick?: (data: PriceData[]) => void
 }> = ({data, limit, onClick}) => {
   let croped = data
-  if(limit) croped = data.slice(-limit)
+  if(limit) croped = data?.slice(-limit)
 
   const chartRef = useRef<SVGSVGElement>(null!)
   useDrawCandleStickChart(chartRef, croped)

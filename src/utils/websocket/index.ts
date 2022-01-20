@@ -1,6 +1,6 @@
 import {ANSWERS} from "../../commands";
 import {GetAllSymbols} from "../../commands/commands";
-import {WebSocketStreamConnect} from "../../sagas/actions";
+import {saveChartData, WebSocketStreamConnect} from "../../sagas/actions";
 import {setIndexes, setMainChartData, setBalance} from "../../slices/Indexes";
 import {addLog, setSessionId} from "../../slices/WebSocket";
 import { wsRequest, wsResponse} from "../../types/RequestResponseTypes"
@@ -58,7 +58,7 @@ export const handleResponse = (
 							ctmString: item.ctmString,
 							vol: item.vol
 						}))
-						emit(setMainChartData(data))
+						emit(saveChartData(data))
 					}
 				}
 			}
