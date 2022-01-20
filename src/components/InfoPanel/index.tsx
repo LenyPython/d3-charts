@@ -1,3 +1,4 @@
+import './InfoPanel.css'
 import {useAppSelector} from "../../app/hooks"
 import {getLogs} from "../../slices/WebSocket"
 
@@ -6,7 +7,7 @@ const InfoPanel:React.FC<{
 }> = ({ isOpen }) => {
   const LOGS = useAppSelector(getLogs)
   return (
-    <div className={isOpen?'open':'hidden'}>
+    <div id='info-panel' className={isOpen?'open':'hidden'}>
       <div id='logger'>
         {
           LOGS.map((item, id) =>  <div key={id}>{item}</div>)

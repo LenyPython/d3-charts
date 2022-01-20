@@ -12,6 +12,15 @@
   font-size: 1.5rem;
   padding: 0.4em;
 }
+#login-form p {
+  text-align: center;
+}
+#login-form a {
+  color: lightblue;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+}
 
 button {
   font-size: 1.4rem;

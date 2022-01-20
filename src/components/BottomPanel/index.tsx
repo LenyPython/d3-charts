@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import Balance from '../Balance'
 import InfoPanel from '../InfoPanel'
-import './transactions.css'
+import './BottomPannel.css'
 
 const Transactions = () => {
   const [isOpen, setIsOpen] = useState(true)

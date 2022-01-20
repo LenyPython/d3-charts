@@ -5,6 +5,12 @@
   margin: 0.1em auto;
   cursor: pointer;
 }
+.group-list p {
+  cursor: pointer;
+}
+.group-list p:hover {
+  color: white;
+}
 .group-list .closed {
   height: 0;
   overflow: hidden;

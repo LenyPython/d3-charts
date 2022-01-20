@@ -16,7 +16,7 @@ const Chart: React.FC<{
   useDrawCandleStickChart(chartRef, croped)
 
   return (
-    <div className="chart" onClick={()=>onClick?.(data)}>
+    <div className={`chart ${limit?'small':''}`} onClick={()=>onClick?.(data)}>
       <svg ref={chartRef} width={'100%'} height={'100%'} />
     </div>
   )

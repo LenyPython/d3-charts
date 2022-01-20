@@ -6,6 +6,12 @@
 		margin: .1em auto;
 		cursor: pointer;
 	}
+	p {
+		cursor: pointer;
+		&:hover {
+			color: white;
+		}
+	}
 	.closed{
 		height: 0;
 		overflow: hidden;

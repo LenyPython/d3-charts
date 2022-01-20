@@ -11,9 +11,7 @@ const GroupList: React.FC<{
   const dispatch = useAppDispatch()
   const [isOpen, setIsOpen] = useState(false)
 
-  const switchInsturment = (symbol: string) =>{
-    dispatch(getChartData(symbol))
-  }
+  const switchInsturment = (symbol: string) => dispatch(getChartData(symbol))
 
   return (
     <div className="group-list">

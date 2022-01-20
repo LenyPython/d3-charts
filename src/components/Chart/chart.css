@@ -3,6 +3,9 @@
   width: 100%;
   flex: 1 1;
 }
+.chart.small {
+  cursor: pointer;
+}
 
 svg {
   fill: white;

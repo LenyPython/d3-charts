@@ -1,0 +1,10 @@
+#info-panel {
+	display: flex;
+}
+#logger, #transactions {
+	height: 200px;
+	overflow-y: auto;
+}
+#logger {
+	width: 25%;
+}
