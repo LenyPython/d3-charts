@@ -11,12 +11,12 @@ export const WebSocketConnect = (payload: LoginCredentials): {
 	payload
 })
 
-
 export const WebSocketDisconnect = (): { 
 	type: WSACTIONS
 } => ({	
 	type: WSACTIONS.disconnect
 })
+
 export const WebSocketStreamConnect = (payload: streamHandlersInterface): { 
 	type: WSACTIONS
 	payload: streamHandlersInterface
@@ -24,6 +24,7 @@ export const WebSocketStreamConnect = (payload: streamHandlersInterface): {
 	type: WSACTIONS.connectStream,
 	payload
 })
+
 export const getChartData = (symbol: string): {
 	type: WSACTIONS
 	payload: string
@@ -31,6 +32,7 @@ export const getChartData = (symbol: string): {
 	type: WSACTIONS.getChartData,
 	payload: symbol
 })
+
 export const saveChartData = (data: PriceData[]): {
 	type: WSACTIONS
 	payload: PriceData[]

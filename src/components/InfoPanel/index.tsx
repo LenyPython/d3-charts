@@ -1,6 +1,7 @@
 import './InfoPanel.css'
 import {useAppSelector} from "../../app/hooks"
 import {getLogs} from "../../slices/WebSocket"
+import Transactions from '../Transactions'
 
 const InfoPanel:React.FC<{
   isOpen: boolean
@@ -13,7 +14,7 @@ const InfoPanel:React.FC<{
           LOGS.map((item, id) =>  <div key={id}>{item}</div>)
         }
       </div>
-      <div id="transactions"></div>
+      <Transactions />
     </div>
   )
 }

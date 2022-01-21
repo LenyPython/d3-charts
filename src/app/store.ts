@@ -1,15 +1,17 @@
+import createSagaMiddleware from 'redux-saga'
 import { configureStore } from '@reduxjs/toolkit';
 import MainSaga from '../sagas/MainSaga'
-import indexesReducer from '../slices/Indexes';
+import IndexesReducer from '../slices/Indexes';
+import BalanceReducer from '../slices/BalanceSlice'
 import WebSocketReducer from '../slices/WebSocket';
-import createSagaMiddleware from 'redux-saga'
 
 const sagaMiddleaware = createSagaMiddleware()
 
 export const store = configureStore({
   reducer: {
     WebSocket: WebSocketReducer,
-    indexes: indexesReducer,
+    Indexes: IndexesReducer,
+    Balance: BalanceReducer,
   },
   middleware: [sagaMiddleaware]
 });

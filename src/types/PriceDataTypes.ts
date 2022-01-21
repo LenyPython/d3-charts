@@ -20,14 +20,6 @@ export interface SmallChartsData extends stringMap{
 	'Hour1': PriceData[]
 	'Min15': PriceData[]
 }
-export interface BalanceResponse {
-balance: number
-equity: number
-equityFX: number
-margin: number
-marginFree: number
-marginLevel: number
-}
 export interface instrumentInfo {
 	swapLong: number
 	swapShort: number

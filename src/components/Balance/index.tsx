@@ -1,6 +1,6 @@
 import {useAppSelector} from "../../app/hooks"
-import {getBalance} from "../../slices/Indexes"
-import {BalanceResponse} from "../../types/PriceDataTypes"
+import {getBalance} from "../../slices/BalanceSlice"
+import {BalanceResponse} from "../../types/BalanceTradesTypes"
 
 const Balance: React.FC<{
   onClick: React.MouseEventHandler<HTMLElement>

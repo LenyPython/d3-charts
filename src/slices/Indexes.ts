@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../app/store'
 import {createData} from '../mock'
-import {BalanceResponse, ChartsDataPayload, HashedInstruments, PriceData, SmallChartsData} from '../types/PriceDataTypes'
+import {ChartsDataPayload, HashedInstruments, PriceData, SmallChartsData} from '../types/PriceDataTypes'
 
 // Define a type for the slice state
 interface indexesInterface {
   indexes: HashedInstruments
-  balance: BalanceResponse
   smallCharts: SmallChartsData
   mainChartData: PriceData[]
 }
@@ -23,14 +22,6 @@ const initialState: indexesInterface = {
     Hour1: createData(),
     Min15: createData(),
   },
-  balance: {
-          balance: 0,
-          equity: 0,
-          equityFX: 0,
-          margin: 0,
-          marginFree: 0,
-          marginLevel: 0,
-          },
 }
 
 export const Indexes = createSlice({
@@ -39,9 +30,6 @@ export const Indexes = createSlice({
   reducers: {
     setIndexes: (state, action: PayloadAction<HashedInstruments>) => {
       state.indexes = action.payload
-    },
-    setBalance: (state, action: PayloadAction<BalanceResponse>) =>{
-      state.balance = action.payload
     },
     //how to set correct data in correct charts
     setMainChartData: (state, action: PayloadAction<PriceData[]>) =>{
@@ -71,12 +59,11 @@ export const Indexes = createSlice({
   },
 })
 
-export const {setIndexes, setMainChartData, setBalance, setSmallChartData} = Indexes.actions
+export const {setIndexes, setMainChartData, setSmallChartData} = Indexes.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const getIndexes = (state: RootState) => state.indexes.indexes
-export const getBalance = (state: RootState) => state.indexes.balance
-export const getMainChartData = (state: RootState) => state.indexes.mainChartData
-export const getSmallChartData = (state: RootState) => state.indexes.smallCharts
+export const getIndexes = (state: RootState) => state.Indexes.indexes
+export const getMainChartData = (state: RootState) => state.Indexes.mainChartData
+export const getSmallChartData = (state: RootState) => state.Indexes.smallCharts
 
 export default Indexes.reducer

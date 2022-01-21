@@ -14,7 +14,7 @@ export interface wsRequest {
 export type RequestCreator = (sessionId: string)=> wsRequest
 
 export interface wsResponse {
-	status: boolean
+	status?: boolean
 	command?: ANSWERS
 	returnData?: any
 	streamSessionId?: string
