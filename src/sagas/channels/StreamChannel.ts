@@ -1,17 +1,23 @@
 import {eventChannel} from 'redux-saga'
 import {addLog} from '../../slices/WebSocket'
-import {GetBalance, KeepAlive, PING_STREAM} from '../../commands/commands'
-import {handleStream, send} from '../../utils/websocket'
+import {KeepAlive, PING_STREAM} from '../../commands/commands'
+import {send} from '../../utils/websocket'
+import {RequestCreator, wsResponse} from '../../types/RequestResponseTypes'
+import {ResponseHandler} from '../../types'
 
 
 const createWebSocketSTREAMChannel = (
 	socket: WebSocket,
-	sessionId: string
+	sessionId: string,
+	openHandler: RequestCreator,
+	streamHandler: ResponseHandler,
+	errorMessage = '[STREAM Error]: error occured',
+	title = '[STREAM]'
 ) => {
 	return eventChannel(emit => {
-		const errorHandler = (e: Event) => emit(addLog(`[STREAM Error]: error occured`))
+		const errorHandler = (e: Event) => emit(addLog(`[${title}]: ${errorMessage}`))
 		const closeHandler = (e: CloseEvent) => {
-			emit(addLog(`[STREAM Close]: ${e.reason ? e.reason : `code: ${e.code}`}`))
+			emit(addLog(`[${title}]: ${e.reason ? e.reason : `code: ${e.code}`}`))
 		}
 		const pingAlive = (socket: WebSocket)=>{
 			if(socket.readyState === socket.OPEN) {
@@ -23,7 +29,7 @@ const createWebSocketSTREAMChannel = (
 		socket.onerror = errorHandler
 		socket.onclose = closeHandler
 		socket.onopen = () => {
-				let msg = GetBalance(sessionId)
+				let msg = openHandler(sessionId)
 				send(socket, msg)
 				pingAlive(socket)
 				msg = KeepAlive(sessionId)
@@ -31,8 +37,7 @@ const createWebSocketSTREAMChannel = (
 		}
 		socket.onmessage = (event: MessageEvent<any>) => {
 			try{
-				const response = JSON.parse(event.data)
-				handleStream(emit, response)
+				streamHandler(emit, event.data)
 			} catch(e) {
 				if(e instanceof Error) emit(addLog(`[STREAM Msg Error]: ${e.message}`))
 			}

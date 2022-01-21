@@ -1,3 +1,4 @@
+import {streamHandlersInterface} from "../../types"
 import {PriceData} from "../../types/PriceDataTypes"
 import {LoginCredentials} from "../../types/RequestResponseTypes"
 import {WSACTIONS} from "../types"
@@ -16,12 +17,12 @@ export const WebSocketDisconnect = (): {
 } => ({	
 	type: WSACTIONS.disconnect
 })
-export const WebSocketStreamConnect = (id: string): { 
+export const WebSocketStreamConnect = (payload: streamHandlersInterface): { 
 	type: WSACTIONS
-	payload: string
+	payload: streamHandlersInterface
 } => ({	
 	type: WSACTIONS.connectStream,
-	payload: id
+	payload
 })
 export const getChartData = (symbol: string): {
 	type: WSACTIONS

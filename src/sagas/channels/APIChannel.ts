@@ -32,7 +32,7 @@ const createWebSocketAPIChannel = (
 		socket.onmessage = (event: MessageEvent<any>) => {
 			try{
 				const response = JSON.parse(event.data)
-				handleResponse(socket!, emit, response)
+				handleResponse(socket, emit, response)
 			} catch(e) {
 				if(e instanceof Error) emit(addLog(`[Main Msg Error]: ${e.message}`))
 			}

@@ -10,7 +10,6 @@ export default function* getChartDataWorker(action: Effect<WSACTIONS, string>){
 	const symbol = action.payload
 	const requests = yield call(GetChartDataCommand, symbol)
 	console.log(requests)
-	//need to workout how to set correct ordered data in correct charts
 	if(WS !== null) {
 		for(let request of requests){
 			//get chart period from request
