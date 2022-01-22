@@ -7,10 +7,6 @@
   overflow-y: auto;
 }
 
-#transactions {
-  flex: 1 1;
-}
-
 #logger {
   width: 25%;
 }
