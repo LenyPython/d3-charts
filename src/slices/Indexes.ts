@@ -33,14 +33,12 @@ export const Indexes = createSlice({
     setIndexes: (state, action: PayloadAction<HashedInstruments>) => {
       state.indexes = action.payload
     },
-    //how to set correct data in correct charts
     setMainChartData: (state, action: PayloadAction<PriceData[]>) =>{
       state.mainChartData = action.payload
     },
     addChartDataTab: (state, action: PayloadAction<ChartsDataPayload>)=>{
       const {symbol, data} = action.payload
       state.openedChartsTabs[symbol] = data
-      console.log(state.openedChartsTabs)
     }
   },
 })
@@ -51,6 +49,6 @@ export const {setIndexes, setMainChartData, addChartDataTab} = Indexes.actions
 export const getIndexes = (state: RootState) => state.Indexes.indexes
 export const getMainChartData = (state: RootState) => state.Indexes.mainChartData
 export const getChartsData = (state: RootState) => state.Indexes.openedChartsTabs
-export const getOpenedCharts= (state: RootState) => Object.keys(state.Indexes.openedChartsTabs)
+export const getOpenedChartsKeys= (state: RootState) => Object.keys(state.Indexes.openedChartsTabs)
 
 export default Indexes.reducer
