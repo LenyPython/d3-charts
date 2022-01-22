@@ -1,21 +1,27 @@
+import './ChartTabs.css'
 import {SetStateAction, Dispatch} from "react"
 import {useAppSelector} from "../../app/hooks"
-import {getOpenedCharts} from "../../slices/Indexes"
+import {getOpenedChartsKeys} from "../../slices/Indexes"
 
 
 const ChartTabs: React.FC<{
   setSymbol: Dispatch<SetStateAction<string>>
-}> = ({setSymbol}) => {
+  symbol: string
+}> = ({setSymbol, symbol}) => {
 
-  const OpenedChartTabsKeys = Array.from(useAppSelector(getOpenedCharts))
+  const OpenedChartTabsKeys = useAppSelector(getOpenedChartsKeys)
 
   return (
     <div id="chart-tabs">
       {
-        OpenedChartTabsKeys.map(symbol=><p
-                               key={symbol}
-          onClick={()=>setSymbol(symbol)}
-        >{symbol}</p>)
+        OpenedChartTabsKeys.map(mySymbol=>(
+          <button
+            className={`tab ${symbol === mySymbol && 'active'}`}
+            key={mySymbol}
+            onClick={()=>setSymbol(mySymbol)}
+         >{mySymbol}</button>
+        )
+                               )
       }
     </div>
   )
