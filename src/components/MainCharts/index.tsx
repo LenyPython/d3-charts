@@ -11,7 +11,7 @@ const MainCharts = () => {
   const mainChartData = useAppSelector(getMainChartData)
   return (
     <div id="main-charts">
-      <ChartTabs setSymbol={setSymbol}/>
+      <ChartTabs symbol={symbol} setSymbol={setSymbol}/>
       <ChartsList symbol={symbol}/>
       <Chart data={mainChartData} />
     </div>
