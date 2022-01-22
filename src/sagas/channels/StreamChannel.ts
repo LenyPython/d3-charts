@@ -2,7 +2,7 @@ import {eventChannel} from 'redux-saga'
 import {addLog} from '../../slices/WebSocket'
 import {KeepAlive, PING_STREAM} from '../../commands/commands'
 import {send} from '../../utils/websocket'
-import {RequestCreator, wsResponse} from '../../types/RequestResponseTypes'
+import {RequestCreator} from '../../types'
 import {ResponseHandler} from '../../types'
 
 
