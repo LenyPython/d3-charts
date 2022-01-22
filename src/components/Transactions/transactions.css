@@ -1,0 +1,33 @@
+#transactions {
+  flex: 1 1;
+}
+#transactions .tabs {
+  border: none;
+}
+#transactions .tab {
+  font-size: 1rem;
+  border-radius: 10px 10px 0 0;
+  margin-right: 0.1em;
+  background: #595959;
+  cursor: pointer;
+}
+#transactions .active {
+  background: #262626;
+  transform: scale(110%) translateY(2px);
+}
+
+#orders-table {
+  width: 100%;
+  color: white;
+  margin-top: 3px;
+}
+#orders-table tr td {
+  width: auto;
+  background: #404040;
+  padding: 0.2em;
+}
+#orders-table tr td:nth-of-type(odd) {
+  background: #262626;
+}
+
+/*# sourceMappingURL=transactions.css.map */
