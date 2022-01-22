@@ -9,11 +9,10 @@ export interface PriceData {
 	vol: number
 }
 export interface ChartsDataPayload {
-  period: number
-  prices: PriceData[]
+	symbol: string
+	data: SmallChartsData
 }
-interface stringMap { [key: string]: any }
-export interface SmallChartsData extends stringMap{
+export interface SmallChartsData extends Record<string, PriceData[]>{
 	'Month': PriceData[]
 	'Day': PriceData[]
 	'Hour4': PriceData[]

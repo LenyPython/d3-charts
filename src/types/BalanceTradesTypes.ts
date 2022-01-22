@@ -24,3 +24,9 @@ export interface TradeInterface {
 	type: number
 	symbol: string
 }
+
+export enum ORDER {
+	open = "Open Trades",
+	closed = "History",
+	pending = "Pending Orders",
+}

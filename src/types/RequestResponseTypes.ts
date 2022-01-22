@@ -5,13 +5,13 @@ export type LoginCredentials = {
 	password: string
 	appName?: string
 }
+
 export interface wsRequest {
 	command: COMMAND
 	arguments?: any
 	streamSessionId?: string
 	symbol?: string
 }
-export type RequestCreator = (sessionId: string)=> wsRequest
 
 export interface wsResponse {
 	status?: boolean
@@ -22,6 +22,7 @@ export interface wsResponse {
 	errorCode?: string
 	errorDescr?: string
 }
+
 export interface JSONLogin {
 	command: COMMAND
 	arguments: LoginCredentials

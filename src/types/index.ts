@@ -1,8 +1,10 @@
-import {RequestCreator} from "./RequestResponseTypes"
+import {wsRequest} from "./RequestResponseTypes"
 
 export type Emmiter = (input: unknown) => void
 
 export type ResponseHandler = (emit: Emmiter, data: string) => void
+
+export type RequestCreator = (sessionId: string)=> wsRequest
 
 export interface streamHandlersInterface {
 	openHandler: RequestCreator
