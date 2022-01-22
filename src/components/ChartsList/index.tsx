@@ -2,17 +2,18 @@ import './charts.css'
 import Chart from "../Chart"
 import {PriceData} from '../../types/PriceDataTypes'
 import {useAppDispatch, useAppSelector} from '../../app/hooks'
-import {setMainChartData, getSmallChartData} from '../../slices/Indexes'
+import {getChartsData, setMainChartData} from '../../slices/Indexes'
 
-const ChartsList: React.FC = () => {
+const ChartsList: React.FC<{ symbol: string }> = ({symbol}) => {
   const dispatch = useAppDispatch()
-  const smallCharts = useAppSelector(getSmallChartData)
+  const Charts = useAppSelector(getChartsData).get(symbol)
+  console.log(Charts)
   const setChart = (data: PriceData[]) => dispatch(setMainChartData(data))
   const charts = [] as JSX.Element[]
-  for(let key in smallCharts){
+  for(let key in Charts){
     charts.push(<Chart 
                  key={key}
-                 data={smallCharts[key]}
+                 data={Charts[key]}
                  onClick={setChart}
                  limit={30}
                  />)
