@@ -6,8 +6,9 @@ import {ChartsDataPayload, HashedInstruments, PriceData, SmallChartsData} from '
 // Define a type for the slice state
 interface indexesInterface {
   indexes: HashedInstruments
-  smallCharts: SmallChartsData
   mainChartData: PriceData[]
+  //hash symbol to array of smaller charts
+  openedChartsTabs: Record<string, SmallChartsData>
 }
 
 
@@ -15,13 +16,14 @@ interface indexesInterface {
 const initialState: indexesInterface = {
   indexes: {} as HashedInstruments,
   mainChartData: [] as PriceData[],
-  smallCharts:{
+  openedChartsTabs: {
+  'random':{
     Month: createData(),
     Day: createData(),
     Hour4: createData(),
     Hour1: createData(),
     Min15: createData(),
-  },
+  }},
 }
 
 export const Indexes = createSlice({
@@ -35,35 +37,20 @@ export const Indexes = createSlice({
     setMainChartData: (state, action: PayloadAction<PriceData[]>) =>{
       state.mainChartData = action.payload
     },
-    setSmallChartData: (state, action: PayloadAction<ChartsDataPayload>)=>{
-      const {period, prices} = action.payload
-      console.log(action.payload)
-      switch(period){
-        case 15:
-          state.smallCharts.Min15 = prices
-          break
-        case 60:
-          state.smallCharts.Hour1 = prices
-          break
-        case 240:
-          state.smallCharts.Hour4 = prices
-          break
-        case 1440:
-          state.smallCharts.Day = prices
-          break
-        case 10080:
-          state.smallCharts.Month = prices
-          break
-      }
+    addChartDataTab: (state, action: PayloadAction<ChartsDataPayload>)=>{
+      const {symbol, data} = action.payload
+      state.openedChartsTabs[symbol] = data
+      console.log(state.openedChartsTabs)
     }
   },
 })
 
-export const {setIndexes, setMainChartData, setSmallChartData} = Indexes.actions
+export const {setIndexes, setMainChartData, addChartDataTab} = Indexes.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const getIndexes = (state: RootState) => state.Indexes.indexes
 export const getMainChartData = (state: RootState) => state.Indexes.mainChartData
-export const getSmallChartData = (state: RootState) => state.Indexes.smallCharts
+export const getChartsData = (state: RootState) => state.Indexes.openedChartsTabs
+export const getOpenedCharts= (state: RootState) => Object.keys(state.Indexes.openedChartsTabs)
 
 export default Indexes.reducer

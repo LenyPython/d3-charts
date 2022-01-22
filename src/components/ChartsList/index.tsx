@@ -6,8 +6,7 @@ import {getChartsData, setMainChartData} from '../../slices/Indexes'
 
 const ChartsList: React.FC<{ symbol: string }> = ({symbol}) => {
   const dispatch = useAppDispatch()
-  const Charts = useAppSelector(getChartsData).get(symbol)
-  console.log(Charts)
+  const Charts = useAppSelector(getChartsData)[symbol]
   const setChart = (data: PriceData[]) => dispatch(setMainChartData(data))
   const charts = [] as JSX.Element[]
   for(let key in Charts){

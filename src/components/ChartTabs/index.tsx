@@ -8,7 +8,6 @@ const ChartTabs: React.FC<{
 }> = ({setSymbol}) => {
 
   const OpenedChartTabsKeys = Array.from(useAppSelector(getOpenedCharts))
-  console.log(OpenedChartTabsKeys)
 
   return (
     <div id="chart-tabs">
