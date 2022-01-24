@@ -18,7 +18,7 @@ export const Disconnect = (): wsRequest => ({command:COMMAND.logout })
 export const GetAllSymbols = (): wsRequest=>({ command: COMMAND.getAllSymbols })
 export const PING = (): wsRequest => ({ command: COMMAND.ping })
 //basic daily chart info
-export const GetChartDataCommand = (symbol: string): wsRequest[] =>{
+export const GetChartDataCommands = (symbol: string): wsRequest[] =>{
   let chartsRequests = [] as wsRequest[]
   for(let period in PERIOD){
     chartsRequests.push({

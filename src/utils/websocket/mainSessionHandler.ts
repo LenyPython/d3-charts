@@ -1,12 +1,10 @@
-import {GetAllSymbols} from "../../commands/commands";
-import {saveChartData, WebSocketStreamConnect} from "../../sagas/actions";
-import {HashedInstruments, instrumentCategory, PriceData,} from '../../types/PriceDataTypes'
+import {passAccountData, WebSocketStreamConnect} from "../../sagas/actions";
 import {addLog, setSessionId} from "../../slices/WebSocket";
-import {setIndexes} from '../../slices/Indexes'
 import {wsResponse} from "../../types/RequestResponseTypes"
-import {send} from ".";
 import {Emmiter} from "../../types";
 import {balanceStreamHandlers} from "./balanceHandler";
+import {send} from ".";
+import {GetAllSymbols} from "../../commands/commands";
 
 
 const handleResponse = (
@@ -16,55 +14,21 @@ const handleResponse = (
 		if(response.status === false) emit(addLog('[Request Error]: false status'))
 		else if(response.status === true){
 			if(response.streamSessionId) {
+				//save sessionID to redux store
 				emit(setSessionId(response.streamSessionId))
+				//send request for all indexes
+				send(WS, GetAllSymbols())
 				//subscribe to balance and trade streaming data
 				emit(WebSocketStreamConnect(balanceStreamHandlers))
-				send(WS, GetAllSymbols())
 			}
+			//if response is good/true pass the returnData to data dispatcher
 			else {
-				//need to refactor all logic to manage responses
-				if(response.returnData) {
-					if(response.returnData[0] !== undefined){
-						const instruments: instrumentCategory[] = response.returnData
-						emit(setIndexes(hashInstruments(instruments)))
-					} else {
-						const dataObj = response.returnData
-						const correct = Math.pow(10, dataObj.digits)
-						const data = dataObj.rateInfos.map((item: PriceData) => ({
-							close: (item.open + item.close) / correct,
-							open: item.open / correct,
-							high: (item.open + item.high) / correct,
-							low: (item.open + item.low) / correct,
-							ctm: item.ctm,
-							ctmString: item.ctmString,
-							vol: item.vol
-						}))
-						emit(saveChartData(data))
-					}
-				}
+			//ping command doesn't return returnData, so check if it exists first
+			if(response.returnData !== undefined)	emit(passAccountData(response.returnData))
 			}
-		}
-		else {
-			emit(addLog('otherevent'))
-		}
+			}
+		else emit(addLog('[Request Error]: status undefined'))
 }
 
-const hashInstruments = (data: instrumentCategory[]) => {
-	let instruments = {} as HashedInstruments
-	for(let instrument of data) {
-			const {categoryName, groupName, swapLong, swapShort, symbol} = instrument
-			const entry = {
-				symbol,
-				swapShort,
-				swapLong
-				}
-			if(instruments[categoryName] === undefined)	instruments[categoryName] = {}
-				instruments[categoryName][groupName] === undefined ?
-				instruments[categoryName][groupName] = [entry]
-				:
-				instruments[categoryName][groupName].push(entry)
-	}
-	return instruments
-}
 
 export default handleResponse
