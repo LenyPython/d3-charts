@@ -1,5 +1,7 @@
 import {HashedInstruments, instrumentCategory} from '../../types/PriceDataTypes'
 
+
+
 export const hashInstruments = (data: instrumentCategory[]) => {
 	let instruments = {} as HashedInstruments
 	for(let instrument of data) {
