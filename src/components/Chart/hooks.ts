@@ -85,7 +85,7 @@ export const useDrawCandleStickChart = (
       .attr('y1', d => yScale(d.high))
       .attr('y2', d => yScale(d.low))
 
-  },[data,downColor, upColor])
+  },[data,downColor, upColor, chartRef])
 
 }
 

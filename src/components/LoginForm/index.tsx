@@ -45,7 +45,7 @@ const LoginForm:React.FC<{
     </form>
       <p>Create demo account:
       <a href="https://www.xtb.com/pl/demo-account"
-      target="_blank" >HERE</a></p>
+      target="_blank" rel='noreferrer'>HERE</a></p>
       <button  className="close-btn" onClick={()=>setIsOpen(false)}>Close</button>
     </div>
   )
