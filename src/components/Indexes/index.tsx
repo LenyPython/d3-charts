@@ -17,7 +17,9 @@ const Indexes = () => {
   }
 
   return (
-    <div id="indexes" className={isOpen?'open':'closed'} onClick={()=>setIsOpen(true)}>
+    <div id="indexes" 
+      className={isOpen?'open':'closed'}
+      onClick={()=>!isOpen&&setIsOpen(true)}>
         <button onClick={()=>setIsOpen(false)}>close</button>
         <select value={category} onChange={handleChange} >
         {GroupNames.map((item: string)=><option key={item} value={item}>{item}</option>)}
