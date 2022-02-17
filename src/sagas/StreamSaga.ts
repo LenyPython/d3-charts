@@ -6,8 +6,8 @@ import createWebSocketSTREAMChannel from "./channels/StreamChannel"
 
 const URL = process.env.REACT_APP_SOCKET_STREAM_URL
 
-export function* WebSocketStreamCreator(action: Effect<string, streamHandlersInterface>){
-	const {openHandler, messageHandler, errorMsg, title} = action.payload
+export function* WebSocketStreamCreator({payload}: Effect<string, streamHandlersInterface>){
+	const {openHandler, messageHandler, errorMsg, title} = payload
 	try{
 		if(!URL) throw new Error('You forgot to declare REACT_APP_SOCKET_STREAM_URL')
 		const STREAM = new WebSocket(URL)
