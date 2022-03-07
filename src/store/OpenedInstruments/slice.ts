@@ -1,6 +1,6 @@
 import reducers from './reducers'
 import { createSlice } from '@reduxjs/toolkit'
-import { createData } from '../../mock'
+import { createData } from '../../utils/mock'
 import { HashedInstruments, OpenedInstrumentsInterface, PriceData } from './types'
 
 // Define the initial state using that type

@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <>
       <nav id="Navigation">
-        {sessionId === null ? (
+        {!sessionId ? (
           <button className="login" onClick={openForm}>
             LOGIN
           </button>
