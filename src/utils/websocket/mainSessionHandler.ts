@@ -1,11 +1,11 @@
-import { passAccountData, WebSocketStreamConnect } from '../../sagas/actions'
-import { wsResponse } from '../../types/RequestResponseTypes'
 import { Emmiter } from '../../types'
 import { balanceStreamHandlers } from './balanceHandler'
 import { send } from '.'
-import { GetAllSymbols } from '../../commands/commands'
-import { setSessionId } from '../../store/LoginData/slice'
 import { addLog } from '../../store/Logger/slice'
+import { wsResponse } from '../../store/LoginData/types'
+import { setSessionId } from '../../store/LoginData/slice'
+import { GetAllSymbols } from '../../store/LoginData/commands'
+import { passAccountData, WebSocketStreamConnect } from '../../store/LoginData/actions'
 
 const handleResponse = (WS: WebSocket, emit: Emmiter, response: wsResponse) => {
   if (response.status === false) emit(addLog('[Request Error]: false status'))

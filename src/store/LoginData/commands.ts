@@ -1,55 +1,51 @@
-import {COMMAND, PERIOD} from '../commands'
-import {JSONLogin, LoginCredentials, wsRequest} from '../types/RequestResponseTypes'
+import { COMMAND, PERIOD } from '../../commands'
+import { JSONLogin, LoginCredentials, wsRequest } from './types'
 
-export const LoginCommand = (
-  userId: string,
-  password: string, 
-  appName?: string
-): JSONLogin => ({
+export const LoginCommand = (userId: string, password: string, appName?: string): JSONLogin => ({
   command: COMMAND.login,
-  arguments:  {
+  arguments: {
     userId,
     password,
-    appName
-    } as LoginCredentials
-  })
+    appName,
+  } as LoginCredentials,
+})
 
-export const Disconnect = (): wsRequest => ({command:COMMAND.logout })
-export const GetAllSymbols = (): wsRequest=>({ command: COMMAND.getAllSymbols })
+export const Disconnect = (): wsRequest => ({ command: COMMAND.logout })
+export const GetAllSymbols = (): wsRequest => ({ command: COMMAND.getAllSymbols })
 export const PING = (): wsRequest => ({ command: COMMAND.ping })
 //basic daily chart info
-export const GetChartDataCommands = (symbol: string): wsRequest[] =>{
+export const GetChartDataCommands = (symbol: string): wsRequest[] => {
   let chartsRequests = [] as wsRequest[]
-  for(let period in PERIOD){
+  for (let period in PERIOD) {
     chartsRequests.push({
       command: COMMAND.getChartRangeRequest,
-      arguments:{
-        info:{
+      arguments: {
+        info: {
           period: PERIOD[period],
           start: Date.now(), //three months
           end: Date.now(), //three months
           ticks: -75,
-          symbol
-        }
-      }
+          symbol,
+        },
+      },
     })
   }
   return chartsRequests
 }
 export const PING_STREAM = (streamSessionId: string): wsRequest => ({
   command: COMMAND.ping,
-  streamSessionId
-  })
+  streamSessionId,
+})
 export const KeepAlive = (streamSessionId: string): wsRequest => ({
   command: COMMAND.getKeepAlive,
-  streamSessionId
-  })
+  streamSessionId,
+})
 export const GetBalance = (streamSessionId: string): wsRequest => ({
   command: COMMAND.getBalance,
-  streamSessionId
-  })
+  streamSessionId,
+})
 export const GetCandles = (streamSessionId: string, symbol: string): wsRequest => ({
   command: COMMAND.getCandles,
   streamSessionId,
-  symbol
-  })
+  symbol,
+})

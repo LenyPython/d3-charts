@@ -1,8 +1,8 @@
 import { ANSWERS } from '../../commands'
 import { streamHandlersInterface, Emmiter } from '../../types'
-import { wsResponse } from '../../types/RequestResponseTypes'
-import { GetBalance } from '../../commands/commands'
 import { setBalance } from '../../store/Balance/slice'
+import { wsResponse } from '../../store/LoginData/types'
+import { GetBalance } from '../../store/LoginData/commands'
 
 const handleBalanceStream = (emit: Emmiter, data: string) => {
   const response: wsResponse = JSON.parse(data)

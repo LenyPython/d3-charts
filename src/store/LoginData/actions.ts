@@ -1,22 +1,17 @@
-import { PriceData } from '../../store/OpenedInstruments/types'
+import { PriceData } from '../OpenedInstruments/types'
 import { streamHandlersInterface } from '../../types'
-import { APIResponse, LoginCredentials } from '../../types/RequestResponseTypes'
-import { WSACTIONS } from '../types'
+import { APIResponse, WSACTIONS, USER_CONNECTION } from './types'
 
-export const WebSocketConnect = (
-  payload: LoginCredentials,
-): {
-  type: WSACTIONS
-  payload: LoginCredentials
+export const LoginUser = (): {
+  type: USER_CONNECTION
 } => ({
-  type: WSACTIONS.connect,
-  payload,
+  type: USER_CONNECTION.connect,
 })
 
-export const WebSocketDisconnect = (): {
-  type: WSACTIONS
+export const LogoutUser = (): {
+  type: USER_CONNECTION
 } => ({
-  type: WSACTIONS.disconnect,
+  type: USER_CONNECTION.disconnect,
 })
 
 export const WebSocketStreamConnect = (
@@ -37,16 +32,6 @@ export const getAccountData = (
 } => ({
   type: WSACTIONS.getAccountData,
   payload: ws,
-})
-
-export const getChartData = (
-  symbol: string,
-): {
-  type: WSACTIONS
-  payload: string
-} => ({
-  type: WSACTIONS.getChartData,
-  payload: symbol,
 })
 
 export const saveChartData = (

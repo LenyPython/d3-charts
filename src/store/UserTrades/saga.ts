@@ -1,8 +1,8 @@
 import { put, call, take, select, Effect } from 'redux-saga/effects'
-import { addLog } from '../store/Logger/slice'
-import { getSessionId } from '../store/LoginData/selectors'
-import { streamHandlersInterface } from '../types'
-import createWebSocketSTREAMChannel from './channels/StreamChannel'
+import { streamHandlersInterface } from '../../types'
+import { createWebSocketSTREAMChannel } from '../channels'
+import { addLog } from '../Logger/slice'
+import { getSessionId } from '../LoginData/selectors'
 
 const URL = process.env.REACT_APP_SOCKET_STREAM_URL
 

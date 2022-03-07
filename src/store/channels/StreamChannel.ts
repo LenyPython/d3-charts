@@ -1,9 +1,9 @@
 import { eventChannel } from 'redux-saga'
-import { KeepAlive, PING_STREAM } from '../../commands/commands'
 import { send } from '../../utils/websocket'
 import { RequestCreator } from '../../types'
 import { ResponseHandler } from '../../types'
 import { addLog } from '../../store/Logger/slice'
+import { KeepAlive, PING_STREAM } from '../LoginData/commands'
 
 const createWebSocketSTREAMChannel = (
   socket: WebSocket,

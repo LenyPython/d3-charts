@@ -1,7 +1,7 @@
 import './LoginForm.css'
 import { Dispatch, SetStateAction } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { WebSocketConnect } from '../../sagas/actions'
+import { LoginUser } from '../../store/LoginData/actions'
 import { getPassword, getUserId } from '../../store/LoginData/selectors'
 import { setPassword, setUserId } from '../../store/LoginData/slice'
 
@@ -14,12 +14,7 @@ const LoginForm: React.FC<{
 
   const login = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    dispatch(
-      WebSocketConnect({
-        userId: user,
-        password,
-      }),
-    )
+    dispatch(LoginUser())
     setIsOpen(false)
   }
   const handleChangeUserId = (e: React.ChangeEvent<HTMLInputElement>) => {

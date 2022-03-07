@@ -1,9 +1,9 @@
 import './transactions.css'
 import { useState } from 'react'
 import { useAppSelector } from '../../app/hooks'
-import { getClosedTrades, getOpenTrades, getPendingTrades } from '../../store/Balance/selectors'
 import { ORDER } from '../../store/Balance/types'
 import { TradeInterface } from '../../store/Balance/types'
+import { getClosedTrades, getOpenTrades, getPendingTrades } from '../../store/UserTrades/selectors'
 
 const Transactions = () => {
   const [type, setType] = useState<ORDER>(ORDER.open)
