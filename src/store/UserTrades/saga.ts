@@ -1,8 +1,9 @@
-import { put, call, take, select, Effect } from 'redux-saga/effects'
+import { put, call, take, select, Effect, takeLeading } from 'redux-saga/effects'
 import { streamHandlersInterface } from '../../types'
 import { createWebSocketSTREAMChannel } from '../channels'
 import { addLog } from '../Logger/slice'
 import { getSessionId } from '../LoginData/selectors'
+import { TRADES_ACTIONS } from './types'
 
 const URL = process.env.REACT_APP_SOCKET_STREAM_URL
 
@@ -30,4 +31,9 @@ export function* WebSocketStreamCreator({ payload }: Effect<string, streamHandle
   } catch (e) {
     if (e instanceof Error) put(addLog(`[${title} Login Error]: ${e.message}`))
   }
+}
+
+export default function* UserTradesWatcherSaga() {
+  //WebSocket data stream
+  yield takeLeading(TRADES_ACTIONS.connectStream, WebSocketStreamCreator)
 }
