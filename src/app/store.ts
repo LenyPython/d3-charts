@@ -1,22 +1,24 @@
 import createSagaMiddleware from 'redux-saga'
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit'
 import MainSaga from '../sagas/MainSaga'
-import IndexesReducer from '../slices/Indexes';
-import BalanceReducer from '../slices/BalanceSlice'
-import WebSocketReducer from '../slices/WebSocket';
+import BalanceReducer from '../store/Balance/slice'
+import LoginDataReducer from '../store/LoginData/slice'
+import OpenedInstrumentsReducer from '../store/OpenedInstruments/slice'
+import LoggerReducer from '../store/Logger/slice'
 
 const sagaMiddleaware = createSagaMiddleware()
 
 export const store = configureStore({
   reducer: {
-    WebSocket: WebSocketReducer,
-    Indexes: IndexesReducer,
+    LoginData: LoginDataReducer,
     Balance: BalanceReducer,
+    OpenedInstruments: OpenedInstrumentsReducer,
+    Logger: LoggerReducer,
   },
-  middleware: [sagaMiddleaware]
-});
+  middleware: [sagaMiddleaware],
+})
 
 sagaMiddleaware.run(MainSaga)
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch
+export type RootState = ReturnType<typeof store.getState>
