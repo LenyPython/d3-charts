@@ -14,10 +14,4 @@ const setTrades = (state: BalanceDataInterface, action: PayloadAction<TradeInter
   })
 }
 
-export enum ORDER {
-  open = 'Open Trades',
-  closed = 'History',
-  pending = 'Pending Orders',
-}
-
 export { setBalance, setTrades }

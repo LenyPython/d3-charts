@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { TradeInterface } from './types'
 import { BalanceDataInterface } from './types'
-import * as Actions from './actions'
+import * as reducers from './reducers'
 
 const mockTrade: TradeInterface = {
   close_price: 1.4,
@@ -37,10 +37,7 @@ const initialState: BalanceDataInterface = {
 const Balance = createSlice({
   name: 'Balance',
   initialState,
-  reducers: {
-    setBalance: Actions.setBalance,
-    setTrades: Actions.setTrades,
-  },
+  reducers,
 })
 
 export const { setBalance, setTrades } = Balance.actions

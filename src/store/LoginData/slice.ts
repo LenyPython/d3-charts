@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { ConnectionData } from './types'
-import * as Actions from './actions'
+import * as reducers from './reducers'
 
 // Define the initial state using that type
 const initialState: ConnectionData = {
@@ -12,9 +12,7 @@ const initialState: ConnectionData = {
 export const UserConnection = createSlice({
   name: 'ConnectionData',
   initialState,
-  reducers: {
-    setSessionId: Actions.setSessionId,
-  },
+  reducers,
 })
 
 export const { setSessionId } = UserConnection.actions

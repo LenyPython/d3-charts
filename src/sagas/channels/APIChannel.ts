@@ -1,52 +1,48 @@
-import { eventChannel } from "redux-saga";
-import { LoginCommand, PING } from "../../commands/commands";
-import { addLog } from "../../slices/WebSocket";
-import { LoginCredentials } from "../../types/RequestResponseTypes";
-import { handleResponse, send } from "../../utils/websocket";
+import { eventChannel } from 'redux-saga'
+import { LoginCommand, PING } from '../../commands/commands'
+import { addLog } from '../../store/Logger/slice'
+import { LoginCredentials } from '../../types/RequestResponseTypes'
+import { handleResponse, send } from '../../utils/websocket'
 
-const appName = process.env.REACT_APP_APP_NAME;
+const appName = process.env.REACT_APP_APP_NAME
 
-const createWebSocketAPIChannel = (
-  socket: WebSocket,
-  { userId, password }: LoginCredentials
-) => {
+const createWebSocketAPIChannel = (socket: WebSocket, { userId, password }: LoginCredentials) => {
   return eventChannel((emit) => {
-    const errorHandler = (e: Event) =>
-      emit(addLog(`[Main Error]: error occured`));
+    const errorHandler = (e: Event) => emit(addLog(`[Main Error]: error occured`))
     const closeHandler = (e: CloseEvent) => {
-      emit(addLog(`[Main Close]: ${e.reason ? e.reason : `code: ${e.code}`}`));
-    };
+      emit(addLog(`[Main Close]: ${e.reason ? e.reason : `code: ${e.code}`}`))
+    }
     const pingAlive = (socket: WebSocket) => {
       if (socket.readyState === socket.OPEN) {
-        send(socket, PING());
-        setTimeout(() => pingAlive(socket), 5000);
+        send(socket, PING())
+        setTimeout(() => pingAlive(socket), 5000)
       }
-    };
+    }
 
-    socket.onerror = errorHandler;
-    socket.onclose = closeHandler;
+    socket.onerror = errorHandler
+    socket.onclose = closeHandler
     socket.onopen = () => {
-      pingAlive(socket);
+      pingAlive(socket)
       //should emit action to saga which will download specific data
       //in order, async actions to recive acc data
 
       //create login command/credentials and send login request
-      const msg = LoginCommand(userId, password, appName);
-      send(socket, msg);
-    };
+      const msg = LoginCommand(userId, password, appName)
+      send(socket, msg)
+    }
     socket.onmessage = (event: MessageEvent<any>) => {
       try {
-        const response = JSON.parse(event.data);
-        handleResponse(socket, emit, response);
+        const response = JSON.parse(event.data)
+        handleResponse(socket, emit, response)
       } catch (e) {
-        if (e instanceof Error) emit(addLog(`[Main Msg Error]: ${e.message}`));
+        if (e instanceof Error) emit(addLog(`[Main Msg Error]: ${e.message}`))
       }
-    };
+    }
     const unsubscribe = () => {
-      socket.close();
-    };
-    return unsubscribe;
-  });
-};
+      socket.close()
+    }
+    return unsubscribe
+  })
+}
 
-export default createWebSocketAPIChannel;
+export default createWebSocketAPIChannel

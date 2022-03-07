@@ -10,7 +10,7 @@ const sagaMiddleaware = createSagaMiddleware()
 
 export const store = configureStore({
   reducer: {
-    LoginDataReducer: LoginDataReducer,
+    LoginData: LoginDataReducer,
     Balance: BalanceReducer,
     Logger: LoggerReducer,
     Indexes: IndexesReducer,
