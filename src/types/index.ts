@@ -1,4 +1,4 @@
-import { wsRequest } from '../store/LoginData/types'
+import { wsRequest } from '../store/MainConnection/types'
 
 export type Emmiter = (input: unknown) => void
 

@@ -1,5 +1,6 @@
 import { COMMAND, PERIOD } from '../../commands'
-import { JSONLogin, LoginCredentials, wsRequest } from './types'
+import { wsRequest } from '../MainConnection/types'
+import { JSONLogin, LoginCredentials } from './types'
 
 export const LoginCommand = (userId: string, password: string, appName?: string): JSONLogin => ({
   command: COMMAND.login,
@@ -11,10 +12,9 @@ export const LoginCommand = (userId: string, password: string, appName?: string)
 })
 
 export const Disconnect = (): wsRequest => ({ command: COMMAND.logout })
-export const GetAllSymbols = (): wsRequest => ({ command: COMMAND.getAllSymbols })
-export const PING = (): wsRequest => ({ command: COMMAND.ping })
+
 //basic daily chart info
-export const GetChartDataCommands = (symbol: string): wsRequest[] => {
+export const DownloadChartDataCommands = (symbol: string): wsRequest[] => {
   let chartsRequests = [] as wsRequest[]
   for (let period in PERIOD) {
     chartsRequests.push({
@@ -32,20 +32,3 @@ export const GetChartDataCommands = (symbol: string): wsRequest[] => {
   }
   return chartsRequests
 }
-export const PING_STREAM = (streamSessionId: string): wsRequest => ({
-  command: COMMAND.ping,
-  streamSessionId,
-})
-export const KeepAlive = (streamSessionId: string): wsRequest => ({
-  command: COMMAND.getKeepAlive,
-  streamSessionId,
-})
-export const GetBalance = (streamSessionId: string): wsRequest => ({
-  command: COMMAND.getBalance,
-  streamSessionId,
-})
-export const GetCandles = (streamSessionId: string, symbol: string): wsRequest => ({
-  command: COMMAND.getCandles,
-  streamSessionId,
-  symbol,
-})

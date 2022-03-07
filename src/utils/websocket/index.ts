@@ -1,6 +1,6 @@
 import handleResponse from './mainSessionHandler'
 import { balanceStreamHandlers } from './balanceHandler'
-import { wsRequest } from '../../store/LoginData/types'
+import { wsRequest } from '../../store/MainConnection/types'
 
 export const send = (ws: WebSocket, msg: wsRequest): void => {
   ws.send(JSON.stringify(msg))

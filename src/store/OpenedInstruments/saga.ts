@@ -1,16 +1,16 @@
-import { Effect, put, delay, call, take } from 'redux-saga/effects'
+import { Effect, put, delay, call, take, takeLeading } from 'redux-saga/effects'
 import { send } from '../../utils/websocket'
-import { saveChartData } from '../LoginData/actions'
-import { GetChartDataCommands } from '../LoginData/commands'
+import { DownloadChartDataCommands } from '../LoginData/commands'
 import { WS } from '../LoginData/saga'
-import { PriceDataResponse, WSACTIONS } from '../LoginData/types'
+import { saveChartData } from '../MainConnection/actions'
+import { MAIN_SOCKET_ACTION, PriceDataResponse } from '../MainConnection/types'
 import { addChartDataTab } from './slice'
-import { PriceData, SmallChartsData } from './types'
+import { INSTRUMENTS_ACTIONS, PriceData, SmallChartsData } from './types'
 
-export default function* downloadChartDataWorker(action: Effect<WSACTIONS, string>) {
+export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, string>) {
   const symbol = action.payload
   //get array of charts requests
-  const requests = GetChartDataCommands(symbol)
+  const requests = DownloadChartDataCommands(symbol)
   let InstrumentData: SmallChartsData = {
     Min15: [] as PriceData[],
     Hour1: [] as PriceData[],
@@ -24,7 +24,7 @@ export default function* downloadChartDataWorker(action: Effect<WSACTIONS, strin
       const period = request.arguments.info.period
       yield call(send, WS, request)
       //await for ws answer
-      const { payload } = yield take(WSACTIONS.saveChartData)
+      const { payload } = yield take(MAIN_SOCKET_ACTION.saveChartData)
       const prices = payload
       switch (period) {
         case 15:
@@ -67,4 +67,9 @@ export function* saveChartDataWorker(returnData: PriceDataResponse) {
     vol: item.vol,
   }))
   yield put(saveChartData(data))
+}
+
+export default function* OpenedInstrumentsWatcherSaga() {
+  //get API chart data worker
+  yield takeLeading(INSTRUMENTS_ACTIONS.downloadChartData, downloadChartDataWorker)
 }

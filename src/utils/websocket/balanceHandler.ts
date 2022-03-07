@@ -1,8 +1,8 @@
 import { ANSWERS } from '../../commands'
 import { streamHandlersInterface, Emmiter } from '../../types'
 import { setBalance } from '../../store/Balance/slice'
-import { wsResponse } from '../../store/LoginData/types'
-import { GetBalance } from '../../store/LoginData/commands'
+import { DownloadBalance } from '../../store/MainConnection/commands'
+import { wsResponse } from '../../store/MainConnection/types'
 
 const handleBalanceStream = (emit: Emmiter, data: string) => {
   const response: wsResponse = JSON.parse(data)
@@ -21,7 +21,7 @@ const handleBalanceStream = (emit: Emmiter, data: string) => {
 }
 
 export const balanceStreamHandlers: streamHandlersInterface = {
-  openHandler: GetBalance,
+  openHandler: DownloadBalance,
   messageHandler: handleBalanceStream,
   title: 'Balance stream',
   errorMsg: 'error on reciving balance data',

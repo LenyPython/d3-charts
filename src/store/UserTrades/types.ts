@@ -1,6 +1,5 @@
-export enum TRADES_ACTIONS {
-  connectStream = 'Websocket Stream Connect',
-}
+export enum TRADES_ACTIONS {}
+
 // Define a type for the slice state
 export interface UserTradesInterface {
   openTrades: TradeInterface[]

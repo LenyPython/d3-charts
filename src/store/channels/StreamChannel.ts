@@ -3,7 +3,7 @@ import { send } from '../../utils/websocket'
 import { RequestCreator } from '../../types'
 import { ResponseHandler } from '../../types'
 import { addLog } from '../../store/Logger/slice'
-import { KeepAlive, PING_STREAM } from '../LoginData/commands'
+import { PING_STREAM, KEEP_ALIVE } from '../MainConnection/commands'
 
 const createWebSocketSTREAMChannel = (
   socket: WebSocket,
@@ -33,7 +33,7 @@ const createWebSocketSTREAMChannel = (
       //to specific types of data
       let msg = openHandler(sessionId)
       send(socket, msg)
-      msg = KeepAlive(sessionId)
+      msg = KEEP_ALIVE(sessionId)
       send(socket, msg)
     }
     socket.onmessage = (event: MessageEvent<any>) => {

@@ -1,14 +1,20 @@
-import { takeLeading } from 'redux-saga/effects'
-import { WebSocketStreamCreator } from '../UserTrades/saga'
-import { AccountDataDispatcher } from '../Balance/saga'
-import { WSACTIONS } from '../LoginData/types'
-import downloadChartDataWorker from '../OpenedInstruments/saga'
+import { takeLeading, Effect, put, call } from 'redux-saga/effects'
+import { hashInstruments } from '../../utils/websocket/hashInstruments'
+import { saveChartDataWorker } from '../OpenedInstruments/saga'
+import { setIndexes } from '../OpenedInstruments/slice'
+import { instrumentCategory } from '../OpenedInstruments/types'
+import { APIResponse, MAIN_SOCKET_ACTION } from './types'
 
-export default function* AllSagaWatcher() {
+//implement utillty type checks for checking specific response types
+export function* AccountDataDispatcher({ payload }: Effect<string, APIResponse>) {
+  const returnData = payload
+  if (Array.isArray(returnData))
+    yield put(setIndexes(hashInstruments(returnData as instrumentCategory[])))
+  else if (returnData.hasOwnProperty('digits') && returnData.hasOwnProperty('rateInfos'))
+    yield call(saveChartDataWorker, returnData)
+}
+
+export default function* MainSocketWatcherSaga() {
   //onopen get indexes worker
-  yield takeLeading(WSACTIONS.passAccountData, AccountDataDispatcher)
-  //WebSocket data stream
-  yield takeLeading(WSACTIONS.connectStream, WebSocketStreamCreator)
-  //get API chart data worker
-  yield takeLeading(WSACTIONS.downloadChartData, downloadChartDataWorker)
+  yield takeLeading(MAIN_SOCKET_ACTION.checkMainSocketResponse, AccountDataDispatcher)
 }

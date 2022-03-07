@@ -1,3 +1,6 @@
+export enum INSTRUMENTS_ACTIONS {
+  downloadChartData = 'get-main-chart-data',
+}
 // Define a type for the slice state
 export interface OpenedInstrumentsInterface {
   indexes: HashedInstruments

@@ -1,14 +1,14 @@
-import { put, call, take, select, Effect, takeLeading } from 'redux-saga/effects'
-import { streamHandlersInterface } from '../../types'
+import { put, call, take, select, takeLeading } from 'redux-saga/effects'
+import { balanceStreamHandlers } from '../../utils/websocket'
 import { createWebSocketSTREAMChannel } from '../channels'
 import { addLog } from '../Logger/slice'
 import { getSessionId } from '../LoginData/selectors'
-import { TRADES_ACTIONS } from './types'
+import { MAIN_SOCKET_ACTION } from '../MainConnection/types'
 
 const URL = process.env.REACT_APP_SOCKET_STREAM_URL
 
-export function* WebSocketStreamCreator({ payload }: Effect<string, streamHandlersInterface>) {
-  const { openHandler, messageHandler, errorMsg, title } = payload
+export function* WebSocketStreamCreator() {
+  const { openHandler, messageHandler, errorMsg, title } = balanceStreamHandlers
   try {
     if (!URL) throw new Error('You forgot to declare REACT_APP_SOCKET_STREAM_URL')
     const STREAM = new WebSocket(URL)
@@ -35,5 +35,5 @@ export function* WebSocketStreamCreator({ payload }: Effect<string, streamHandle
 
 export default function* UserTradesWatcherSaga() {
   //WebSocket data stream
-  yield takeLeading(TRADES_ACTIONS.connectStream, WebSocketStreamCreator)
+  yield takeLeading(MAIN_SOCKET_ACTION.connectStream, WebSocketStreamCreator)
 }

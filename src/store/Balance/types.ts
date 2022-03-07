@@ -1,7 +1,7 @@
 export enum ORDER {
-  open = 'Open Trades',
-  closed = 'History',
-  pending = 'Pending Orders',
+  open = 'open-trades',
+  closed = 'closed-trades',
+  pending = 'pending-orders',
 }
 // Define a type for the slice state
 export interface BalanceDataInterface {

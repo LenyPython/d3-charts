@@ -1,11 +1,11 @@
-import { WSACTIONS } from '../LoginData/types'
+import { INSTRUMENTS_ACTIONS } from './types'
 
 export const downloadChartData = (
   symbol: string,
 ): {
-  type: WSACTIONS
+  type: INSTRUMENTS_ACTIONS
   payload: string
 } => ({
-  type: WSACTIONS.downloadChartData,
+  type: INSTRUMENTS_ACTIONS.downloadChartData,
   payload: symbol,
 })
