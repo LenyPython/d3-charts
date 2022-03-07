@@ -1,58 +1,70 @@
-import {streamHandlersInterface} from "../../types"
-import {PriceData} from "../../types/PriceDataTypes"
-import {APIResponse, LoginCredentials} from "../../types/RequestResponseTypes"
-import {WSACTIONS} from "../types"
+import { PriceData } from '../../store/OpenedInstruments/types'
+import { streamHandlersInterface } from '../../types'
+import { APIResponse, LoginCredentials } from '../../types/RequestResponseTypes'
+import { WSACTIONS } from '../types'
 
-export const WebSocketConnect = (payload: LoginCredentials): {
-	type: WSACTIONS
-	payload: LoginCredentials
+export const WebSocketConnect = (
+  payload: LoginCredentials,
+): {
+  type: WSACTIONS
+  payload: LoginCredentials
 } => ({
-	type: WSACTIONS.connect,
-	payload
+  type: WSACTIONS.connect,
+  payload,
 })
 
-export const WebSocketDisconnect = (): { 
-	type: WSACTIONS
-} => ({	
-	type: WSACTIONS.disconnect
-})
-
-export const WebSocketStreamConnect = (payload: streamHandlersInterface): { 
-	type: WSACTIONS
-	payload: streamHandlersInterface
-} => ({	
-	type: WSACTIONS.connectStream,
-	payload
-})
-
-export const getAccountData = (ws: WebSocket): {
-	type: WSACTIONS
-	payload: WebSocket
+export const WebSocketDisconnect = (): {
+  type: WSACTIONS
 } => ({
-	type: WSACTIONS.getAccountData,
-	payload: ws
+  type: WSACTIONS.disconnect,
 })
 
-export const getChartData = (symbol: string): {
-	type: WSACTIONS
-	payload: string
+export const WebSocketStreamConnect = (
+  payload: streamHandlersInterface,
+): {
+  type: WSACTIONS
+  payload: streamHandlersInterface
 } => ({
-	type: WSACTIONS.getChartData,
-	payload: symbol
+  type: WSACTIONS.connectStream,
+  payload,
 })
 
-export const saveChartData = (data: PriceData[]): {
-	type: WSACTIONS
-	payload: PriceData[]
+export const getAccountData = (
+  ws: WebSocket,
+): {
+  type: WSACTIONS
+  payload: WebSocket
 } => ({
-	type: WSACTIONS.saveChartData,
-	payload: data
+  type: WSACTIONS.getAccountData,
+  payload: ws,
 })
 
-export const passAccountData = (data: APIResponse): {
-	type: WSACTIONS
-	payload: APIResponse
+export const getChartData = (
+  symbol: string,
+): {
+  type: WSACTIONS
+  payload: string
 } => ({
-	type: WSACTIONS.passAccountData,
-	payload: data
+  type: WSACTIONS.getChartData,
+  payload: symbol,
+})
+
+export const saveChartData = (
+  data: PriceData[],
+): {
+  type: WSACTIONS
+  payload: PriceData[]
+} => ({
+  type: WSACTIONS.saveChartData,
+  payload: data,
+})
+
+export const passAccountData = (
+  data: APIResponse,
+): {
+  type: WSACTIONS
+  payload: APIResponse
+} => ({
+  type: WSACTIONS.passAccountData,
+  payload: data,
 })

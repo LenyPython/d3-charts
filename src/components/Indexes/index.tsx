@@ -1,6 +1,6 @@
-import {useState} from 'react'
-import {useAppSelector} from '../../app/hooks'
-import {getIndexes} from '../../slices/Indexes'
+import { useState } from 'react'
+import { useAppSelector } from '../../app/hooks'
+import { getIndexes } from '../../store/OpenedInstruments/selectors'
 import CategoryGroup from '../CategoryGroups'
 import './indexes.css'
 
@@ -17,17 +17,22 @@ const Indexes = () => {
   }
 
   return (
-    <div id="indexes" 
-      className={isOpen?'open':'closed'}
-      onClick={()=>!isOpen&&setIsOpen(true)}>
-        <button onClick={()=>setIsOpen(false)}>close</button>
-        <select value={category} onChange={handleChange} >
-        {GroupNames.map((item: string)=><option key={item} value={item}>{item}</option>)}
-        </select>
-        <CategoryGroup category={category} />
-      </div>
+    <div
+      id="indexes"
+      className={isOpen ? 'open' : 'closed'}
+      onClick={() => !isOpen && setIsOpen(true)}
+    >
+      <button onClick={() => setIsOpen(false)}>close</button>
+      <select value={category} onChange={handleChange}>
+        {GroupNames.map((item: string) => (
+          <option key={item} value={item}>
+            {item}
+          </option>
+        ))}
+      </select>
+      <CategoryGroup category={category} />
+    </div>
   )
 }
-
 
 export default Indexes

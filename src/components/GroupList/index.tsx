@@ -1,13 +1,13 @@
 import './GroupList.css'
-import {useState} from "react"
-import {instrumentInfo} from "../../types/PriceDataTypes"
-import {getChartData} from '../../sagas/actions'
-import {useAppDispatch} from "../../app/hooks"
+import { useState } from 'react'
+import { getChartData } from '../../sagas/actions'
+import { useAppDispatch } from '../../app/hooks'
+import { instrumentInfo } from '../../store/OpenedInstruments/types'
 
-const GroupList: React.FC<{ 
-  title: string,
-  group: instrumentInfo[] 
-}> = ({title, group}) => {
+const GroupList: React.FC<{
+  title: string
+  group: instrumentInfo[]
+}> = ({ title, group }) => {
   const dispatch = useAppDispatch()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -15,18 +15,16 @@ const GroupList: React.FC<{
 
   return (
     <div className="group-list">
-      <h4 onClick={()=>setIsOpen(!isOpen)}>{title}</h4>
-        <div className={isOpen?"open":"closed"}>
-          {group?.map(instr=><p 
-          key={instr.symbol}
-          onClick={()=>switchInsturment(instr.symbol)}
-          >
-          {instr.symbol}
-          </p>)}
-        </div>
+      <h4 onClick={() => setIsOpen(!isOpen)}>{title}</h4>
+      <div className={isOpen ? 'open' : 'closed'}>
+        {group?.map((instr) => (
+          <p key={instr.symbol} onClick={() => switchInsturment(instr.symbol)}>
+            {instr.symbol}
+          </p>
+        ))}
       </div>
+    </div>
   )
 }
-
 
 export default GroupList
