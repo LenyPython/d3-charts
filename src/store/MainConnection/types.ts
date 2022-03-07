@@ -4,7 +4,6 @@ import { instrumentCategory, PriceData } from '../../store/OpenedInstruments/typ
 export enum MAIN_SOCKET_ACTION {
   saveChartData = 'save-chart-data',
   getAccountData = 'get-account-data',
-  passAccountData = 'pass-account-data',
   checkMainSocketResponse = 'check-response-type',
   connectStream = 'Websocket-stream-connect',
 }

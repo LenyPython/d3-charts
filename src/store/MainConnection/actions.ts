@@ -32,6 +32,6 @@ export const sendResponseToTypeCheck = (
   type: MAIN_SOCKET_ACTION
   payload: APIResponse
 } => ({
-  type: MAIN_SOCKET_ACTION.passAccountData,
+  type: MAIN_SOCKET_ACTION.checkMainSocketResponse,
   payload: data,
 })
