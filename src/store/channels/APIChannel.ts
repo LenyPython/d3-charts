@@ -25,9 +25,6 @@ const createWebSocketAPIChannel = (socket: WebSocket, { userId, password }: Logi
     socket.onclose = closeHandler
     socket.onopen = () => {
       pingAlive(socket)
-      //should emit action to saga which will download specific data
-      //in order, async actions to recive acc data
-
       //create login command/credentials and send login request
       const msg = LoginCommand(userId, password, appName)
       send(socket, msg)
@@ -35,6 +32,7 @@ const createWebSocketAPIChannel = (socket: WebSocket, { userId, password }: Logi
     socket.onmessage = (event: MessageEvent<any>) => {
       try {
         const response = JSON.parse(event.data)
+        //send response to main saga for type checks
         handleResponse(socket, emit, response)
       } catch (e) {
         if (e instanceof Error) emit(addLog(`[Main Msg Error]: ${e.message}`))

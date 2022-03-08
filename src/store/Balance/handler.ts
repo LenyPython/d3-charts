@@ -1,18 +1,14 @@
-import { Emmiter, StreamHandlersInterface, StreamResponse } from '../../types'
+import { Emmiter, StreamHandlersInterface, wsResponse } from '../../types'
 import { setBalance } from '../../store/Balance/slice'
 import { SubscribeBalance } from './commands'
 import { BalanceResponse } from './types'
 import { STREAM_ANSWERS } from '../../commands'
 
-const isBalance = (data: StreamResponse): data is BalanceResponse => {
-  return (
-    (data as BalanceResponse).command === STREAM_ANSWERS.balance &&
-    (data as BalanceResponse).data !== undefined
-  )
+const isBalance = (data: wsResponse): data is BalanceResponse => {
+  return data.command === STREAM_ANSWERS.balance && data.data !== undefined
 }
-const handleBalanceStream = (emit: Emmiter, response: StreamResponse) => {
-  console.log('BalanceHandler', response)
-
+const handleBalanceStream = (emit: Emmiter, res: string) => {
+  const response = JSON.parse(res)
   if (isBalance(response)) emit(setBalance(response.data))
 }
 

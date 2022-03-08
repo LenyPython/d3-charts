@@ -1,17 +1,17 @@
 import { STREAM_ANSWERS, API_COMMANDS, STREAM_COMMANDS } from '../commands'
-import { BalanceResponse } from '../store/Balance/types'
+import { UserBalance } from '../store/Balance/types'
 import { instrumentCategory, PriceData } from '../store/OpenedInstruments/types'
 import { TradeInterface } from '../store/UserTrades/types'
 export type Emmiter = (input: unknown) => void
 
 //try to find a way to change ant type to correct typing
-export type ResponseHandler = (emit: Emmiter, data: StreamResponse) => void
+export type ResponseHandler = (emit: Emmiter, data: string) => void
 export type RequestCreator = (sessionId: string) => wsRequest
 export type instrumentsResponse = instrumentCategory[]
 
 export type APIResponse = instrumentsResponse | PriceDataResponse
 
-export type StreamResponse = TradeInterface[] | BalanceResponse
+export type StreamResponse = TradeInterface | UserBalance
 
 export interface PriceDataResponse {
   digits: number

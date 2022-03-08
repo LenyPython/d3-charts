@@ -1,3 +1,5 @@
+import { STREAM_ANSWERS } from '../../commands'
+
 export enum TRADES_ACTIONS {}
 
 // Define a type for the slice state
@@ -22,4 +24,9 @@ export interface TradeInterface {
   tp: number
   type: number
   symbol: string
+}
+
+export interface TradesResponse {
+  command: STREAM_ANSWERS
+  data: TradeInterface
 }

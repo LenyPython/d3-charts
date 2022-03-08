@@ -1,22 +1,23 @@
-import { Emmiter, StreamHandlersInterface, StreamResponse } from '../../types'
-import { setTrades } from './slice'
-import { TradeInterface } from '../Balance/types'
-//import { SubscribeToTradesStream } from './commands'
+import { Emmiter, StreamHandlersInterface, wsResponse } from '../../types'
+import { setTrade } from './slice'
+import { STREAM_ANSWERS } from '../../commands'
+import { TradesResponse } from './types'
+import { SubscribeUserTrades } from './commands'
 
-const isTrade = (data: StreamResponse): data is TradeInterface[] => {
-  return (
-    (data as TradeInterface[])[0].cmd !== undefined &&
-    (data as TradeInterface[])[0].open_time !== undefined
-  )
+const isTrade = (res: wsResponse): res is TradesResponse => {
+  return res.command === STREAM_ANSWERS.trades && res.data !== undefined
 }
 
-const handleUserTradesStream = (emit: Emmiter, data: StreamResponse) => {
-  console.log('TradesHandler', data)
-  if (isTrade(data)) emit(setTrades(data))
+const handleUserTradesStream = (emit: Emmiter, res: string) => {
+  const response = JSON.parse(res)
+  if (isTrade(response)) emit(setTrade(response.data))
+}
+const openHandler = (sessionId: string) => {
+  return SubscribeUserTrades(sessionId)
 }
 
 export const UserTradesHandlers: StreamHandlersInterface = {
-  //openHandler: SubscribeToTradesStream,
+  openHandler,
   messageHandler: handleUserTradesStream,
   title: 'Trades stream',
   errorMsg: 'error on reciving trades data',

@@ -5,7 +5,7 @@ import { setSessionId } from '../LoginData/slice'
 import { saveChartDataWorker } from '../OpenedInstruments/saga'
 import { setIndexes } from '../OpenedInstruments/slice'
 import { instrumentCategory } from '../OpenedInstruments/types'
-import { ConnectWebsocketAccountStream } from './actions'
+import { ConnectWebsockets } from './actions'
 import { DownloadAllSymbols } from './commands'
 import { MAIN_SOCKET_ACTION, RequiredConncectionData } from './types'
 import { APIResponse } from '../../types'
@@ -24,8 +24,8 @@ function* EstablishMainConnectionSaga(action: Effect<MAIN_SOCKET_ACTION, Require
   yield put(setSessionId(sessionId))
   //send request for all indexes
   yield call(send, socket, DownloadAllSymbols())
-  //subscribe to balance and trade streaming data
-  yield put(ConnectWebsocketAccountStream())
+  //open all websockets
+  yield put(ConnectWebsockets())
 }
 export default function* MainSocketWatcherSaga() {
   //onopen get indexes worker

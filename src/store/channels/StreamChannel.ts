@@ -29,12 +29,14 @@ const createWebSocketSTREAMChannel = (
     socket.onclose = closeHandler
     socket.onopen = () => {
       pingAlive(socket)
-      //on open i should emit action which will start subscription
-      //to specific types of data
       let msg = KEEP_ALIVE(sessionId)
       send(socket, msg)
+      //on open i should emit action which will start subscription
+      //to specific types of data
+      //i could start a saga on opening
       if (openHandler) {
         msg = openHandler(sessionId)
+        console.log(msg)
         send(socket, msg)
       }
     }

@@ -11,19 +11,19 @@ export const EstablishMainConnection = (
   type: MAIN_SOCKET_ACTION.establishMainConnection,
   payload,
 })
-export const ConnectWebsocketAccountStream = (): {
+export const ConnectWebsockets = (): {
   type: MAIN_SOCKET_ACTION
 } => ({
   type: MAIN_SOCKET_ACTION.connectStream,
 })
 export const getAccountData = (
-  ws: WebSocket,
+  socket: WebSocket,
 ): {
   type: MAIN_SOCKET_ACTION
   payload: WebSocket
 } => ({
   type: MAIN_SOCKET_ACTION.getAccountData,
-  payload: ws,
+  payload: socket,
 })
 
 export const saveChartData = (

@@ -2,6 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { TradeInterface, UserTradesInterface } from './types'
 
 const reducers = {
+  setTrade: (state: UserTradesInterface, action: PayloadAction<TradeInterface>) => {},
   setTrades: (state: UserTradesInterface, action: PayloadAction<TradeInterface[]>) => {
     const trades = action.payload
     trades.forEach((trade: TradeInterface) => {
