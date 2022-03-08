@@ -1,9 +1,9 @@
-import { COMMAND, PERIOD } from '../../commands'
+import { API_COMMANDS, PERIOD } from '../../commands'
 import { wsRequest } from '../../types'
 import { JSONLogin, LoginCredentials } from './types'
 
 export const LoginCommand = (userId: string, password: string, appName?: string): JSONLogin => ({
-  command: COMMAND.login,
+  command: API_COMMANDS.login,
   arguments: {
     userId,
     password,
@@ -11,14 +11,14 @@ export const LoginCommand = (userId: string, password: string, appName?: string)
   } as LoginCredentials,
 })
 
-export const Disconnect = (): wsRequest => ({ command: COMMAND.logout })
+export const Disconnect = (): wsRequest => ({ command: API_COMMANDS.logout })
 
 //basic daily chart info
 export const DownloadChartDataCommands = (symbol: string): wsRequest[] => {
   let chartsRequests = [] as wsRequest[]
   for (let period in PERIOD) {
     chartsRequests.push({
-      command: COMMAND.getChartRangeRequest,
+      command: API_COMMANDS.getChartRangeRequest,
       arguments: {
         info: {
           period: PERIOD[period],

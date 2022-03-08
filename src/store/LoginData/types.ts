@@ -1,4 +1,4 @@
-import { COMMAND } from '../../commands'
+import { API_COMMANDS } from '../../commands'
 
 export enum USER_CONNECTION {
   connect = 'user-connect',
@@ -18,6 +18,6 @@ export type LoginCredentials = {
   appName?: string
 }
 export interface JSONLogin {
-  command: COMMAND
+  command: API_COMMANDS
   arguments: LoginCredentials
 }

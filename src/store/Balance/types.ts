@@ -1,3 +1,4 @@
+import { STREAM_ANSWERS } from '../../commands'
 export enum ORDER {
   open = 'open-trades',
   closed = 'closed-trades',
@@ -5,16 +6,21 @@ export enum ORDER {
 }
 // Define a type for the slice state
 export interface BalanceDataInterface {
-  balance: BalanceResponse
+  balance: UserBalance
 }
 
-export interface BalanceResponse {
+export interface UserBalance {
   balance: number
   equity: number
   equityFX: number
   margin: number
   marginFree: number
   marginLevel: number
+}
+
+export interface BalanceResponse {
+  command: STREAM_ANSWERS.balance
+  data: UserBalance
 }
 
 export interface TradeInterface {

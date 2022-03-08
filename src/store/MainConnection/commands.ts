@@ -1,18 +1,18 @@
-import { COMMAND } from '../../commands'
+import { API_COMMANDS, STREAM_COMMANDS } from '../../commands'
 import { wsRequest } from '../../types'
 
-export const DownloadAllSymbols = (): wsRequest => ({ command: COMMAND.getAllSymbols })
-export const PING = (): wsRequest => ({ command: COMMAND.ping })
+export const DownloadAllSymbols = (): wsRequest => ({ command: API_COMMANDS.getAllSymbols })
+export const PING = (): wsRequest => ({ command: API_COMMANDS.ping })
 export const PING_STREAM = (streamSessionId: string): wsRequest => ({
-  command: COMMAND.ping,
+  command: STREAM_COMMANDS.ping,
   streamSessionId,
 })
 export const KEEP_ALIVE = (streamSessionId: string): wsRequest => ({
-  command: COMMAND.getKeepAlive,
+  command: STREAM_COMMANDS.getKeepAlive,
   streamSessionId,
 })
 export const DownloadCandles = (streamSessionId: string, symbol: string): wsRequest => ({
-  command: COMMAND.getCandles,
+  command: STREAM_COMMANDS.getCandles,
   streamSessionId,
   symbol,
 })

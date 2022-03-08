@@ -1,8 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { BalanceResponse, BalanceDataInterface } from './types'
+import { BalanceDataInterface, UserBalance } from './types'
 
 const reducers = {
-  setBalance: (state: BalanceDataInterface, action: PayloadAction<BalanceResponse>) => {
+  setBalance: (state: BalanceDataInterface, action: PayloadAction<UserBalance>) => {
     state.balance = action.payload
   },
 }
