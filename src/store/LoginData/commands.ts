@@ -1,5 +1,5 @@
 import { COMMAND, PERIOD } from '../../commands'
-import { wsRequest } from '../MainConnection/types'
+import { wsRequest } from '../../types'
 import { JSONLogin, LoginCredentials } from './types'
 
 export const LoginCommand = (userId: string, password: string, appName?: string): JSONLogin => ({

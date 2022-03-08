@@ -9,12 +9,12 @@ const initialState: ConnectionData = {
   password: process.env.REACT_APP_PASS || '',
 }
 
-export const UserConnection = createSlice({
-  name: 'ConnectionData',
+export const LoginData = createSlice({
+  name: 'LoginData',
   initialState,
   reducers,
 })
 
-export const { setSessionId, setUserId, setPassword } = UserConnection.actions
+export const { setSessionId, setUserId, setPassword } = LoginData.actions
 
-export default UserConnection.reducer
+export default LoginData.reducer

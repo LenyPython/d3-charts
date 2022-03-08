@@ -1,7 +1,17 @@
 import { PriceData } from '../OpenedInstruments/types'
-import { APIResponse, MAIN_SOCKET_ACTION } from './types'
+import { RequiredConncectionData, MAIN_SOCKET_ACTION } from './types'
+import { APIResponse } from '../../types'
 
-export const WebSocketAccountStreamConnect = (): {
+export const EstablishMainConnection = (
+  payload: RequiredConncectionData,
+): {
+  type: MAIN_SOCKET_ACTION
+  payload: RequiredConncectionData
+} => ({
+  type: MAIN_SOCKET_ACTION.establishMainConnection,
+  payload,
+})
+export const ConnectWebsocketAccountStream = (): {
   type: MAIN_SOCKET_ACTION
 } => ({
   type: MAIN_SOCKET_ACTION.connectStream,

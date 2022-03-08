@@ -8,10 +8,10 @@ import { PING_STREAM, KEEP_ALIVE } from '../MainConnection/commands'
 const createWebSocketSTREAMChannel = (
   socket: WebSocket,
   sessionId: string,
-  openHandler: RequestCreator,
   streamHandler: ResponseHandler,
   errorMessage = '[STREAM Error]: error occured',
   title = '[STREAM]',
+  openHandler?: RequestCreator,
 ) => {
   return eventChannel((emit) => {
     const errorHandler = (e: Event) => emit(addLog(`[${title}]: ${errorMessage}`))
@@ -31,10 +31,12 @@ const createWebSocketSTREAMChannel = (
       pingAlive(socket)
       //on open i should emit action which will start subscription
       //to specific types of data
-      let msg = openHandler(sessionId)
+      let msg = KEEP_ALIVE(sessionId)
       send(socket, msg)
-      msg = KEEP_ALIVE(sessionId)
-      send(socket, msg)
+      if (openHandler) {
+        msg = openHandler(sessionId)
+        send(socket, msg)
+      }
     }
     socket.onmessage = (event: MessageEvent<any>) => {
       try {

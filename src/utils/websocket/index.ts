@@ -1,9 +1,6 @@
-import handleResponse from './mainSessionHandler'
-import { balanceStreamHandlers } from './balanceHandler'
-import { wsRequest } from '../../store/MainConnection/types'
+import { wsRequest } from '../../types'
 
 export const send = (ws: WebSocket, msg: wsRequest): void => {
+  console.log(msg)
   ws.send(JSON.stringify(msg))
 }
-
-export { handleResponse, balanceStreamHandlers }
