@@ -1,5 +1,4 @@
 import './LoginForm.css'
-import { Dispatch, SetStateAction } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { LoginUser } from '../../store/LoginData/actions'
 import { getPassword, getUserId } from '../../store/LoginData/selectors'
