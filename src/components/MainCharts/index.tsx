@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { getMainChartData } from '../../store/OpenedInstruments/selectors'
 
 const MainCharts = () => {
-  const [symbol, setSymbol] = useState('random')
+  const [symbol, setSymbol] = useState('EURUSD')
   const mainChartData = useAppSelector(getMainChartData)
   return (
     <div id="main-charts">

@@ -16,6 +16,7 @@ export const OpenedInstruments = createSlice({
   reducers,
 })
 
-export const { setIndexes, setMainChartData, addChartDataTab } = OpenedInstruments.actions
+export const { resetChartDataTab, setIndexes, setMainChartData, addChartDataTab } =
+  OpenedInstruments.actions
 
 export default OpenedInstruments.reducer

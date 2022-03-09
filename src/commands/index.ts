@@ -3,6 +3,7 @@ export enum API_COMMANDS {
   logout = 'logout',
   getAllSymbols = 'getAllSymbols',
   getTrades = 'getTrades',
+  getTradesHistory = 'getTradesHistory',
   getChartRangeRequest = 'getChartRangeRequest',
   ping = 'ping',
 }

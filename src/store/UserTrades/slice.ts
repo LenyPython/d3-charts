@@ -15,6 +15,6 @@ const UserTrades = createSlice({
   reducers,
 })
 
-export const { setTrade, setTrades } = UserTrades.actions
+export const { setTrade, setOpenTrades, setClosedTrades } = UserTrades.actions
 
 export default UserTrades.reducer

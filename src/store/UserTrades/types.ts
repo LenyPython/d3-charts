@@ -27,9 +27,14 @@ export interface TradeInterface {
   symbol: string
   volume: number
 }
-export const isUserTradesResponse = (data: APIResponse): data is TradeInterface[] => {
+export const isUserTradesResponse = (
+  data: APIResponse,
+  tradeStatus: 'open' | 'closed',
+): data is TradeInterface[] => {
+  const status = tradeStatus === 'open' ? false : true
   return (
     Array.isArray(data) &&
+    (data[0] as TradeInterface).closed === status &&
     (data[0] as TradeInterface).order !== undefined &&
     (data[0] as TradeInterface).volume !== undefined
   )

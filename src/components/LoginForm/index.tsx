@@ -5,9 +5,7 @@ import { LoginUser } from '../../store/LoginData/actions'
 import { getPassword, getUserId } from '../../store/LoginData/selectors'
 import { setPassword, setUserId } from '../../store/LoginData/slice'
 
-const LoginForm: React.FC<{
-  setIsOpen: Dispatch<SetStateAction<boolean>>
-}> = ({ setIsOpen }) => {
+const LoginForm = () => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(getUserId)
   const password = useAppSelector(getPassword)
@@ -15,7 +13,6 @@ const LoginForm: React.FC<{
   const login = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     dispatch(LoginUser())
-    setIsOpen(false)
   }
   const handleChangeUserId = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setUserId(e.target.value))
@@ -51,9 +48,6 @@ const LoginForm: React.FC<{
           HERE
         </a>
       </p>
-      <button className="close-btn" onClick={() => setIsOpen(false)}>
-        Close
-      </button>
     </div>
   )
 }

@@ -5,7 +5,14 @@ export const DownloadAllSymbols = (): wsRequest => ({ command: API_COMMANDS.getA
 export const GetTrades = (): wsRequest => ({
   command: API_COMMANDS.getTrades,
   arguments: {
-    openedOnly: false,
+    openedOnly: true,
+  },
+})
+export const GetTradesHistory = (): wsRequest => ({
+  command: API_COMMANDS.getTradesHistory,
+  arguments: {
+    end: 0,
+    start: 0,
   },
 })
 export const PING = (): wsRequest => ({ command: API_COMMANDS.ping })

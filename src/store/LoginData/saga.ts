@@ -6,6 +6,7 @@ import { addLog } from '../../store/Logger/slice'
 import { setSessionId } from '../../store/LoginData/slice'
 import { createWebSocketAPIChannel } from '../channels'
 import { getPassword, getUserId } from './selectors'
+import { resetChartDataTab } from '../OpenedInstruments/slice'
 
 export let WS: WebSocket | null = null
 const URL = process.env.REACT_APP_SOCKET_URL
@@ -35,6 +36,7 @@ export function* WebSocketAPIWatcher() {
 
 export function* WebSocketDisconnectWorker() {
   yield call(send, WS!, Disconnect())
+  yield put(resetChartDataTab())
   yield put(setSessionId(''))
 }
 export default function* ConnectUserWatcherSaga() {

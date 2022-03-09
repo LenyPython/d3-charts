@@ -16,6 +16,9 @@ const reducers = {
     const { symbol, data } = action.payload
     state.openedChartsTabs[symbol] = data
   },
+  resetChartDataTab: (state: OpenedInstrumentsInterface) => {
+    state.openedChartsTabs = {}
+  },
 }
 
 export default reducers
