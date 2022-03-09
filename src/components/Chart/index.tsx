@@ -1,7 +1,7 @@
 import './chart.css'
 import { useRef } from 'react'
 import { useDrawCandleStickChart } from './hooks'
-import { PriceData } from '../../store/OpenedInstruments/types'
+import { PriceData } from '../../types'
 
 const Chart: React.FC<{
   data: PriceData[]

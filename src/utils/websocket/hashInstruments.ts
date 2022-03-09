@@ -1,6 +1,7 @@
-import { HashedInstruments, instrumentCategory } from '../../store/OpenedInstruments/types'
+import { IndexInterface } from '../../store/MainConnection/types'
+import { HashedInstruments } from '../../store/OpenedInstruments/types'
 
-export const hashInstruments = (data: instrumentCategory[]) => {
+export const hashInstruments = (data: IndexInterface[]) => {
   let instruments = {} as HashedInstruments
   for (let instrument of data) {
     const { categoryName, groupName, swapLong, swapShort, symbol } = instrument

@@ -1,14 +1,14 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { WebSocketDisconnect } from '../../sagas/actions'
-import { getSessionId } from '../../store/LoginData/selectors'
+import { LogoutUser } from '../../store/LoginData/actions'
+import { getUserId } from '../../store/LoginData/selectors'
 
 const Statusbar = () => {
   const dispatch = useAppDispatch()
-  const sessionId = useAppSelector(getSessionId)
-  const logout = () => dispatch(WebSocketDisconnect())
+  const UserID = useAppSelector(getUserId)
+  const logout = () => dispatch(LogoutUser())
   return (
     <>
-      <div>SessionID: {sessionId}</div>
+      <div>UserID: {UserID}</div>
       <button onClick={logout}>Logout</button>
     </>
   )

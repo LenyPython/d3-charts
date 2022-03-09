@@ -1,7 +1,8 @@
 #login-form {
   position: fixed;
-  inset: 5% 5% 5% 5%;
-  background: rgba(5, 0, 0, 0.7);
+  inset: 0;
+  z-index: 9999;
+  animation: color 20s infinite reverse;
 }
 #login-form form {
   padding: 5em;
@@ -22,6 +23,26 @@
   text-decoration: none;
 }
 
+@keyframes color {
+  0% {
+    background-color: rgba(15, 0, 0, 0.9);
+  }
+  20% {
+    background-color: rgba(15, 15, 0, 0.9);
+  }
+  40% {
+    background-color: rgba(0, 15, 0, 0.9);
+  }
+  60% {
+    background-color: rgba(0, 15, 15, 0.9);
+  }
+  80% {
+    background-color: rgba(3, 0, 15, 0.9);
+  }
+  100% {
+    background-color: rgba(15, 0, 13, 0.9);
+  }
+}
 button {
   font-size: 1.4rem;
   padding: 0.3em 1em;

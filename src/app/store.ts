@@ -5,6 +5,7 @@ import BalanceReducer from '../store/Balance/slice'
 import LoginDataReducer from '../store/LoginData/slice'
 import OpenedInstrumentsReducer from '../store/OpenedInstruments/slice'
 import LoggerReducer from '../store/Logger/slice'
+import UserTradesReducer from '../store/UserTrades/slice'
 
 const sagaMiddleaware = createSagaMiddleware()
 
@@ -12,6 +13,7 @@ export const store = configureStore({
   reducer: {
     LoginData: LoginDataReducer,
     Balance: BalanceReducer,
+    UserTrades: UserTradesReducer,
     OpenedInstruments: OpenedInstrumentsReducer,
     Logger: LoggerReducer,
   },

@@ -1,17 +1,17 @@
 import { eventChannel } from 'redux-saga'
-import { KeepAlive, PING_STREAM } from '../../commands/commands'
 import { send } from '../../utils/websocket'
 import { RequestCreator } from '../../types'
 import { ResponseHandler } from '../../types'
 import { addLog } from '../../store/Logger/slice'
+import { PING_STREAM, KEEP_ALIVE } from '../MainConnection/commands'
 
 const createWebSocketSTREAMChannel = (
   socket: WebSocket,
   sessionId: string,
-  openHandler: RequestCreator,
-  streamHandler: ResponseHandler,
+  messageHandler: ResponseHandler,
   errorMessage = '[STREAM Error]: error occured',
   title = '[STREAM]',
+  openHandler?: RequestCreator,
 ) => {
   return eventChannel((emit) => {
     const errorHandler = (e: Event) => emit(addLog(`[${title}]: ${errorMessage}`))
@@ -29,16 +29,20 @@ const createWebSocketSTREAMChannel = (
     socket.onclose = closeHandler
     socket.onopen = () => {
       pingAlive(socket)
+      let msg = KEEP_ALIVE(sessionId)
+      send(socket, msg)
       //on open i should emit action which will start subscription
       //to specific types of data
-      let msg = openHandler(sessionId)
-      send(socket, msg)
-      msg = KeepAlive(sessionId)
-      send(socket, msg)
+      //i could start a saga on opening
+      if (openHandler) {
+        msg = openHandler(sessionId)
+        send(socket, msg)
+      }
     }
     socket.onmessage = (event: MessageEvent<any>) => {
+      const response = JSON.parse(event.data)
       try {
-        streamHandler(emit, event.data)
+        messageHandler(emit, response)
       } catch (e) {
         if (e instanceof Error) emit(addLog(`[STREAM Msg Error]: ${e.message}`))
       }
