@@ -8,7 +8,7 @@ import { PING_STREAM, KEEP_ALIVE } from '../MainConnection/commands'
 const createWebSocketSTREAMChannel = (
   socket: WebSocket,
   sessionId: string,
-  streamHandler: ResponseHandler,
+  messageHandler: ResponseHandler,
   errorMessage = '[STREAM Error]: error occured',
   title = '[STREAM]',
   openHandler?: RequestCreator,
@@ -36,13 +36,13 @@ const createWebSocketSTREAMChannel = (
       //i could start a saga on opening
       if (openHandler) {
         msg = openHandler(sessionId)
-        console.log(msg)
         send(socket, msg)
       }
     }
     socket.onmessage = (event: MessageEvent<any>) => {
+      const response = JSON.parse(event.data)
       try {
-        streamHandler(emit, event.data)
+        messageHandler(emit, response)
       } catch (e) {
         if (e instanceof Error) emit(addLog(`[STREAM Msg Error]: ${e.message}`))
       }

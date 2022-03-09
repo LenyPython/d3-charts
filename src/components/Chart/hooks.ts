@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import { RefObject, useLayoutEffect } from 'react'
-import { PriceData } from '../../store/OpenedInstruments/types'
+import { PriceData } from '../../types'
 
 export const useDrawCandleStickChart = (
   chartRef: RefObject<SVGSVGElement>,

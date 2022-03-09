@@ -2,6 +2,7 @@ export enum API_COMMANDS {
   login = 'login',
   logout = 'logout',
   getAllSymbols = 'getAllSymbols',
+  getTrades = 'getTrades',
   getChartRangeRequest = 'getChartRangeRequest',
   ping = 'ping',
 }

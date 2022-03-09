@@ -1,10 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import {
-  ChartsDataPayload,
-  HashedInstruments,
-  OpenedInstrumentsInterface,
-  PriceData,
-} from './types'
+import { PriceData } from '../../types'
+import { ChartsDataPayload, HashedInstruments, OpenedInstrumentsInterface } from './types'
 
 const reducers = {
   setIndexes: (state: OpenedInstrumentsInterface, action: PayloadAction<HashedInstruments>) => {

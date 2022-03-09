@@ -2,11 +2,11 @@ import './GroupList.css'
 import { useState } from 'react'
 import { downloadChartData } from '../../store/OpenedInstruments/actions'
 import { useAppDispatch } from '../../app/hooks'
-import { instrumentInfo } from '../../store/OpenedInstruments/types'
+import { HashedInstrument } from '../../store/OpenedInstruments/types'
 
 const GroupList: React.FC<{
   title: string
-  group: instrumentInfo[]
+  group: HashedInstrument[]
 }> = ({ title, group }) => {
   const dispatch = useAppDispatch()
   const [isOpen, setIsOpen] = useState(false)

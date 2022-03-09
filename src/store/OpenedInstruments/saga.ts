@@ -1,12 +1,12 @@
 import { Effect, put, delay, call, take, takeLeading } from 'redux-saga/effects'
+import { PriceData } from '../../types'
 import { send } from '../../utils/websocket'
 import { DownloadChartDataCommands } from '../LoginData/commands'
 import { WS } from '../LoginData/saga'
 import { saveChartData } from '../MainConnection/actions'
-import { MAIN_SOCKET_ACTION } from '../MainConnection/types'
-import { PriceDataResponse } from '../../types'
+import { MAIN_SOCKET_ACTION, PriceDataResponse } from '../MainConnection/types'
 import { addChartDataTab } from './slice'
-import { INSTRUMENTS_ACTIONS, PriceData, SmallChartsData } from './types'
+import { INSTRUMENTS_ACTIONS, SmallChartsData } from './types'
 
 export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, string>) {
   const symbol = action.payload

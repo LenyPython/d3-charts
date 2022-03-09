@@ -7,8 +7,7 @@ import { STREAM_ANSWERS } from '../../commands'
 const isBalance = (data: wsResponse): data is BalanceResponse => {
   return data.command === STREAM_ANSWERS.balance && data.data !== undefined
 }
-const handleBalanceStream = (emit: Emmiter, res: string) => {
-  const response = JSON.parse(res)
+const handleBalanceStream = (emit: Emmiter, response: wsResponse) => {
   if (isBalance(response)) emit(setBalance(response.data))
 }
 

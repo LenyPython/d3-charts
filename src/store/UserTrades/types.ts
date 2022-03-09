@@ -1,4 +1,5 @@
 import { STREAM_ANSWERS } from '../../commands'
+import { APIResponse } from '../../types'
 
 export enum TRADES_ACTIONS {}
 
@@ -24,9 +25,17 @@ export interface TradeInterface {
   tp: number
   type: number
   symbol: string
+  volume: number
+}
+export const isUserTradesResponse = (data: APIResponse): data is TradeInterface[] => {
+  return (
+    Array.isArray(data) &&
+    (data[0] as TradeInterface).order !== undefined &&
+    (data[0] as TradeInterface).volume !== undefined
+  )
 }
 
-export interface TradesResponse {
+export interface TradeResponse {
   command: STREAM_ANSWERS
   data: TradeInterface
 }

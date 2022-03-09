@@ -1,6 +1,7 @@
 import reducers from './reducers'
 import { createSlice } from '@reduxjs/toolkit'
-import { HashedInstruments, OpenedInstrumentsInterface, PriceData } from './types'
+import { HashedInstruments, OpenedInstrumentsInterface } from './types'
+import { PriceData } from '../../types'
 
 // Define the initial state using that type
 const initialState: OpenedInstrumentsInterface = {

@@ -3,7 +3,7 @@ import Chart from '../Chart'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { getChartsData } from '../../store/OpenedInstruments/selectors'
 import { setMainChartData } from '../../store/OpenedInstruments/slice'
-import { PriceData } from '../../store/OpenedInstruments/types'
+import { PriceData } from '../../types'
 
 const ChartsList: React.FC<{ symbol: string }> = ({ symbol }) => {
   const dispatch = useAppDispatch()

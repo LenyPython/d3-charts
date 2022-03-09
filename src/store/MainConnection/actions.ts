@@ -1,6 +1,5 @@
-import { PriceData } from '../OpenedInstruments/types'
 import { RequiredConncectionData, MAIN_SOCKET_ACTION } from './types'
-import { APIResponse } from '../../types'
+import { APIResponse, PriceData } from '../../types'
 
 export const EstablishMainConnection = (
   payload: RequiredConncectionData,
