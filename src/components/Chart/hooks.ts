@@ -21,5 +21,5 @@ export const useDrawCandleStickChart = (
     const { xScale, yScale } = drawAxis(SVG, data, SvgHeight, SvgWidth)
     drawCandlesticks(SVG, data, xScale, yScale, { downColor, upColor })
     drawTitle(SVG, symbol)
-  }, [data, downColor, upColor, chartRef])
+  }, [data, symbol, downColor, upColor, chartRef])
 }
