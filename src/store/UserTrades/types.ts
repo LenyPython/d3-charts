@@ -34,6 +34,7 @@ export const isUserTradesResponse = (
   const status = tradeStatus === 'open' ? false : true
   return (
     Array.isArray(data) &&
+    data?.length > 0 &&
     (data[0] as TradeInterface).closed === status &&
     (data[0] as TradeInterface).order !== undefined &&
     (data[0] as TradeInterface).volume !== undefined

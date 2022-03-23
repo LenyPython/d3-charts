@@ -5,14 +5,15 @@ import { PriceData } from '../../types'
 
 const Chart: React.FC<{
   data: PriceData[]
+  symbol: string
   limit?: number
   onClick?: (data: PriceData[]) => void
-}> = ({ data, limit, onClick }) => {
+}> = ({ data, limit, symbol, onClick }) => {
   let croped = data
   if (limit) croped = data?.slice(-limit)
 
   const chartRef = useRef<SVGSVGElement>(null!)
-  useDrawCandleStickChart(chartRef, croped)
+  useDrawCandleStickChart(chartRef, symbol, croped)
 
   return (
     <div className={`chart ${limit ? 'small' : ''}`} onClick={() => onClick?.(data)}>

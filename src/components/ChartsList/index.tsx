@@ -11,7 +11,9 @@ const ChartsList: React.FC<{ symbol: string }> = ({ symbol }) => {
   const setChart = (data: PriceData[]) => dispatch(setMainChartData(data))
   const charts = [] as JSX.Element[]
   for (let key in Charts) {
-    charts.push(<Chart key={key} data={Charts[key]} onClick={setChart} limit={30} />)
+    charts.push(
+      <Chart key={symbol + key} data={Charts[key]} symbol={key} onClick={setChart} limit={30} />,
+    )
   }
 
   return <div id="chart-list">{charts}</div>
