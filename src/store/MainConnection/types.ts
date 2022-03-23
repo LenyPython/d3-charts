@@ -23,6 +23,7 @@ export interface IndexInterface {
 export const isGetAllSymbolsResponse = (data: APIResponse): data is IndexInterface[] => {
   return (
     Array.isArray(data) &&
+    data?.length > 0 &&
     (data[0] as IndexInterface).groupName !== undefined &&
     (data[1] as IndexInterface).categoryName !== undefined
   )
@@ -33,7 +34,7 @@ export interface PriceDataResponse {
 }
 export const isPriceDataResponse = (data: APIResponse): data is PriceDataResponse => {
   return (
-    (data as PriceDataResponse).digits !== undefined &&
+    (data as PriceDataResponse)?.digits !== undefined &&
     Array.isArray((data as PriceDataResponse).rateInfos)
   )
 }

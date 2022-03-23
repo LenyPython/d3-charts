@@ -1,4 +1,4 @@
-import { takeLeading, Effect, put, call, delay } from 'redux-saga/effects'
+import { takeLeading, takeEvery, Effect, put, call, delay } from 'redux-saga/effects'
 import { send } from '../../utils/websocket'
 import { hashInstruments } from '../../utils/websocket/hashInstruments'
 import { setSessionId } from '../LoginData/slice'
@@ -22,9 +22,9 @@ import { downloadChartData } from '../OpenedInstruments/actions'
 function* AccountDataDispatcher({ payload }: Effect<MAIN_SOCKET_ACTION, APIResponse>) {
   const returnData = payload
 
-  if (isGetAllSymbolsResponse(returnData))
+  if (isGetAllSymbolsResponse(returnData)) {
     yield put(setIndexes(hashInstruments(returnData as IndexInterface[])))
-  else if (isPriceDataResponse(returnData)) yield call(saveChartDataWorker, returnData)
+  } else if (isPriceDataResponse(returnData)) yield call(saveChartDataWorker, returnData)
   else if (isUserTradesResponse(returnData, 'open')) yield put(setOpenTrades(returnData))
   else if (isUserTradesResponse(returnData, 'closed')) yield put(setClosedTrades(returnData))
 }
@@ -45,6 +45,6 @@ function* EstablishMainConnectionSaga(action: Effect<MAIN_SOCKET_ACTION, Require
 }
 export default function* MainSocketWatcherSaga() {
   //onopen get indexes worker
-  yield takeLeading(MAIN_SOCKET_ACTION.checkMainSocketResponse, AccountDataDispatcher)
+  yield takeEvery(MAIN_SOCKET_ACTION.checkMainSocketResponse, AccountDataDispatcher)
   yield takeLeading(MAIN_SOCKET_ACTION.establishMainConnection, EstablishMainConnectionSaga)
 }
