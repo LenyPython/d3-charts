@@ -4,9 +4,9 @@ import reducers from './reducers'
 
 // Define the initial state using that type
 const initialState: UserTradesInterface = {
-  openTrades: [],
-  closedTrades: [],
-  pendingTrades: [],
+  openTrades: {},
+  closedTrades: {},
+  pendingTrades: {},
 }
 
 const UserTrades = createSlice({
@@ -15,6 +15,6 @@ const UserTrades = createSlice({
   reducers,
 })
 
-export const { setTrade, setOpenTrades, setClosedTrades } = UserTrades.actions
+export const { setTrade, setTrades } = UserTrades.actions
 
 export default UserTrades.reducer

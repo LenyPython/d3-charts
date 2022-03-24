@@ -1,4 +1,8 @@
 import { STREAM_ANSWERS } from '../../commands'
+
+export enum BALANCE {
+  connectStream = 'balance/connect-stream',
+}
 export enum ORDER {
   open = 'open-trades',
   closed = 'closed-trades',

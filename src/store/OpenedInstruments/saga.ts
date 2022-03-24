@@ -13,11 +13,11 @@ export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, stri
   //get array of charts requests
   const requests = DownloadChartDataCommands(symbol)
   let InstrumentData: SmallChartsData = {
-    Min15: [] as PriceData[],
-    Hour1: [] as PriceData[],
-    Hour4: [] as PriceData[],
+    Week: [] as PriceData[],
     Day: [] as PriceData[],
-    Month: [] as PriceData[],
+    Hour4: [] as PriceData[],
+    Hour1: [] as PriceData[],
+    Min15: [] as PriceData[],
   }
   if (WS !== null) {
     for (let request of requests) {
@@ -41,7 +41,7 @@ export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, stri
           InstrumentData.Day = prices
           break
         case 10080:
-          InstrumentData.Month = prices
+          InstrumentData.Week = prices
           break
       }
       //delay making request to API

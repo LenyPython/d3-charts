@@ -14,7 +14,7 @@ const ChartTabs: React.FC<{
       {OpenedChartTabsKeys.map((mySymbol) => (
         <button
           className={`tab ${symbol === mySymbol && 'active'}`}
-          key={mySymbol}
+          key={mySymbol + '-tabs-for-charts'}
           onClick={() => setSymbol(mySymbol)}
         >
           {mySymbol}

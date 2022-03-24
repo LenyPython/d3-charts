@@ -42,9 +42,12 @@ const createWebSocketSTREAMChannel = (
     socket.onmessage = (event: MessageEvent<any>) => {
       const response = JSON.parse(event.data)
       try {
+        //debug purpose of retrieving data from API
+        if (process.env.REACT_APP_DEBUG === 'true' && response.command !== 'keepAlive')
+          console.log(response)
         messageHandler(emit, response)
       } catch (e) {
-        if (e instanceof Error) emit(addLog(`[STREAM Msg Error]: ${e.message}`))
+        if (e instanceof Error) emit(addLog(`[${title} Error]: ${e.message}`))
       }
     }
 

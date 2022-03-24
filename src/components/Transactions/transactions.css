@@ -21,6 +21,15 @@
   color: white;
   margin-top: 3px;
 }
+#orders-table tr:first-of-type {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+}
+#orders-table tr {
+  animation: color-blink 1s alternate linear infinite;
+  font-size: 0.9rem;
+}
 #orders-table tr td {
   width: auto;
   background: #404040;
@@ -28,6 +37,23 @@
 }
 #orders-table tr td:nth-of-type(odd) {
   background: #262626;
+}
+
+.winning {
+  --profit-color: 120;
+}
+
+.lossing {
+  --profit-color: 0;
+}
+
+@keyframes color-blink {
+  from {
+    color: hsla(var(--profit-color), 100%, 70%, 1);
+  }
+  to {
+    color: hsla(var(--profit-color), 100%, 40%, 1);
+  }
 }
 
 /*# sourceMappingURL=transactions.css.map */

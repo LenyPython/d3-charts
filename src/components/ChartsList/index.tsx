@@ -12,7 +12,13 @@ const ChartsList: React.FC<{ symbol: string }> = ({ symbol }) => {
   const charts = [] as JSX.Element[]
   for (let key in Charts) {
     charts.push(
-      <Chart key={symbol + key} data={Charts[key]} symbol={key} onClick={setChart} limit={30} />,
+      <Chart
+        key={symbol + '-' + key + '-small-chart'}
+        data={Charts[key]}
+        symbol={key}
+        onClick={setChart}
+        limit={30}
+      />,
     )
   }
 

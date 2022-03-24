@@ -1,32 +1,54 @@
 #transactions {
-	flex: 1 1;
-	.tabs {
-		border: none;
-	}
-	.tab {
-		font-size: 1rem;
-		border-radius: 10px 10px 0 0;
-		margin-right: .1em;
-		background: hsl(0, 0%, 35%);
-		cursor: pointer;
-	}
-	.active {
-		background: hsl(0, 0%, 15%);
-		transform: scale(110%) translateY(2px);
-	}
+  flex: 1 1;
+  .tabs {
+    border: none;
+  }
+  .tab {
+    font-size: 1rem;
+    border-radius: 10px 10px 0 0;
+    margin-right: 0.1em;
+    background: hsl(0, 0%, 35%);
+    cursor: pointer;
+  }
+  .active {
+    background: hsl(0, 0%, 15%);
+    transform: scale(110%) translateY(2px);
+  }
 }
-#orders-table{
-	width: 100%;
-	color: white;
-	margin-top: 3px;
-	tr{
-		td{
-			width: auto;
-			background: hsl(0, 0%, 25%);
-			padding: .2em;
-		}
-		td:nth-of-type(odd){
-			background: hsl(0, 0%, 15%);
-		}
-	}
+#orders-table {
+  width: 100%;
+  color: white;
+  margin-top: 3px;
+  tr:first-of-type {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.2rem;
+  }
+  tr {
+    animation: color-blink 1s alternate linear infinite;
+    font-size: 0.9rem;
+    td {
+      width: auto;
+      background: hsl(0, 0%, 25%);
+      padding: 0.2em;
+    }
+    td:nth-of-type(odd) {
+      background: hsl(0, 0%, 15%);
+    }
+  }
+}
+.winning {
+  --profit-color: 120;
+}
+.lossing {
+  --profit-color: 0;
+}
+
+@keyframes color-blink {
+  from {
+    color: hsla(var(--profit-color), 100%, 70%, 1);
+  }
+  to {
+    color: hsla(var(--profit-color), 100%, 40%, 1);
+  }
 }

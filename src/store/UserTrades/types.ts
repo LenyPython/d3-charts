@@ -1,13 +1,15 @@
 import { STREAM_ANSWERS } from '../../commands'
 import { APIResponse } from '../../types'
 
-export enum TRADES_ACTIONS {}
+export enum TRADES_ACTIONS {
+  connectStream = 'trades/connect-stream',
+}
 
 // Define a type for the slice state
 export interface UserTradesInterface {
-  openTrades: TradeInterface[]
-  closedTrades: TradeInterface[]
-  pendingTrades: TradeInterface[]
+  openTrades: Record<string, TradeInterface>
+  closedTrades: Record<string, TradeInterface>
+  pendingTrades: Record<string, TradeInterface>
 }
 
 export interface TradeInterface {
@@ -27,15 +29,10 @@ export interface TradeInterface {
   symbol: string
   volume: number
 }
-export const isUserTradesResponse = (
-  data: APIResponse,
-  tradeStatus: 'open' | 'closed',
-): data is TradeInterface[] => {
-  const status = tradeStatus === 'open' ? false : true
+export const isUserTradesResponse = (data: APIResponse): data is TradeInterface[] => {
   return (
     Array.isArray(data) &&
     data?.length > 0 &&
-    (data[0] as TradeInterface).closed === status &&
     (data[0] as TradeInterface).order !== undefined &&
     (data[0] as TradeInterface).volume !== undefined
   )
