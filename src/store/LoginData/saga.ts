@@ -1,3 +1,4 @@
+import { PayloadAction } from '@reduxjs/toolkit';
 import { put, call, take, takeLeading, select } from 'redux-saga/effects'
 import { send } from '../../utils/websocket'
 import { LoginCredentials, USER_CONNECTION } from './types'
@@ -12,8 +13,8 @@ export let WS: WebSocket | null = null
 const URL = process.env.REACT_APP_SOCKET_URL
 
 export function* WebSocketAPIWatcher() {
-  const userId = yield select(getUserId)
-  const password = yield select(getPassword)
+  const userId: string = yield select(getUserId)
+  const password: string= yield select(getPassword)
   const payload = {
     userId,
     password,
@@ -23,10 +24,10 @@ export function* WebSocketAPIWatcher() {
     if (!URL) throw new Error('You forgot to declare REACT_APP_SOCKET_URL')
     if (WS === null || WS.readyState !== WS.OPEN) WS = new WebSocket(URL)
     yield put(addLog('[Main API]: On'))
-    const socketChannel = yield call(createWebSocketAPIChannel, WS!, payload)
+    const socketChannel: ReturnType<typeof createWebSocketAPIChannel> = yield call(createWebSocketAPIChannel, WS!, payload)
 
     while (WS.readyState !== WS.CLOSED) {
-      const action = yield take(socketChannel)
+      const action: PayloadAction = yield take(socketChannel)
       yield put(action)
     }
   } catch (e) {

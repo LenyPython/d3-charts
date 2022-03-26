@@ -1,3 +1,4 @@
+import { BalanceResponse } from './../store/Balance/types';
 import { STREAM_ANSWERS, API_COMMANDS, STREAM_COMMANDS } from '../commands'
 import { UserBalance } from '../store/Balance/types'
 import { IndexInterface, PriceDataResponse } from '../store/MainConnection/types'
@@ -9,7 +10,7 @@ export type ResponseHandler = (emit: Emmiter, data: wsResponse) => void
 export type RequestCreator = (sessionId: string) => wsRequest
 export type instrumentsResponse = IndexInterface[]
 
-export type APIResponse = instrumentsResponse | PriceDataResponse | TradeInterface[]
+export type APIResponse = BalanceResponse | instrumentsResponse | PriceDataResponse | TradeInterface[]
 
 export type StreamResponse = TradeInterface | UserBalance
 

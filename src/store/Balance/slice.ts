@@ -7,7 +7,7 @@ const initialState: BalanceDataInterface = {
   balance: {
     balance: 0,
     equity: 0,
-    equityFX: 0,
+    credit: 0,
     margin: 0,
     marginFree: 0,
     marginLevel: 0,
@@ -20,6 +20,6 @@ const Balance = createSlice({
   reducers,
 })
 
-export const { setBalance } = Balance.actions
+export const { setBalance, setBalanceFromResponse } = Balance.actions
 
 export default Balance.reducer

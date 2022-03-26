@@ -1,7 +1,7 @@
 import { Effect, put, delay, call, take, takeLeading } from 'redux-saga/effects'
 import { PriceData } from '../../types'
 import { send } from '../../utils/websocket'
-import { DownloadChartDataCommands } from '../LoginData/commands'
+import { DownloadChartDataCommands } from './commands'
 import { WS } from '../LoginData/saga'
 import { saveChartData } from '../MainConnection/actions'
 import { MAIN_SOCKET_ACTION, PriceDataResponse } from '../MainConnection/types'
