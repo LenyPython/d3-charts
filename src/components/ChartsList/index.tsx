@@ -14,6 +14,7 @@ const ChartsList: React.FC<{ symbol: string }> = ({ symbol }) => {
     charts.push(
       <Chart
         key={symbol + '-' + key + '-small-chart'}
+        id={key}
         data={Charts[key]}
         symbol={key}
         onClick={setChart}

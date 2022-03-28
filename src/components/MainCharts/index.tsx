@@ -13,7 +13,7 @@ const MainCharts = () => {
     <div id="main-charts">
       <ChartTabs symbol={symbol} setSymbol={setSymbol} />
       <ChartsList symbol={symbol} />
-      <Chart data={mainChartData} symbol={symbol} />
+      <Chart data={mainChartData} id={'main'} symbol={symbol} />
     </div>
   )
 }

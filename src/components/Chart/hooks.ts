@@ -1,10 +1,11 @@
 import * as d3 from 'd3'
+import * as fc from 'd3fc'
 import { RefObject, useLayoutEffect } from 'react'
 import { PriceData } from '../../types'
-import { clearSVG, drawAxis, drawTitle, drawCandlesticks } from './draw'
 
 export const useDrawCandleStickChart = (
-  chartRef: RefObject<SVGSVGElement>,
+  chartRef: RefObject<HTMLDivElement>,
+  ID: string,
   symbol: string,
   data: PriceData[],
   downColor = 'red',
@@ -13,13 +14,28 @@ export const useDrawCandleStickChart = (
   useLayoutEffect(() => {
     if (!chartRef.current) return
     if (!data) return
-    //get current svg height and width
-    const SvgHeight = chartRef.current.clientHeight
-    const SvgWidth = chartRef.current.clientWidth
-    const SVG = d3.select(chartRef.current)
-    clearSVG(SVG)
-    const { xScale, yScale } = drawAxis(SVG, data, SvgHeight, SvgWidth)
-    drawCandlesticks(SVG, data, xScale, yScale, { downColor, upColor })
-    drawTitle(SVG, symbol)
+    const DIV = d3.select(chartRef.current)
+
+    const yExtent = fc.extentLinear().accessors([(d: PriceData) => d.high, (d: PriceData) => d.low])
+
+    const xExtent = fc.extentTime().accessors([(d: PriceData) => d.ctm])
+
+    const candlestick = fc
+      .autoBandwidth(fc.seriesSvgCandlestick())
+      .crossValue((d: PriceData) => d.ctm)
+      .highValue((d: PriceData) => d.high)
+      .lowValue((d: PriceData) => d.low)
+      .openValue((d: PriceData) => d.open)
+      .closeValue((d: PriceData) => d.close)
+    const multi = fc.seriesSvgMulti().series([candlestick])
+
+    const chart = fc
+      .chartCartesian(d3.scaleTime(), d3.scaleLinear())
+
+      .svgPlotArea(multi)
+      .xDomain(xExtent(data))
+      .yDomain(yExtent(data))
+
+    DIV.datum(data).call(chart)
   }, [data, symbol, downColor, upColor, chartRef])
 }
