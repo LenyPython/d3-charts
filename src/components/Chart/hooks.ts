@@ -34,11 +34,14 @@ export const useDrawCandleStickChart = (
       .discontinuityProvider(fc.discontinuitySkipWeekends())
       .domain(xExtent(data))
       .nice()
+
+    const xTickFilter = d3.timeDay.filter((d) => d.getDay() > 1)
     const chart = fc
       .chartCartesian(discontinuedScale, d3.scaleLinear())
       .chartLabel(ID)
       .svgPlotArea(multi)
       .yDomain(yExtent(data))
+      .xTicks(xTickFilter)
 
     DIV.datum(data).call(chart)
   }, [data, symbol, ID, downColor, upColor, chartRef])
