@@ -63,7 +63,7 @@ export function* saveChartDataWorker(returnData: PriceDataResponse) {
     open: item.open / correct,
     high: (item.open + item.high) / correct,
     low: (item.open + item.low) / correct,
-    ctm: item.ctm,
+    ctm: new Date(item.ctm),
     ctmString: item.ctmString,
     vol: item.vol,
   }))

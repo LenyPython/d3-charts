@@ -1,6 +1,5 @@
 import { STREAM_ANSWERS } from '../../commands'
 import { APIResponse } from '../../types'
-import { PriceDataResponse } from '../MainConnection/types'
 
 export enum BALANCE {
   connectStream = 'balance/connect-stream',
@@ -14,7 +13,7 @@ export enum ORDER {
 export interface BalanceDataInterface {
   balance: UserBalance
 }
-interface GeneralBalance{
+interface GeneralBalance {
   balance: number
   equity: number
   credit: number

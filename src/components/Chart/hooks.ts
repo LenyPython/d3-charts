@@ -29,13 +29,17 @@ export const useDrawCandleStickChart = (
       .closeValue((d: PriceData) => d.close)
     const multi = fc.seriesSvgMulti().series([candlestick])
 
+    const discontinuedScale = fc
+      .scaleDiscontinuous(d3.scaleTime())
+      .discontinuityProvider(fc.discontinuitySkipWeekends())
+      .domain(xExtent(data))
+      .nice()
     const chart = fc
-      .chartCartesian(d3.scaleTime(), d3.scaleLinear())
-
+      .chartCartesian(discontinuedScale, d3.scaleLinear())
+      .chartLabel(ID)
       .svgPlotArea(multi)
-      .xDomain(xExtent(data))
       .yDomain(yExtent(data))
 
     DIV.datum(data).call(chart)
-  }, [data, symbol, downColor, upColor, chartRef])
+  }, [data, symbol, ID, downColor, upColor, chartRef])
 }
