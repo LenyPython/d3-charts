@@ -6,8 +6,13 @@ const reducers = {
   setIndexes: (state: OpenedInstrumentsInterface, action: PayloadAction<HashedInstruments>) => {
     state.indexes = action.payload
   },
-  setMainChartData: (state: OpenedInstrumentsInterface, action: PayloadAction<PriceData[]>) => {
-    state.mainChartData = action.payload
+  setMainChartData: (
+    state: OpenedInstrumentsInterface,
+    action: PayloadAction<{ data: PriceData[]; timeStamp: string }>,
+  ) => {
+    const { data, timeStamp } = action.payload
+    state.mainChartData = data
+    state.timeStamp = timeStamp
   },
   addChartDataTab: (
     state: OpenedInstrumentsInterface,

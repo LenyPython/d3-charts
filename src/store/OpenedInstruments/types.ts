@@ -8,6 +8,7 @@ export enum INSTRUMENTS_ACTIONS {
 export interface OpenedInstrumentsInterface {
   indexes: HashedInstruments
   mainChartData: PriceData[]
+  timeStamp: string
   //hash symbol to array of smaller charts
   openedChartsTabs: Record<string, SmallChartsData>
 }

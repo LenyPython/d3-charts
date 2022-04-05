@@ -4,5 +4,6 @@ import type { RootState } from '../../app/store'
 export const getIndexes = (state: RootState) => state.OpenedInstruments.indexes
 export const getMainChartData = (state: RootState) => state.OpenedInstruments.mainChartData
 export const getChartsData = (state: RootState) => state.OpenedInstruments.openedChartsTabs
+export const getMainChartTimeStamp = (state: RootState) => state.OpenedInstruments.timeStamp
 export const getOpenedChartsKeys = (state: RootState) =>
   Object.keys(state.OpenedInstruments.openedChartsTabs)

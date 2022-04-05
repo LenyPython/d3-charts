@@ -7,6 +7,7 @@ import { PriceData } from '../../types'
 const initialState: OpenedInstrumentsInterface = {
   indexes: {} as HashedInstruments,
   mainChartData: [] as PriceData[],
+  timeStamp: 'Min15',
   openedChartsTabs: {},
 }
 

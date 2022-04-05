@@ -8,6 +8,7 @@ export const useDrawCandleStickChart = (
   ID: string,
   symbol: string,
   data: PriceData[],
+  smallChart: boolean,
   downColor = 'red',
   upColor = 'green',
 ) => {
@@ -35,14 +36,46 @@ export const useDrawCandleStickChart = (
       .domain(xExtent(data))
       .nice()
 
-    const xTickFilter = d3.timeDay.filter((d) => d.getDay() > 1)
+    const TICKS = smallChart ? { ticks: 0, format: '' } : getTicks(ID)
     const chart = fc
-      .chartCartesian(discontinuedScale, d3.scaleLinear())
+      .chartCartesian({
+        xScale: discontinuedScale,
+        yScale: d3.scaleLinear(),
+      })
       .chartLabel(ID)
       .svgPlotArea(multi)
       .yDomain(yExtent(data))
-      .xTicks(xTickFilter)
+      .xTicks(TICKS.ticks)
+      .xTickFormat(TICKS.format)
+      .yDecorate((selection: any) => {
+        selection.select('text').attr('fill', 'white')
+      })
+      .xDecorate((selection: any) => {
+        selection
+          .select('text') /* .attr('transform', 'rotate(90deg)') */
+          .attr('transform', 'translate(0 25) rotate(90)')
+          .attr('fill', 'white')
+      })
 
     DIV.datum(data).call(chart)
-  }, [data, symbol, ID, downColor, upColor, chartRef])
+  }, [data, symbol, ID, downColor, upColor, chartRef, smallChart])
+}
+
+function getTicks(ID: string) {
+  let ticks = d3.timeMonth.every(3)
+  let format = d3.timeFormat('%B')
+  if (ID.includes('Day')) {
+    ticks = d3.timeMonday
+    format = d3.timeFormat('%a, %b')
+  } else if (ID.includes('Hour4')) {
+    ticks = d3.timeHour.every(12)!.filter((d) => d.getDay() !== 0 && d.getDay() !== 6)
+    format = d3.timeFormat('%H.00  %a')
+  } else if (ID.includes('Hour1')) {
+    ticks = d3.timeHour.every(4)!.filter((d) => d.getDay() !== 0 && d.getDay() !== 6)
+    format = d3.timeFormat('%H.00  %a')
+  } else if (ID.includes('Min15')) {
+    ticks = d3.timeHour.filter((d) => d.getDay() !== 0 && d.getDay() !== 6)
+    format = d3.timeFormat('%H.00')
+  }
+  return { ticks, format }
 }
