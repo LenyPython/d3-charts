@@ -1,10 +1,10 @@
-import { fork, takeLeading } from 'redux-saga/effects'
+import { spawn, takeLeading } from 'redux-saga/effects'
 import { WebSocketStreamCreator } from '../channels/WebSocketConnection'
 import { BalanceHandlers } from './handler'
 import { BALANCE } from './types'
 
 function* CreateBalanceSocketWorker() {
-  yield fork(WebSocketStreamCreator, BalanceHandlers)
+  yield spawn(WebSocketStreamCreator, BalanceHandlers)
 }
 
 export default function* BalanceWatcherSaga() {

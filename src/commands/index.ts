@@ -7,6 +7,7 @@ export enum API_COMMANDS {
   getTradesHistory = 'getTradesHistory',
   getChartRangeRequest = 'getChartRangeRequest',
   ping = 'ping',
+  tradeTransaction = 'tradeTransaction',
 }
 
 export enum STREAM_COMMANDS {
@@ -22,4 +23,3 @@ export enum STREAM_ANSWERS {
   balance = 'balance',
   candle = 'candle',
 }
-

@@ -10,10 +10,14 @@ export const EstablishMainConnection = (
   type: MAIN_SOCKET_ACTION.establishMainConnection,
   payload,
 })
-export const ConnectWebsockets = (): {
+export const ConnectWebsockets = (
+  payload: WebSocket,
+): {
   type: MAIN_SOCKET_ACTION
+  payload: WebSocket
 } => ({
   type: MAIN_SOCKET_ACTION.connectStream,
+  payload,
 })
 export const getAccountData = (
   socket: WebSocket,

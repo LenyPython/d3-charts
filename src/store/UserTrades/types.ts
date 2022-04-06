@@ -2,7 +2,8 @@ import { STREAM_ANSWERS } from '../../commands'
 import { APIResponse } from '../../types'
 
 export enum TRADES_ACTIONS {
-  connectStream = 'trades/connect-stream',
+  connectStream = 'Trades/connect-stream',
+  orderTransaction = 'Trades/open-transaction',
 }
 
 // Define a type for the slice state
@@ -10,6 +11,19 @@ export interface UserTradesInterface {
   openTrades: Record<string, TradeInterface>
   closedTrades: Record<string, TradeInterface>
   pendingTrades: Record<string, TradeInterface>
+}
+export interface TradeTransactionInterface {
+  cmd: number
+  customComment?: string
+  expiration: number
+  offset: number
+  order: number
+  price: number
+  sl: number
+  symbol: string
+  tp: number
+  type: number
+  volume: number
 }
 
 export interface TradeInterface {
