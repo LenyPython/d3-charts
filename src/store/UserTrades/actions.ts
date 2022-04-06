@@ -1,3 +1,6 @@
+import { API_ACTION, IndexInterface } from './../MainConnection/types'
+import { wsRequest } from './../../types/index'
+import { CMD, TYPE } from './../../commands/index'
 import { TRADES_ACTIONS, TradeTransactionInterface } from './types'
 
 export const ConnectTradesStream = (): {
@@ -5,24 +8,34 @@ export const ConnectTradesStream = (): {
 } => ({
   type: TRADES_ACTIONS.connectStream,
 })
-export const marketBuy = (
-  symbol: string,
+export const MakeAPIRequest = (
+  payload: wsRequest,
+): {
+  type: API_ACTION
+  payload: wsRequest
+} => ({
+  type: API_ACTION.makeRequest,
+  payload,
+})
+export const sendMarketByRequest = (
+  payload: string,
 ): {
   type: TRADES_ACTIONS
-  payload: TradeTransactionInterface
+  payload: string
 } => ({
   type: TRADES_ACTIONS.orderTransaction,
-  payload: {
-    cmd: 0,
-    symbol,
-    customComment: 'Bot market buy',
-    expiration: 0,
-    offset: 0,
-    order: 0,
-    price: 0.0,
-    sl: 0.0,
-    tp: 0.0,
-    type: 0,
-    volume: 0.01,
-  },
+  payload,
 })
+export const sendOpenTransactionRequest = (
+  payload: IndexInterface,
+): {
+  type: TRADES_ACTIONS
+  payload: IndexInterface
+} => ({
+  type: TRADES_ACTIONS.createCommand,
+  payload,
+})
+
+/* : {
+    
+  }, */

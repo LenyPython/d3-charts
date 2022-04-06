@@ -25,13 +25,19 @@ export const GetTradesHistory = (): wsRequest => ({
   },
 })
 export const DownloadAllSymbols = (): wsRequest => ({ command: API_COMMANDS.getAllSymbols })
+export const GetSymbol = (symbol: string): wsRequest => ({
+  command: API_COMMANDS.getSymbol,
+  arguments: {
+    symbol,
+  },
+})
 export const DownloadCandles = (streamSessionId: string, symbol: string): wsRequest => ({
   command: STREAM_COMMANDS.getCandles,
   streamSessionId,
   symbol,
 })
 
-export const OpenTransaction = (tradeTransInfo: TradeTransactionInterface): wsRequest => ({
+export const OpenTransactionInfo = (tradeTransInfo: TradeTransactionInterface): wsRequest => ({
   command: API_COMMANDS.tradeTransaction,
   arguments: {
     tradeTransInfo,

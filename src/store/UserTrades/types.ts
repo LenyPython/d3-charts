@@ -1,9 +1,11 @@
+import { CMD, TYPE } from './../../commands/index'
 import { STREAM_ANSWERS } from '../../commands'
 import { APIResponse } from '../../types'
 
 export enum TRADES_ACTIONS {
   connectStream = 'Trades/connect-stream',
   orderTransaction = 'Trades/open-transaction',
+  createCommand = 'Trade/create-command',
 }
 
 // Define a type for the slice state
@@ -13,7 +15,8 @@ export interface UserTradesInterface {
   pendingTrades: Record<string, TradeInterface>
 }
 export interface TradeTransactionInterface {
-  cmd: number
+  cmd: CMD
+  type: TYPE
   customComment?: string
   expiration: number
   offset: number
@@ -22,7 +25,6 @@ export interface TradeTransactionInterface {
   sl: number
   symbol: string
   tp: number
-  type: number
   volume: number
 }
 

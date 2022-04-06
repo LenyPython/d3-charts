@@ -7,6 +7,10 @@ export enum MAIN_SOCKET_ACTION {
   checkMainSocketResponse = 'Main/check-response-type',
   connectStream = 'Main/Websocket-stream-connect',
 }
+export enum API_ACTION {
+  makeRequest = 'API/make-request',
+  getSymbolPrice = 'API/get-symbol-price',
+}
 
 export interface RequiredConncectionData {
   sessionId: string
@@ -14,11 +18,20 @@ export interface RequiredConncectionData {
 }
 
 export interface IndexInterface {
+  ask: number
+  bid: number
   swapLong: number
   swapShort: number
   symbol: string
   categoryName: string
   groupName: string
+}
+export const isGetSymbolResponse = (data: APIResponse): data is IndexInterface => {
+  return (
+    data !== undefined &&
+    (data as IndexInterface).ask !== undefined &&
+    (data as IndexInterface).bid !== undefined
+  )
 }
 export const isGetAllSymbolsResponse = (data: APIResponse): data is IndexInterface[] => {
   return (

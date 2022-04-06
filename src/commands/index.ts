@@ -2,6 +2,7 @@ export enum API_COMMANDS {
   login = 'login',
   logout = 'logout',
   getAllSymbols = 'getAllSymbols',
+  getSymbol = 'getSymbol',
   getTrades = 'getTrades',
   getBalance = 'getMarginLevel',
   getTradesHistory = 'getTradesHistory',
@@ -22,4 +23,21 @@ export enum STREAM_ANSWERS {
   keepAlive = 'keepAlive',
   balance = 'balance',
   candle = 'candle',
+}
+export enum CMD {
+  BUY = 0,
+  SELL = 1,
+  BUY_LIMIT = 2,
+  SELL_LIMIT = 3,
+  BUY_STOP = 4,
+  SELL_STOP = 5,
+  BALANCE = 6,
+  CREDIT = 7,
+}
+export enum TYPE {
+  OPEN = 0,
+  PENDING = 1,
+  CLOSE = 2,
+  MODIFY = 3,
+  DELETE = 4,
 }

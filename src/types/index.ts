@@ -15,6 +15,7 @@ export type APIResponse =
   | instrumentsResponse
   | PriceDataResponse
   | TradeInterface[]
+  | IndexInterface
 
 export type StreamResponse = TradeInterface | UserBalance
 

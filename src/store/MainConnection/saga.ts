@@ -1,14 +1,18 @@
+import { sendOpenTransactionRequest } from './../UserTrades/actions'
+import { wsRequest } from './../../types/index'
 import { isBalanceResponse } from './../Balance/types'
-import { takeLeading, takeEvery, Effect, put, call, delay } from 'redux-saga/effects'
+import { takeLeading, takeEvery, Effect, put, call, delay, take } from 'redux-saga/effects'
 import { send } from '../../utils/websocket'
 import { hashInstruments } from '../../utils/websocket/hashInstruments'
 import { setSessionId } from '../LoginData/slice'
 import { saveChartDataWorker } from '../OpenedInstruments/saga'
 import { setIndexes } from '../OpenedInstruments/slice'
 import { ConnectWebsockets } from './actions'
-import { DownloadAllSymbols, GetTrades, GetTradesHistory } from './commands'
+import { DownloadAllSymbols, GetTradesHistory } from './commands'
 import {
+  API_ACTION,
   isGetAllSymbolsResponse,
+  isGetSymbolResponse,
   isPriceDataResponse,
   MAIN_SOCKET_ACTION,
   RequiredConncectionData,
@@ -23,8 +27,8 @@ import { setBalanceFromResponse } from '../Balance/slice'
 //implement utillty type checks for checking specific response types
 function* AccountDataDispatcher({ payload }: Effect<MAIN_SOCKET_ACTION, APIResponse>) {
   const returnData = payload
-
-  if (isGetAllSymbolsResponse(returnData)) yield put(setIndexes(hashInstruments(returnData)))
+  if (isGetSymbolResponse(returnData)) yield put(sendOpenTransactionRequest(returnData))
+  else if (isGetAllSymbolsResponse(returnData)) yield put(setIndexes(hashInstruments(returnData)))
   else if (isPriceDataResponse(returnData)) yield call(saveChartDataWorker, returnData)
   else if (isUserTradesResponse(returnData)) yield put(setTrades(returnData))
   else if (isBalanceResponse(returnData)) yield put(setBalanceFromResponse(returnData))
@@ -44,12 +48,15 @@ function* EstablishMainConnectionSaga({
   yield delay(200)
   yield put(downloadChartData('EURUSD'))
   yield delay(200)
-  //open all websockets
+  //open all websockets and subscriptions
   yield put(ConnectWebsockets(socket))
-  //ping for open trades data
+}
+export function* ApiRequestWorker(socket: WebSocket) {
   while (socket.readyState !== socket.CLOSED) {
-    yield call(send, socket, GetTrades())
-    yield delay(3000)
+    const action: Effect<API_ACTION, wsRequest> = yield take(API_ACTION.makeRequest)
+    const { payload: request } = action
+    console.log(request)
+    yield call(send, socket, request)
   }
 }
 export default function* MainSocketWatcherSaga() {

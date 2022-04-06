@@ -5,7 +5,7 @@ import ChartTabs from '../ChartTabs'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { useState } from 'react'
 import { getMainChartData, getMainChartTimeStamp } from '../../store/OpenedInstruments/selectors'
-import { marketBuy } from '../../store/UserTrades/actions'
+import { sendMarketByRequest } from '../../store/UserTrades/actions'
 
 const MainCharts = () => {
   const dispatch = useAppDispatch()
@@ -13,8 +13,7 @@ const MainCharts = () => {
   const timeStamp = useAppSelector(getMainChartTimeStamp)
   const mainChartData = useAppSelector(getMainChartData)
   const marketBuyHandler = () => {
-    console.log('buying')
-    dispatch(marketBuy(symbol))
+    dispatch(sendMarketByRequest(symbol))
   }
   return (
     <div id="main-charts">
