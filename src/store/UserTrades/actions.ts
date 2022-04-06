@@ -1,7 +1,6 @@
 import { API_ACTION, IndexInterface } from './../MainConnection/types'
 import { wsRequest } from './../../types/index'
-import { CMD, TYPE } from './../../commands/index'
-import { TRADES_ACTIONS, TradeTransactionInterface } from './types'
+import { TRADES_ACTIONS } from './types'
 
 export const ConnectTradesStream = (): {
   type: TRADES_ACTIONS
