@@ -1,4 +1,3 @@
-import { TradeTransactionInterface } from './../UserTrades/types'
 import { API_COMMANDS, STREAM_COMMANDS } from '../../commands'
 import { wsRequest } from '../../types'
 
@@ -35,11 +34,4 @@ export const DownloadCandles = (streamSessionId: string, symbol: string): wsRequ
   command: STREAM_COMMANDS.getCandles,
   streamSessionId,
   symbol,
-})
-
-export const OpenTransactionInfo = (tradeTransInfo: TradeTransactionInterface): wsRequest => ({
-  command: API_COMMANDS.tradeTransaction,
-  arguments: {
-    tradeTransInfo,
-  },
 })

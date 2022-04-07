@@ -7,6 +7,17 @@ export enum TRADES_ACTIONS {
   orderTransaction = 'Trades/open-transaction',
   createCommand = 'Trade/create-command',
 }
+export interface OrderInfo {
+  symbol: string
+  cmd: CMD
+  type: TYPE
+  expiration?: number
+  offset?: number
+  order?: number
+  volume?: number
+  tp?: number
+  sl?: number
+}
 
 // Define a type for the slice state
 export interface UserTradesInterface {
