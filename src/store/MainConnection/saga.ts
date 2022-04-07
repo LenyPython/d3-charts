@@ -55,7 +55,6 @@ export function* ApiRequestWorker(socket: WebSocket) {
   while (socket.readyState !== socket.CLOSED) {
     const action: Effect<API_ACTION, wsRequest> = yield take(API_ACTION.makeRequest)
     const { payload: request } = action
-    console.log(request)
     yield call(send, socket, request)
   }
 }

@@ -16,25 +16,42 @@
   }
 }
 #orders-table {
+  text-align: right;
   width: 100%;
   color: white;
   margin-top: 3px;
-  tr:first-of-type {
+  thead  tr{
     font-size: 1.2rem;
     font-weight: 600;
     letter-spacing: 0.2rem;
   }
   tr {
-    animation: color-blink 1s alternate linear infinite;
-    font-size: 0.9rem;
+    font-size: 1rem;
     td {
+      animation: color-blink 2s alternate linear infinite;
       width: auto;
-      background: hsl(0, 0%, 25%);
       padding: 0.2em;
+      --bg-opacity: .6;
     }
     td:nth-of-type(odd) {
-      background: hsl(0, 0%, 15%);
+      
+      --bg-opacity: .4;
     }
+    td:first-child{
+      width: 1%;
+      animation: none;
+      padding: 0;
+      text-align: right;
+    }
+  }
+  button {
+    font-size: 1em;
+    font-weight: 800;
+    color: white;
+    background-color: rgb(48, 3, 107);
+    border-radius: 5px;
+    padding: 2px 1em;
+
   }
 }
 .winning {
@@ -46,9 +63,9 @@
 
 @keyframes color-blink {
   from {
-    color: hsla(var(--profit-color), 100%, 70%, 1);
+    background-color: hsla(var(--profit-color), 100%, 50%, var(--bg-opacity));
   }
   to {
-    color: hsla(var(--profit-color), 100%, 40%, 1);
+    background-color: hsla(var(--profit-color), 100%, 40%, var(--bg-opacity));
   }
 }

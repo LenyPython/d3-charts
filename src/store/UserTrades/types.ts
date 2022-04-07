@@ -39,11 +39,16 @@ export interface TradeTransactionInterface {
   volume: number
 }
 
+export enum ORDER {
+  open = 'open-trades',
+  closed = 'closed-trades',
+  pending = 'pending-orders',
+}
 export interface TradeInterface {
   close_price: number
   close_time: number
   closed: boolean
-  cmd: number
+  cmd: CMD
   digits: number
   open_price: number
   open_time: number
@@ -52,7 +57,7 @@ export interface TradeInterface {
   profit: number | null
   sl: number
   tp: number
-  type: number
+  type: TYPE
   symbol: string
   volume: number
 }

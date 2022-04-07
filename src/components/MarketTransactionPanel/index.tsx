@@ -1,7 +1,8 @@
+import './MarketTransactionPanel.css'
 import { useState } from 'react'
 import { useAppDispatch } from '../../app/hooks'
 import { CMD, TYPE } from '../../commands'
-import { sendOpenMarketOrderRequest } from '../../store/UserTrades/actions'
+import { sendMarketOrderRequest } from '../../store/UserTrades/actions'
 
 const MarketTransactionPanel: React.FC<{
   symbol: string
@@ -10,7 +11,7 @@ const MarketTransactionPanel: React.FC<{
   const [volume, setVolume] = useState(0.01)
   const marketOpenOrderHandler = (cmd: CMD) => {
     dispatch(
-      sendOpenMarketOrderRequest({
+      sendMarketOrderRequest({
         cmd,
         type: TYPE.OPEN,
         symbol,
@@ -23,8 +24,8 @@ const MarketTransactionPanel: React.FC<{
     setVolume(parseFloat(target.value))
   }
   return (
-    <div>
-      <button onClick={() => marketOpenOrderHandler(CMD.SELL)} style={{ backgroundColor: 'red' }}>
+    <div id="transaction-panel-container">
+      <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
         sell
       </button>
       <input
@@ -35,7 +36,7 @@ const MarketTransactionPanel: React.FC<{
         step="0.01"
         value={volume}
       />
-      <button onClick={() => marketOpenOrderHandler(CMD.BUY)} style={{ backgroundColor: 'green' }}>
+      <button className="btn buy" onClick={() => marketOpenOrderHandler(CMD.BUY)}>
         buy
       </button>
     </div>

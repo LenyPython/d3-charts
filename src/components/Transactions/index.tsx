@@ -1,10 +1,13 @@
 import './transactions.css'
 import { useState } from 'react'
-import { useAppSelector } from '../../app/hooks'
-import { ORDER } from '../../store/Balance/types'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { ORDER, TradeInterface } from '../../store/UserTrades/types'
 import { getClosedTrades, getOpenTrades, getPendingTrades } from '../../store/UserTrades/selectors'
+import { TYPE } from '../../commands'
+import { sendMarketOrderRequest } from '../../store/UserTrades/actions'
 
 const Transactions = () => {
+  const dispatch = useAppDispatch()
   const [type, setType] = useState<ORDER>(ORDER.open)
 
   let action = getOpenTrades
@@ -13,6 +16,20 @@ const Transactions = () => {
 
   const trades = useAppSelector(action)
   const TradesRows = [] as JSX.Element[]
+  const handleCloseTransaction = (trade: TradeInterface) => {
+    const { cmd, volume, sl, tp, order, symbol } = trade
+    dispatch(
+      sendMarketOrderRequest({
+        cmd,
+        symbol,
+        type: TYPE.CLOSE,
+        order,
+        sl,
+        tp,
+        volume,
+      }),
+    )
+  }
   for (let id in trades) {
     const trade = trades[id]
     let profitable = ''
@@ -23,8 +40,15 @@ const Transactions = () => {
     if (trade.cmd === 1) position = 'SELL'
     TradesRows.push(
       <tr key={trade.symbol + '-' + trade.open_time} className={profitable}>
+        <td>
+          {type === ORDER.open && (
+            <button onClick={() => handleCloseTransaction(trade)}>close</button>
+          )}
+        </td>
         <td>{trade.symbol}</td>
+        <td>{trade.order}</td>
         <td>{position}</td>
+        <td>{trade.volume}</td>
         <td>{new Date(trade.open_time).toLocaleString()}</td>
         <td>{trade.profit ?? 0}</td>
         <td>{trade.sl}</td>
@@ -52,15 +76,20 @@ const Transactions = () => {
         </button>
       </div>
       <table id="orders-table">
-        <tr>
-          <td>Symbol</td>
-          <td>Order</td>
-          <td>Open</td>
-          <td>Profit</td>
-          <td>sl</td>
-          <td>tp</td>
-        </tr>
-        {TradesRows}
+        <thead>
+          <tr>
+            <td></td>
+            <td>Symbol</td>
+            <td>Order</td>
+            <td>Position</td>
+            <td>Volume</td>
+            <td>Open time</td>
+            <td>Profit</td>
+            <td>sl</td>
+            <td>tp</td>
+          </tr>
+        </thead>
+        <tbody>{TradesRows}</tbody>
       </table>
     </div>
   )
