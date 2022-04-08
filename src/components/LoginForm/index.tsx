@@ -3,11 +3,24 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { LoginUser } from '../../store/LoginData/actions'
 import { getPassword, getUserId } from '../../store/LoginData/selectors'
 import { setPassword, setUserId } from '../../store/LoginData/slice'
+import { useEffect } from 'react'
+import { CREDENTIALS } from '../../constants'
 
 const LoginForm = () => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(getUserId)
   const password = useAppSelector(getPassword)
+
+  useEffect(() => {
+    const credentials = sessionStorage.getItem(CREDENTIALS)
+    if (credentials) {
+      const { userId, password } = JSON.parse(credentials)
+      dispatch(setUserId(userId))
+      dispatch(setPassword(password))
+      dispatch(LoginUser())
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const login = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()

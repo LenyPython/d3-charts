@@ -25,6 +25,7 @@ export function* OpenTransactionWorker(action: Effect<TRADES_ACTIONS, OrderInfo>
     symbol,
     cmd,
     type,
+    customComment = 'Bot buy',
     offset = 0,
     order = 0,
     expiration = 0,
@@ -38,7 +39,7 @@ export function* OpenTransactionWorker(action: Effect<TRADES_ACTIONS, OrderInfo>
   )
   const msg = OpenTransactionRequestCreator({
     type,
-    customComment: 'Bot market buy',
+    customComment,
     price: data.ask,
     symbol: data.symbol,
     cmd,

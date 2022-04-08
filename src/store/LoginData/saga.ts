@@ -1,4 +1,5 @@
-import { PayloadAction } from '@reduxjs/toolkit';
+import { CREDENTIALS } from './../../constants'
+import { PayloadAction } from '@reduxjs/toolkit'
 import { put, call, take, takeLeading, select } from 'redux-saga/effects'
 import { send } from '../../utils/websocket'
 import { LoginCredentials, USER_CONNECTION } from './types'
@@ -14,7 +15,7 @@ const URL = process.env.REACT_APP_SOCKET_URL
 
 export function* WebSocketAPIWatcher() {
   const userId: string = yield select(getUserId)
-  const password: string= yield select(getPassword)
+  const password: string = yield select(getPassword)
   const payload = {
     userId,
     password,
@@ -24,8 +25,13 @@ export function* WebSocketAPIWatcher() {
     if (!URL) throw new Error('You forgot to declare REACT_APP_SOCKET_URL')
     if (WS === null || WS.readyState !== WS.OPEN) WS = new WebSocket(URL)
     yield put(addLog('[Main API]: On'))
-    const socketChannel: ReturnType<typeof createWebSocketAPIChannel> = yield call(createWebSocketAPIChannel, WS!, payload)
+    const socketChannel: ReturnType<typeof createWebSocketAPIChannel> = yield call(
+      createWebSocketAPIChannel,
+      WS!,
+      payload,
+    )
 
+    sessionStorage.setItem(CREDENTIALS, JSON.stringify(payload))
     while (WS.readyState !== WS.CLOSED) {
       const action: PayloadAction = yield take(socketChannel)
       yield put(action)
@@ -39,6 +45,7 @@ export function* WebSocketDisconnectWorker() {
   yield call(send, WS!, Disconnect())
   yield put(resetChartDataTab())
   yield put(setSessionId(''))
+  sessionStorage.removeItem(CREDENTIALS)
 }
 export default function* ConnectUserWatcherSaga() {
   //Main WEbSocket connection

@@ -27,6 +27,7 @@ const Transactions = () => {
         sl,
         tp,
         volume,
+        customComment: 'MyTrader market transaction',
       }),
     )
   }
@@ -49,6 +50,7 @@ const Transactions = () => {
         <td>{trade.order}</td>
         <td>{position}</td>
         <td>{trade.volume}</td>
+        <td>{trade.customComment}</td>
         <td>{new Date(trade.open_time).toLocaleString()}</td>
         <td>{trade.profit ?? 0}</td>
         <td>{trade.sl}</td>
@@ -83,6 +85,7 @@ const Transactions = () => {
             <td>Order</td>
             <td>Position</td>
             <td>Volume</td>
+            <td>Comment</td>
             <td>Open time</td>
             <td>Profit</td>
             <td>sl</td>

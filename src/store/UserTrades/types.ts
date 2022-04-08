@@ -1,5 +1,4 @@
-import { CMD, TYPE } from './../../commands/index'
-import { STREAM_ANSWERS } from '../../commands'
+import { CMD, TYPE, STREAM_ANSWERS } from '../../commands'
 import { APIResponse } from '../../types'
 
 export enum TRADES_ACTIONS {
@@ -12,6 +11,7 @@ export interface OrderInfo {
   cmd: CMD
   type: TYPE
   expiration?: number
+  customComment?: string
   offset?: number
   order?: number
   volume?: number
@@ -45,21 +45,25 @@ export enum ORDER {
   pending = 'pending-orders',
 }
 export interface TradeInterface {
-  close_price: number
-  close_time: number
-  closed: boolean
   cmd: CMD
-  digits: number
-  open_price: number
-  open_time: number
-  order: number
-  order2: number
-  profit: number | null
-  sl: number
-  tp: number
   type: TYPE
   symbol: string
   volume: number
+  position: number
+  order: number
+  order2: number
+  state: string
+  close_price: number
+  close_time: number
+  closed: boolean
+  comment: string
+  customComment: string
+  digits: number
+  open_price: number
+  open_time: number
+  profit: number | null
+  sl: number
+  tp: number
 }
 export const isUserTradesResponse = (data: APIResponse): data is TradeInterface[] => {
   return (
