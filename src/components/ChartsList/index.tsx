@@ -1,22 +1,15 @@
 import './charts.css'
 import Chart from '../Chart'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { getChartsData } from '../../store/OpenedInstruments/selectors'
-import { setMainChartData } from '../../store/OpenedInstruments/slice'
-import { PriceData } from '../../types'
+import { useAppSelector } from '../../app/hooks'
+import { getOpenedChartsData, getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 
-const ChartsList: React.FC<{ symbol: string }> = ({ symbol }) => {
-  const Charts = useAppSelector(getChartsData)[symbol]
+const ChartsList = () => {
+  const symbol = useAppSelector(getCurrentChartSymbol)
+  const Charts = useAppSelector(getOpenedChartsData)[symbol]
   const charts = [] as JSX.Element[]
   for (let key in Charts) {
     charts.push(
-      <Chart
-        key={symbol + '-' + key + '-small-chart'}
-        id={key}
-        data={Charts[key]}
-        symbol={symbol}
-        limit={30}
-      />,
+      <Chart key={symbol + '-' + key + '-small-chart'} id={key} data={Charts[key]} limit={30} />,
     )
   }
 

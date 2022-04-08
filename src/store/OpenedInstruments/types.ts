@@ -9,6 +9,7 @@ export interface OpenedInstrumentsInterface {
   indexes: HashedInstruments
   mainChartData: PriceData[]
   timeStamp: string
+  symbol: string
   //hash symbol to array of smaller charts
   openedChartsTabs: Record<string, SmallChartsData>
 }

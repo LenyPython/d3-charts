@@ -1,21 +1,23 @@
-
-
-#indexes {
-	display: flex;
-	flex-direction: column;
-	padding: 1em;
-	min-width: 200px;
-	max-width: 350px;
-	resize: horizontal;
-	overflow-y: auto;
-	border: 1px solid grey;
-	p {
-		width: 100%;
-		margin-bottom: .2em;
-		border-bottom: 1px dotted grey;
-	}
-}
-
-.closed {
-	transform: translateX(-100%);
+#container-indexes {
+  width: 350px;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  overflow-y: auto;
+  .container-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  span {
+    margin-right: 5px;
+    font-weight: 600;
+    color: white;
+    &:hover {
+      cursor: pointer;
+      color: hsl(120, 100%, 50%);
+      text-decoration: underline;
+    }
+  }
 }

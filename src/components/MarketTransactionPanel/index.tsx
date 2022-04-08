@@ -1,13 +1,13 @@
 import './MarketTransactionPanel.css'
 import { useState } from 'react'
-import { useAppDispatch } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { CMD, TYPE } from '../../commands'
 import { sendMarketOrderRequest } from '../../store/UserTrades/actions'
+import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 
-const MarketTransactionPanel: React.FC<{
-  symbol: string
-}> = ({ symbol }) => {
+const MarketTransactionPanel = () => {
   const dispatch = useAppDispatch()
+  const symbol = useAppSelector(getCurrentChartSymbol)
   const [volume, setVolume] = useState(0.01)
   const marketOpenOrderHandler = (cmd: CMD) => {
     dispatch(

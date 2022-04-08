@@ -2,17 +2,18 @@ import './chart.css'
 import { useRef } from 'react'
 import { useDrawCandleStickChart } from './hooks'
 import { PriceData } from '../../types'
-import { useAppDispatch } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { setMainChartData } from '../../store/OpenedInstruments/slice'
+import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 
 const Chart: React.FC<{
   data: PriceData[]
-  symbol: string
   id: string
   limit?: number
-}> = ({ data, limit, symbol, id }) => {
+}> = ({ data, limit, id }) => {
   let croped = data
   if (limit) croped = data?.slice(-limit)
+  const symbol = useAppSelector(getCurrentChartSymbol)
   const dispatch = useAppDispatch()
   const chartID = `${symbol}-${id}`
   const chartRef = useRef<HTMLDivElement>(null!)

@@ -5,7 +5,7 @@ import { DownloadChartDataCommands } from './commands'
 import { WS } from '../LoginData/saga'
 import { saveChartData } from '../MainConnection/actions'
 import { MAIN_SOCKET_ACTION, PriceDataResponse } from '../MainConnection/types'
-import { addChartDataTab } from './slice'
+import { addChartDataTab, setCurrentCharts } from './slice'
 import { INSTRUMENTS_ACTIONS, SmallChartsData } from './types'
 
 export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, string>) {
@@ -19,6 +19,7 @@ export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, stri
     Hour1: [] as PriceData[],
     Min15: [] as PriceData[],
   }
+
   if (WS !== null) {
     for (let request of requests) {
       //get chart period from request
@@ -53,6 +54,7 @@ export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, stri
         data: InstrumentData,
       }),
     )
+    yield put(setCurrentCharts(symbol))
   }
 }
 export function* saveChartDataWorker(returnData: PriceDataResponse) {
