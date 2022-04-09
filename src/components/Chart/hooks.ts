@@ -16,10 +16,19 @@ export const useDrawCandleStickChart = (
     if (!chartRef.current) return
     if (!data) return
     const DIV = d3.select(chartRef.current)
+    const render = () => {
+      DIV.datum(data).call(chart)
+    }
 
     const yExtent = fc.extentLinear().accessors([(d: PriceData) => d.high, (d: PriceData) => d.low])
-
     const xExtent = fc.extentTime().accessors([(d: PriceData) => d.ctm])
+    const mainDiscontinuedScaleX = fc
+      .scaleDiscontinuous(d3.scaleTime())
+      .discontinuityProvider(fc.discontinuitySkipWeekends())
+      .domain(xExtent(data))
+      .nice()
+    const mainScaleY = d3.scaleLinear()
+    const zoom = fc.zoom().on('zoom', render)
 
     const candlestick = fc
       .autoBandwidth(fc.seriesSvgCandlestick())
@@ -29,18 +38,11 @@ export const useDrawCandleStickChart = (
       .openValue((d: PriceData) => d.open)
       .closeValue((d: PriceData) => d.close)
     const multi = fc.seriesSvgMulti().series([candlestick])
-
-    const discontinuedScale = fc
-      .scaleDiscontinuous(d3.scaleTime())
-      .discontinuityProvider(fc.discontinuitySkipWeekends())
-      .domain(xExtent(data))
-      .nice()
-
     const TICKS = smallChart ? { ticks: 0, format: '' } : getTicks(ID)
     const chart = fc
       .chartCartesian({
-        xScale: discontinuedScale,
-        yScale: d3.scaleLinear(),
+        xScale: mainDiscontinuedScaleX,
+        yScale: mainScaleY,
       })
       .chartLabel(ID)
       .svgPlotArea(multi)
@@ -56,8 +58,19 @@ export const useDrawCandleStickChart = (
           .attr('transform', 'translate(0 25) rotate(90)')
           .attr('fill', 'white')
       })
+      .decorate((sel: any) => {
+        if (!smallChart) {
+          console.log(sel)
+          sel.enter().select('.plot-area').call(zoom, mainDiscontinuedScaleX, mainScaleY)
+          sel.enter().select('.x-axis').call(zoom, mainDiscontinuedScaleX, null)
+          sel.enter().select('.y-axis').call(zoom, null, mainScaleY)
+        }
+      })
 
-    DIV.datum(data).call(chart)
+    render()
+    /*     return () => {
+      DIV.on('.zoom', null)
+    } */
   }, [data, symbol, ID, downColor, upColor, chartRef, smallChart])
 }
 
