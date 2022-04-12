@@ -60,10 +60,9 @@ export const useDrawCandleStickChart = (
       })
       .decorate((sel: any) => {
         if (!smallChart) {
-          console.log(sel)
-          sel.enter().select('.plot-area').call(zoom, mainDiscontinuedScaleX, mainScaleY)
-          sel.enter().select('.x-axis').call(zoom, mainDiscontinuedScaleX, null)
-          sel.enter().select('.y-axis').call(zoom, null, mainScaleY)
+          sel.join().select('.plot-area').call(zoom, mainDiscontinuedScaleX, mainScaleY)
+          sel.join().select('.x-axis').call(zoom, mainDiscontinuedScaleX, null)
+          sel.join().select('.y-axis').call(zoom, null, mainScaleY)
         }
       })
 
