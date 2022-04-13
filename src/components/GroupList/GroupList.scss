@@ -1,19 +1,19 @@
 .group-list {
-	h4{
-		background: hsl(0, 0%, 15%);
-		color: hsl(0, 0%, 100%);
-		padding: .3em;
-		margin: .1em auto;
-		cursor: pointer;
-	}
-	p {
-		cursor: pointer;
-		&:hover {
-			color: white;
-		}
-	}
-	.closed{
-		height: 0;
-		overflow: hidden;
-	}
+  h4 {
+    background: hsl(0, 0%, 15%);
+    color: hsl(0, 0%, 100%);
+    padding: 0.3em;
+    margin: 0.1em auto;
+    cursor: pointer;
+  }
+  p {
+    cursor: pointer;
+    &:hover {
+      color: white;
+    }
+  }
+  .closed {
+    height: 0;
+    overflow: hidden;
+  }
 }

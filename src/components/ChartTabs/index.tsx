@@ -9,7 +9,7 @@ const ChartTabs = () => {
   const symbol = useAppSelector(getCurrentChartSymbol)
 
   return (
-    <div id="chart-tabs">
+    <div id="chart-tabs" className="df">
       {OpenedChartTabsKeys.map((mySymbol) => (
         <button
           className={`tab ${symbol === mySymbol && 'active'}`}

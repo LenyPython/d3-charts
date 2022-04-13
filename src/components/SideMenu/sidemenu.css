@@ -1,0 +1,1 @@
+#container-side-menu{width:30%;max-width:350px}#container-side-menu>*{width:100%}#container-side-menu button{font-size:1rem;font-weight:600;background-color:transparent;border:2px solid #fff}#container-side-menu button:hover{background-color:rgba(255,255,0,.4)}#container-side-menu button.active{background-color:green;box-shadow:0 0 15px green}

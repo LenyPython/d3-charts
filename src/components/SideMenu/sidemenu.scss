@@ -1,0 +1,22 @@
+#container-side-menu {
+  width: 30%;
+  max-width: 350px;
+  & > * {
+    width: 100%;
+  }
+  button {
+    $color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: transparent;
+    border: 2px solid $color;
+    &:hover {
+      background-color: hsla(60, 100%, 50%, 0.4);
+    }
+    &.active {
+      $color: green;
+      background-color: $color;
+      box-shadow: 0 0 15px $color;
+    }
+  }
+}

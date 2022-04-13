@@ -20,24 +20,26 @@
   width: 100%;
   color: white;
   margin-top: 3px;
-  thead  tr{
+  thead tr {
     font-size: 1.2rem;
     font-weight: 600;
     letter-spacing: 0.2rem;
   }
   tr {
     font-size: 1rem;
+    &:hover {
+      box-shadow: 0 0 15px hsl(var(--profit-color), 100%, 50%);
+    }
     td {
       animation: color-blink 2s alternate linear infinite;
       width: auto;
       padding: 0.2em;
-      --bg-opacity: .6;
+      --bg-opacity: 0.6;
     }
     td:nth-of-type(odd) {
-      
-      --bg-opacity: .4;
+      --bg-opacity: 0.4;
     }
-    td:first-child{
+    td:first-child {
       width: 1%;
       animation: none;
       padding: 0;
@@ -45,13 +47,14 @@
     }
   }
   button {
+    background-color: transparent;
     font-size: 1em;
     font-weight: 800;
-    color: white;
-    background-color: rgb(48, 3, 107);
-    border-radius: 5px;
+    color: hsl(var(--profit-color), 100%, 50%);
     padding: 2px 1em;
-
+    &:hover {
+      background-color: hsl(var(--profit-color), 100%, 10%);
+    }
   }
 }
 .winning {

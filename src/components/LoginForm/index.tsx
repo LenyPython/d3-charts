@@ -34,8 +34,8 @@ const LoginForm = () => {
   }
 
   return (
-    <div id="login-form" className="flex-center">
-      <form className="flex-center">
+    <div id="login-form" className="dfc jcc aic">
+      <form className="dfc jcc aic">
         <input
           type="name"
           value={user}

@@ -13,7 +13,11 @@ const ChartsList = () => {
     )
   }
 
-  return <div id="chart-list">{charts}</div>
+  return (
+    <div id="chart-list" className="df">
+      {charts}
+    </div>
+  )
 }
 
 export default ChartsList

@@ -43,7 +43,9 @@ const Transactions = () => {
       <tr key={trade.symbol + '-' + trade.open_time} className={profitable}>
         <td>
           {type === ORDER.open && (
-            <button onClick={() => handleCloseTransaction(trade)}>close</button>
+            <button className={profitable} onClick={() => handleCloseTransaction(trade)}>
+              close
+            </button>
           )}
         </td>
         <td>{trade.symbol}</td>

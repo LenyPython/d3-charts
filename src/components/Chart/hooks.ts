@@ -16,9 +16,6 @@ export const useDrawCandleStickChart = (
     if (!chartRef.current) return
     if (!data) return
     const DIV = d3.select(chartRef.current)
-    const render = () => {
-      DIV.datum(data).call(chart)
-    }
 
     const yExtent = fc.extentLinear().accessors([(d: PriceData) => d.high, (d: PriceData) => d.low])
     const xExtent = fc.extentTime().accessors([(d: PriceData) => d.ctm])
@@ -28,7 +25,7 @@ export const useDrawCandleStickChart = (
       .domain(xExtent(data))
       .nice()
     const mainScaleY = d3.scaleLinear()
-    const zoom = fc.zoom().on('zoom', render)
+    // const zoom = fc.zoom().on('zoom', render)
 
     const candlestick = fc
       .autoBandwidth(fc.seriesSvgCandlestick())
@@ -58,15 +55,19 @@ export const useDrawCandleStickChart = (
           .attr('transform', 'translate(0 25) rotate(90)')
           .attr('fill', 'white')
       })
+
+    DIV.datum(data).call(chart)
+    /*
       .decorate((sel: any) => {
         if (!smallChart) {
-          sel.join().select('.plot-area').call(zoom, mainDiscontinuedScaleX, mainScaleY)
-          sel.join().select('.x-axis').call(zoom, mainDiscontinuedScaleX, null)
-          sel.join().select('.y-axis').call(zoom, null, mainScaleY)
+          sel.enter().select('.plot-area').call(zoom, mainDiscontinuedScaleX, mainScaleY)
+          sel.enter().select('.x-axis').call(zoom, mainDiscontinuedScaleX, null)
+          sel.enter().select('.y-axis').call(zoom, null, mainScaleY)
         }
       })
 
     render()
+    */
     /*     return () => {
       DIV.on('.zoom', null)
     } */

@@ -43,21 +43,6 @@
   }
 }
 
-button {
-  font-size: 1.4rem;
-  padding: 0.3em 1em;
-  background: blue;
-  border: none;
-  border-radius: 10px;
-  color: white;
-}
-.flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-flow: column;
-}
-
 .close-btn {
   position: absolute;
   top: 25px;
