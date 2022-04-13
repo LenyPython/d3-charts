@@ -1,19 +1,11 @@
-#transaction-panel-container{
+#transaction-panel-container {
+  margin: 1rem auto;
+  text-align: center;
+  width: 100%;
+  input {
     text-align: center;
-    width: 100%;
-    input{
-        font-size: 20px;
-        padding: 3px;
-        margin: auto 1rem;
-    }
-    .btn {
-        padding: 3px 1.2em;
-        cursor: pointer;
-    }
-    .buy {
-        background-color: green;
-    }
-    .sell{
-        background-color: red;
-    }
+    font-size: 20px;
+    padding: 3px;
+    margin: auto 1rem;
+  }
 }

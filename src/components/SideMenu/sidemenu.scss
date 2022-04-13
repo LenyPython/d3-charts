@@ -8,15 +8,16 @@
     $color: white;
     font-size: 1rem;
     font-weight: 600;
-    background-color: transparent;
     border: 2px solid $color;
     &:hover {
-      background-color: hsla(60, 100%, 50%, 0.4);
+      $color: hsla(60, 100%, 50%, 0.5);
+      background-color: $color;
+      box-shadow: 0 0 15px $color, 0 0 10px $color, 0 0 20px $color;
     }
     &.active {
       $color: green;
       background-color: $color;
-      box-shadow: 0 0 15px $color;
+      box-shadow: 0 0 15px $color, 0 0 10px $color, 0 0 20px $color;
     }
   }
 }

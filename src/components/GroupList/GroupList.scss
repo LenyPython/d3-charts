@@ -10,6 +10,11 @@
     cursor: pointer;
     &:hover {
       color: white;
+      background-color: hsla(60, 81%, 28%, 0.3);
+      font-weight: 600;
+      margin: 0.3em auto;
+      padding: 3px;
+      box-shadow: 0 0 10px hsl(60, 100%, 35%);
     }
   }
   .closed {

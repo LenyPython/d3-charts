@@ -1,6 +1,7 @@
 import { useAppSelector } from '../../app/hooks'
 import { getBalance } from '../../store/Balance/selectors'
 import { UserBalance } from '../../store/Balance/types'
+import './balance.css'
 
 const Balance: React.FC<{
   onClick: React.MouseEventHandler<HTMLElement>
@@ -9,7 +10,12 @@ const Balance: React.FC<{
 
   return (
     <div id="balance" onClick={onClick}>
-      {`Balance: ${balance.balance} Equity: ${balance.equity} Margin: ${balance.margin}% MarginFree: ${balance.marginFree}% MarginLevel: ${balance.marginLevel}%`}
+      <p>
+        Balance: <span>{balance.balance} </span> Equity: <span>{balance.equity} </span>
+        Margin: <span>{balance.margin}% </span>
+        MarginFree: <span>{balance.marginFree}% </span>
+        MarginLevel: <span>{balance.marginLevel}%</span>
+      </p>
     </div>
   )
 }

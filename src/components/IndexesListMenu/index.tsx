@@ -18,9 +18,13 @@ const Indexes = () => {
 
   return (
     <div id="container-indexes">
-      <div className="container-group">
+      <div className="container-group df jcse">
         {GroupNames.map((item: string) => (
-          <span key={item} onClick={handleSetGroup}>
+          <span
+            key={item}
+            onClick={handleSetGroup}
+            className={category === item ? 'active-group' : ''}
+          >
             {item}
           </span>
         ))}

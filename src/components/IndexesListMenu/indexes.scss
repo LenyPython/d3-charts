@@ -7,17 +7,21 @@
   overflow-y: auto;
   .container-group {
     width: 100%;
-    display: flex;
-    justify-content: space-evenly;
   }
   span {
     margin-right: 5px;
     font-weight: 600;
     color: white;
     &:hover {
+      $color: hsl(60, 100%, 50%);
       cursor: pointer;
-      color: hsl(120, 100%, 50%);
-      text-decoration: underline;
+      color: $color;
+      text-shadow: 0 0 20px $color, 0 0 15px $color, 0 0 10px $color;
+    }
+    &.active-group {
+      $color: hsl(120, 100%, 50%);
+      color: $color;
+      text-shadow: 0 0 20px $color, 0 0 15px $color, 0 0 10px $color;
     }
   }
 }

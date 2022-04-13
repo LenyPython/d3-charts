@@ -1,0 +1,14 @@
+#container-pending-order {
+  h5 {
+    margin: auto auto 2em;
+  }
+  input {
+    text-align: right;
+  }
+  .buy {
+    background-color: green;
+  }
+  .sell {
+    background-color: red;
+  }
+}

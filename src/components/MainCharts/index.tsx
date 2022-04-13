@@ -2,7 +2,6 @@ import './maincharts.css'
 import Chart from '../Chart'
 import ChartsList from '../ChartsList'
 import ChartTabs from '../ChartTabs'
-import MarketTransactionPanel from '../MarketTransactionPanel'
 import { useAppSelector } from '../../app/hooks'
 import {
   getCurrentChartSymbol,
@@ -19,7 +18,6 @@ const MainCharts = () => {
       <ChartTabs />
       <ChartsList />
       <Chart data={OpenedChartsData?.[symbol]?.[timeStamp]} id={`${timeStamp}-main`} />
-      <MarketTransactionPanel />
     </div>
   )
 }

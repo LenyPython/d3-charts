@@ -1,0 +1,11 @@
+#balance {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: gray;
+  &:hover {
+    cursor: pointer;
+  }
+  span {
+    color: hsla(120, 100%, 50%, 0.8);
+  }
+}
