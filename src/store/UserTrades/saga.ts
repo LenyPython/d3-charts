@@ -1,3 +1,4 @@
+import { TYPE } from './../../commands/index'
 import { call, delay, fork, Effect, takeLeading, put, take } from 'redux-saga/effects'
 import { IndexInterface } from '../MainConnection/types'
 import { GetSymbol, GetTrades } from '../MainConnection/commands'
@@ -21,10 +22,11 @@ export function* DownloadOpenTradesWorker(socket: WebSocket) {
 }
 
 export function* OpenTransactionWorker(action: Effect<TRADES_ACTIONS, OrderInfo>) {
-  const {
+  let {
     symbol,
     cmd,
     type,
+    price = 0,
     customComment = 'Bot buy',
     offset = 0,
     order = 0,
@@ -33,15 +35,18 @@ export function* OpenTransactionWorker(action: Effect<TRADES_ACTIONS, OrderInfo>
     tp = 0,
     sl = 0,
   } = action.payload
-  yield put(MakeAPIRequest(GetSymbol(symbol)))
-  const { payload: data }: Effect<TRADES_ACTIONS, IndexInterface> = yield take(
-    TRADES_ACTIONS.createCommand,
-  )
+  if (price === 0) {
+    yield put(MakeAPIRequest(GetSymbol(symbol)))
+    const { payload: data }: Effect<TRADES_ACTIONS, IndexInterface> = yield take(
+      TRADES_ACTIONS.createCommand,
+    )
+    price = data.ask
+  }
   const msg = OpenTransactionRequestCreator({
     type,
     customComment,
-    price: data.ask,
-    symbol: data.symbol,
+    price,
+    symbol,
     cmd,
     offset,
     order,

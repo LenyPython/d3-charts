@@ -3,13 +3,12 @@ import { useAppSelector } from '../../app/hooks'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 import './pendingOrder.css'
 import React, { useState } from 'react'
+import PendingOrderButtons from '../PendingOrderButtons'
 
 const PendingOrdenMenu = () => {
   const symbol = useAppSelector(getCurrentChartSymbol)
-  const [sl, setSl] = useState<number>(0)
-  const [tp, setTp] = useState<number>(0)
-  const [vol, setVol] = useState<number>(0.01)
-  const [price, setPrice] = useState<number>(0)
+  const transaction = useTransactionInfo()
+  const { sl, setSl, tp, setTp, vol, setVol, price, setPrice } = transaction
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     if (target.name === 'tp') setTp(+target.value)
@@ -38,11 +37,26 @@ const PendingOrdenMenu = () => {
       <input type="number" name="tp" min={0} step={0.001} value={tp} onChange={handleChange} />
       <label htmlFor="sl">SL:</label>
       <input type="number" name="sl" min={0} step={0.001} value={sl} onChange={handleChange} />
-      <button className="buy">Buy Limit</button>
-      <button className="buy">Buy Stop</button>
-      <button className="sell">Sell Limit</button>
-      <button className="sell">Sell Stop</button>
+      <PendingOrderButtons transaction={transaction} />
     </div>
   )
 }
 export default PendingOrdenMenu
+
+const useTransactionInfo = () => {
+  const [sl, setSl] = useState<number>(0)
+  const [tp, setTp] = useState<number>(0)
+  const [vol, setVol] = useState<number>(0.01)
+  const [price, setPrice] = useState<number>(0)
+  return {
+    sl,
+    setSl,
+    tp,
+    setTp,
+    vol,
+    setVol,
+    price,
+    setPrice,
+  }
+}
+export type TransactionInfoHook = ReturnType<typeof useTransactionInfo>

@@ -1,4 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
+import { TYPE } from '../../commands'
 import { TradeInterface, UserTradesInterface } from './types'
 
 const reducers = {
@@ -23,7 +24,8 @@ const reducers = {
         delete state.closedTrades[trade.position]
         state.closedTrades[trade.order2] = trade
       } else {
-        state.openTrades[trade.order] = trade
+        if (trade.open_time !== undefined) state.openTrades[trade.order] = trade
+        else state.pendingTrades[trade.order] = trade
       }
     })
   },
