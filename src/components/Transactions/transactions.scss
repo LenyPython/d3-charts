@@ -1,6 +1,6 @@
 #transactions {
   flex: 1 1;
-  .tabs {
+  & > div {
     border: none;
   }
   .tab {
@@ -9,10 +9,6 @@
     margin-right: 0.1em;
     background: hsl(0, 0%, 35%);
     cursor: pointer;
-  }
-  .active {
-    background: hsl(0, 0%, 15%);
-    transform: scale(110%) translateY(2px);
   }
 }
 #orders-table {

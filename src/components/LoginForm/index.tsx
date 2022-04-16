@@ -52,14 +52,24 @@ const LoginForm = () => {
           required
         />
         <br />
+        <div>
+          <label htmlFor="demo">
+            DEMO
+            <input type="radio" id="demo" name="account-type" value="demo" checked />
+          </label>
+          <label htmlFor="real">
+            REAL
+            <input type="radio" id="real" name="account-type" value="real" />
+          </label>
+        </div>
         <button onClick={login}>Login</button>
+        <p>
+          Create demo account:
+          <a href="https://www.xtb.com/pl/demo-account" target="_blank" rel="noreferrer">
+            HERE
+          </a>
+        </p>
       </form>
-      <p>
-        Create demo account:
-        <a href="https://www.xtb.com/pl/demo-account" target="_blank" rel="noreferrer">
-          HERE
-        </a>
-      </p>
     </div>
   )
 }

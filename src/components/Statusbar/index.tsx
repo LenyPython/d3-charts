@@ -8,8 +8,11 @@ const Statusbar = () => {
   const logout = () => dispatch(LogoutUser())
   return (
     <>
+      <div>othe connection statuses</div>
       <div>UserID: {UserID}</div>
-      <button onClick={logout}>Logout</button>
+      <button id="btn-logout" onClick={logout}>
+        Logout
+      </button>
     </>
   )
 }

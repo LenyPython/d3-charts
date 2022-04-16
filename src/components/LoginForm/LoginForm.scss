@@ -1,3 +1,5 @@
+@import '../../scss/colors';
+
 #login-form {
   position: fixed;
   inset: 0;
@@ -5,8 +7,11 @@
   animation: color 20s infinite reverse;
   form {
     padding: 5em;
-    background: black;
+    background: $main-background-color;
     input {
+      margin: 0.3em 0.7em;
+    }
+    & > input {
       min-width: 300px;
       font-size: 1.5rem;
       padding: 0.4em;
@@ -14,9 +19,11 @@
   }
   p {
     text-align: center;
+    margin: 0.3em;
   }
   a {
-    color: lightblue;
+    color: $main-info-color;
+    margin: 0.5em;
     font-size: 1.2rem;
     font-weight: 600;
     text-decoration: none;
@@ -41,12 +48,4 @@
   100% {
     background-color: hsla(310, 100%, 3%, 0.9);
   }
-}
-
-.close-btn {
-  position: absolute;
-  top: 25px;
-  right: 25px;
-  background: red;
-  color: white;
 }

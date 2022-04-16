@@ -54,6 +54,7 @@ const Transactions = () => {
         <td>{trade.volume}</td>
         <td>{trade.customComment}</td>
         <td>{new Date(trade.open_time).toLocaleString()}</td>
+        <td>{trade.open_price}</td>
         <td>{trade.profit ?? 0}</td>
         <td>{trade.sl}</td>
         <td>{trade.tp}</td>
@@ -69,13 +70,13 @@ const Transactions = () => {
   return (
     <div id="transactions">
       <div className="tabs">
-        <button className={`tab ${type === ORDER.open && 'active'}`} onClick={handleClick}>
+        <button className={type === ORDER.open ? 'tab-active' : ''} onClick={handleClick}>
           {ORDER.open}
         </button>
-        <button className={`tab ${type === ORDER.pending && 'active'}`} onClick={handleClick}>
+        <button className={type === ORDER.pending ? 'tab-active' : ''} onClick={handleClick}>
           {ORDER.pending}
         </button>
-        <button className={`tab ${type === ORDER.closed && 'active'}`} onClick={handleClick}>
+        <button className={type === ORDER.closed ? 'tab-active' : ''} onClick={handleClick}>
           {ORDER.closed}
         </button>
       </div>
@@ -89,6 +90,7 @@ const Transactions = () => {
             <td>Volume</td>
             <td>Comment</td>
             <td>Open time</td>
+            <td>Open Price</td>
             <td>Profit</td>
             <td>sl</td>
             <td>tp</td>

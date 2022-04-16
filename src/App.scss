@@ -1,14 +1,13 @@
+@use './scss/_colors.scss';
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-$background-color: hsla(0, 50%, 0%, 1);
-$font-color: gray;
 
 body {
-  background: $background-color;
-  color: $font-color;
+  background: colors.$main-background-color;
+  color: colors.$main-text-color;
   width: 100vw;
   height: 100vh;
 }
@@ -19,13 +18,21 @@ body {
   display: flex;
   flex-direction: column;
 }
+%active {
+  box-shadow: inset 0 0 15px var(--color);
+  text-shadow: 0 0 15px var(--color);
+}
 button {
+  --color: #{colors.$main-succes-color};
   background-color: transparent;
-  border: none;
-  color: white;
+  border: 2px solid var(--color);
+  color: var(--color);
   padding: 3px 1em;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
+  &:hover {
+    @extend %active;
+  }
 }
 .df {
   display: flex;
@@ -43,6 +50,14 @@ button {
 .jcsa {
   justify-content: space-around;
 }
+.jcsb {
+  justify-content: space-between;
+}
 .jcse {
   justify-content: space-evenly;
+}
+
+.tab-active {
+  @extend %active;
+  --color: #{colors.$main-text-color} !important;
 }

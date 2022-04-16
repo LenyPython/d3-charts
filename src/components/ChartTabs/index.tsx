@@ -12,7 +12,7 @@ const ChartTabs = () => {
     <div id="chart-tabs" className="df">
       {OpenedChartTabsKeys.map((mySymbol) => (
         <button
-          className={`tab ${symbol === mySymbol && 'active'}`}
+          className={symbol === mySymbol ? 'tab-active' : ''}
           key={mySymbol + '-tabs-for-charts'}
           onClick={() => dispatch(setCurrentCharts(mySymbol))}
         >
