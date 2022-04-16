@@ -2,12 +2,18 @@
 
 #transactions {
   flex: 1 1;
-  .tab {
-    font-size: 1rem;
-    border-radius: 10px 10px 0 0;
-    margin-right: 0.1em;
-    background: hsl(0, 0%, 35%);
-    cursor: pointer;
+}
+#container-btns {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: colors.$main-background-color;
+  button {
+    --color: #{colors.$third-background-color};
+    margin: 0.3em;
+    &:hover {
+      --color: #{colors.$secondary-inactive-color};
+    }
   }
 }
 #orders-table {
@@ -57,5 +63,15 @@
 .lossing {
   --profit-color: #{colors.$main-error-color};
   --profit-color2: #{colors.$secondary-error-color};
+  --profit-color3: #{colors.$third-error-color};
+}
+.order-buy {
+  --profit-color: #{colors.$main-succes-color};
+  --profit-color2: #{colors.$main-info-color};
+  --profit-color3: #{colors.$third-succes-color};
+}
+.order-sell {
+  --profit-color: #{colors.$main-error-color};
+  --profit-color2: #{colors.$main-info-color};
   --profit-color3: #{colors.$third-error-color};
 }
