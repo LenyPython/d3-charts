@@ -24,7 +24,7 @@ const reducers = {
         delete state.closedTrades[trade.position]
         state.closedTrades[trade.order2] = trade
       } else {
-        if (trade.open_time !== undefined) state.openTrades[trade.order] = trade
+        if (trade.cmd < 2) state.openTrades[trade.order] = trade
         else state.pendingTrades[trade.order] = trade
       }
     })

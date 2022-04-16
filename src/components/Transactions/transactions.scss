@@ -1,3 +1,5 @@
+@use '../../scss/colors';
+
 #transactions {
   flex: 1 1;
   .tab {
@@ -11,7 +13,6 @@
 #orders-table {
   text-align: right;
   width: 100%;
-  color: white;
   margin-top: 3px;
   thead tr {
     font-size: 1.2rem;
@@ -21,42 +22,40 @@
   tr {
     font-size: 1rem;
     &:hover {
-      box-shadow: 0 0 15px hsl(var(--profit-color), 100%, 50%);
+      box-shadow: 0 0 15px var(--profit-color), 0 0 25px var(--profit-color);
     }
     td {
-      animation: color-blink 2s alternate linear infinite;
       width: auto;
       padding: 0.2em;
-      --bg-opacity: 0.6;
+      background-color: var(--profit-color2);
     }
     td:nth-of-type(odd) {
-      --bg-opacity: 0.4;
+      background-color: var(--profit-color3);
     }
     td:first-child {
+      background-color: transparent;
       width: 1%;
-      animation: none;
       padding: 0;
       text-align: right;
     }
   }
   button {
+    --color: #{colors.$info-accent};
     font-size: 1em;
     font-weight: 800;
     padding: 2px 1em;
+    &:hover {
+      --color: var(--profit-color);
+    }
   }
 }
 .winning {
-  --profit-color: 120;
+  --profit-color: #{colors.$main-succes-color};
+  --profit-color2: #{colors.$secondary-succes-color};
+  --profit-color3: #{colors.$third-succes-color};
 }
 .lossing {
-  --profit-color: 0;
-}
-
-@keyframes color-blink {
-  from {
-    background-color: hsla(var(--profit-color), 100%, 50%, var(--bg-opacity));
-  }
-  to {
-    background-color: hsla(var(--profit-color), 100%, 40%, var(--bg-opacity));
-  }
+  --profit-color: #{colors.$main-error-color};
+  --profit-color2: #{colors.$secondary-error-color};
+  --profit-color3: #{colors.$third-error-color};
 }
