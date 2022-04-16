@@ -11,7 +11,9 @@ const InfoPanel: React.FC<{
     <div id="info-panel" className={`df ${isOpen ? 'open' : 'hidden'}`}>
       <div id="logger">
         {LOGS.map((item, id) => (
-          <div key={id}>{item}</div>
+          <div key={id} className={item.class}>
+            {item.msg}
+          </div>
         ))}
       </div>
       <Transactions />

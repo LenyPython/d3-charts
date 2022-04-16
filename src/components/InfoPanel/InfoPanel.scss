@@ -1,3 +1,5 @@
+@use '../../scss/colors';
+
 #logger,
 #transactions {
   height: 200px;
@@ -5,5 +7,22 @@
 }
 
 #logger {
+  border: 1px solid colors.$third-background-color;
+  margin-right: 3px;
   width: 25%;
+  & > div {
+    margin: 0.1em auto;
+  }
+  .error {
+    background-color: colors.$secondary-error-color;
+  }
+  .info {
+    background-color: colors.$secondary-info-color;
+  }
+  .succes {
+    background-color: colors.$secondary-succes-color;
+  }
+  .warning {
+    background-color: colors.$main-warning-color;
+  }
 }

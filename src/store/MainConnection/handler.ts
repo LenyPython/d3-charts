@@ -5,10 +5,18 @@ import {
   EstablishMainConnection,
 } from '../../store/MainConnection/actions'
 import { wsResponse } from '../../types'
+import { LOG } from '../Logger/types'
 
 const handleResponse = (socket: WebSocket, emit: Emmiter, response: wsResponse) => {
-  if (!response) emit(addLog('[Request Error]: status undefined'))
-  if (response.status === false) emit(addLog('[Request Error]: false status'))
+  if (!response)
+    emit(
+      addLog({
+        class: LOG.error,
+        msg: '[Request Error]: status undefined',
+      }),
+    )
+  if (response.status === false)
+    emit(addLog({ class: LOG.warning, msg: '[Request Error]: false status' }))
   if (response.status === true) {
     if (response.streamSessionId) {
       emit(

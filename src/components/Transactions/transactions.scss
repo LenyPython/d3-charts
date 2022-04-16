@@ -1,8 +1,5 @@
 #transactions {
   flex: 1 1;
-  & > div {
-    border: none;
-  }
   .tab {
     font-size: 1rem;
     border-radius: 10px 10px 0 0;
@@ -43,14 +40,9 @@
     }
   }
   button {
-    background-color: transparent;
     font-size: 1em;
     font-weight: 800;
-    color: hsl(var(--profit-color), 100%, 50%);
     padding: 2px 1em;
-    &:hover {
-      background-color: hsl(var(--profit-color), 100%, 10%);
-    }
   }
 }
 .winning {

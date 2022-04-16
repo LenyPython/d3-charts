@@ -1,11 +1,11 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { LoggerInterface } from './types'
+import { Log, LoggerInterface } from './types'
 
-const addLog = (state: LoggerInterface, action: PayloadAction<string>) => {
+const addLog = (state: LoggerInterface, action: PayloadAction<Log>) => {
   state.Logs.push(action.payload)
 }
 const clearLog = (state: LoggerInterface) => {
-  state.Logs = [] as string[]
+  state.Logs = [] as Log[]
 }
 
 export { addLog, clearLog }

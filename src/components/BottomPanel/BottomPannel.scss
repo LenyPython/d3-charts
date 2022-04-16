@@ -1,11 +1,26 @@
-#lower-panel {
+@use '../../scss/colors';
+
+#container-bottom-panel {
+  position: relative;
   padding: 0.3em;
   .hidden {
     overflow: hidden;
     height: 0;
   }
-  div {
-    border: 1px solid grey;
+  & > div {
+    border: 1px solid colors.$third-background-color;
     padding: 0.2em;
+  }
+}
+
+#transaction-toggle {
+  background-color: colors.$main-background-color;
+  position: absolute;
+  font-size: 0.7em;
+  top: 0;
+  left: 175px;
+  transform: translate(-50%, -70%);
+  &.open {
+    --color: #{colors.$main-error-color};
   }
 }

@@ -69,7 +69,7 @@ const Transactions = () => {
 
   return (
     <div id="transactions">
-      <div className="tabs">
+      <div>
         <button className={type === ORDER.open ? 'tab-active' : ''} onClick={handleClick}>
           {ORDER.open}
         </button>

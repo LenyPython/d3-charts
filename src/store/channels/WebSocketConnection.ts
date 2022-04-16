@@ -1,4 +1,5 @@
-import { PayloadAction } from '@reduxjs/toolkit';
+import { LOG } from './../Logger/types'
+import { PayloadAction } from '@reduxjs/toolkit'
 import { put, take, select, call } from 'redux-saga/effects'
 import { StreamHandlersInterface } from '../../types'
 import { addLog } from '../Logger/slice'
@@ -12,7 +13,12 @@ export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
   try {
     if (!URL) throw new Error('You forgot to declare REACT_APP_SOCKET_STREAM_URL')
     const socket = new WebSocket(URL)
-    yield put(addLog(`[${title}]: stream open`))
+    yield put(
+      addLog({
+        class: LOG.succes,
+        msg: `[${title}]: stream open`,
+      }),
+    )
     const sessionId: string = yield select(getSessionId)
     const socketChannel: ReturnType<typeof createWebSocketSTREAMChannel> = yield call(
       createWebSocketSTREAMChannel,
@@ -29,6 +35,12 @@ export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
       yield put(action)
     }
   } catch (e) {
-    if (e instanceof Error) put(addLog(`[${title} Socket Error]: ${e.message}`))
+    if (e instanceof Error)
+      put(
+        addLog({
+          class: LOG.error,
+          msg: `[${title} Socket Error]: ${e.message}`,
+        }),
+      )
   }
 }

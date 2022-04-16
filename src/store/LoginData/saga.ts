@@ -9,6 +9,7 @@ import { setSessionId } from '../../store/LoginData/slice'
 import { createWebSocketAPIChannel } from '../channels'
 import { getPassword, getUserId } from './selectors'
 import { resetChartDataTab } from '../OpenedInstruments/slice'
+import { LOG } from '../Logger/types'
 
 export let WS: WebSocket | null = null
 const URL = process.env.REACT_APP_SOCKET_URL
@@ -24,7 +25,12 @@ export function* WebSocketAPIWatcher() {
   try {
     if (!URL) throw new Error('You forgot to declare REACT_APP_SOCKET_URL')
     if (WS === null || WS.readyState !== WS.OPEN) WS = new WebSocket(URL)
-    yield put(addLog('[Main API]: On'))
+    yield put(
+      addLog({
+        class: LOG.info,
+        msg: '[Main API]: On',
+      }),
+    )
     const socketChannel: ReturnType<typeof createWebSocketAPIChannel> = yield call(
       createWebSocketAPIChannel,
       WS!,
@@ -37,7 +43,13 @@ export function* WebSocketAPIWatcher() {
       yield put(action)
     }
   } catch (e) {
-    if (e instanceof Error) put(addLog(`[Main Error]: ${e.message}`))
+    if (e instanceof Error)
+      put(
+        addLog({
+          class: LOG.error,
+          msg: `[Main Error]: ${e.message}`,
+        }),
+      )
   }
 }
 

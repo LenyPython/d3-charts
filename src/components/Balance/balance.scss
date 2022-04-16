@@ -1,11 +1,30 @@
-#balance {
+@use '../../scss/colors';
+
+#container-balance {
   font-size: 1.3rem;
   font-weight: 600;
-  color: gray;
-  &:hover {
-    cursor: pointer;
-  }
   span {
-    color: hsla(120, 100%, 50%, 0.8);
+    animation: colorfull 10s infinite alternate;
+  }
+}
+
+@keyframes colorfull {
+  0% {
+    color: colors.$main-succes-color;
+  }
+  20% {
+    color: colors.$main-text-color;
+  }
+  40% {
+    color: colors.$main-error-color;
+  }
+  60% {
+    color: colors.$main-text-color;
+  }
+  80% {
+    color: colors.$main-info-color;
+  }
+  100% {
+    color: colors.$main-text-color;
   }
 }

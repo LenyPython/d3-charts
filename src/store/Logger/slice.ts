@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { LoggerInterface } from './types'
+import { Log, LoggerInterface } from './types'
 import * as reducers from './reducers'
 
 // Define the initial state using that type
 const initialState: LoggerInterface = {
-  Logs: [] as string[],
+  Logs: [] as Log[],
 }
 
 const Logger = createSlice({

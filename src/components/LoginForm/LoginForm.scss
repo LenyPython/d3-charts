@@ -4,7 +4,7 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  animation: color 20s infinite reverse;
+  animation: color 20s infinite alternate;
   form {
     padding: 5em;
     background: $main-background-color;
