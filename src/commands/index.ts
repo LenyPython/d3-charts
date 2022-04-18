@@ -24,6 +24,7 @@ export enum STREAM_ANSWERS {
   balance = 'balance',
   candle = 'candle',
 }
+export const cmd = ['BUY', 'SELL', 'BUY LIMIT', 'SELL LIMIT', 'BUY STOP', 'SELL STOP']
 export enum CMD {
   BUY = 0,
   SELL = 1,

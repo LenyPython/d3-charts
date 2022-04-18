@@ -1,14 +1,1 @@
-.chart {
-  background: #171717;
-  width: 100%;
-  flex: 1 1;
-}
-.chart.small {
-  cursor: pointer;
-}
-
-svg {
-  fill: white;
-}
-
-/*# sourceMappingURL=chart.css.map */
+.chart{background:#171717;width:100%;flex:1 1}.chart.small{cursor:pointer}svg{fill:#fff}

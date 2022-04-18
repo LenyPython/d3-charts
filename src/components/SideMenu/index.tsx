@@ -10,10 +10,10 @@ const SideMenu = () => {
   return (
     <div id="container-side-menu" className="dfc aic">
       <div className="df jcsa">
-        <button className={type === IDX ? 'active' : ''} onClick={() => setType(IDX)}>
+        <button className={type === IDX ? 'tab-active' : ''} onClick={() => setType(IDX)}>
           Indexes
         </button>
-        <button className={type === ORDER ? 'active' : ''} onClick={() => setType(ORDER)}>
+        <button className={type === ORDER ? 'tab-active' : ''} onClick={() => setType(ORDER)}>
           Order
         </button>
       </div>

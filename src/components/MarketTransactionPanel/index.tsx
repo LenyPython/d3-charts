@@ -25,9 +25,6 @@ const MarketTransactionPanel = () => {
   }
   return (
     <div id="transaction-panel-container">
-      <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
-        sell
-      </button>
       <input
         type="number"
         onChange={handleVolumeChange}
@@ -36,6 +33,10 @@ const MarketTransactionPanel = () => {
         step="0.01"
         value={volume}
       />
+      <br />
+      <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
+        sell
+      </button>
       <button className="btn buy" onClick={() => marketOpenOrderHandler(CMD.BUY)}>
         buy
       </button>

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { ORDER, TradeInterface } from '../../store/UserTrades/types'
 import { getClosedTrades, getOpenTrades, getPendingTrades } from '../../store/UserTrades/selectors'
-import { CMD, TYPE } from '../../commands'
+import { cmd, CMD, TYPE } from '../../commands'
 import { sendMarketOrderRequest } from '../../store/UserTrades/actions'
 
 const Transactions = () => {
@@ -17,17 +17,19 @@ const Transactions = () => {
   const trades = useAppSelector(action)
   const TradesRows = [] as JSX.Element[]
   const handleCloseTransaction = (trade: TradeInterface) => {
-    const { cmd, volume, sl, tp, order, symbol } = trade
+    const { cmd, volume, order, symbol, customComment } = trade
     dispatch(
       sendMarketOrderRequest({
         cmd,
         symbol,
-        type: TYPE.CLOSE,
+        /******************************************
+        need to rework
+        stupid sumple solution to delete pending orders and open trades
+         */
+        type: type === ORDER.open ? TYPE.CLOSE : TYPE.DELETE,
         order,
-        sl,
-        tp,
         volume,
-        customComment: 'MyTrader market transaction',
+        customComment,
       }),
     )
   }
@@ -47,12 +49,10 @@ const Transactions = () => {
         decorationClass = 'order-sell'
       }
     }
-    let position = 'BUY'
-    if (trade.cmd === 1) position = 'SELL'
     TradesRows.push(
       <tr key={trade.symbol + '-' + trade.open_time} className={decorationClass}>
         <td>
-          {type === ORDER.open && (
+          {type !== ORDER.closed && (
             <button className={decorationClass} onClick={() => handleCloseTransaction(trade)}>
               close
             </button>
@@ -60,7 +60,7 @@ const Transactions = () => {
         </td>
         <td>{trade.symbol}</td>
         <td>{trade.order}</td>
-        <td>{position}</td>
+        <td>{cmd[trade.cmd]}</td>
         <td>{trade.volume}</td>
         <td>{trade.customComment}</td>
         <td>{new Date(trade.open_time).toLocaleString()}</td>

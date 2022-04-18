@@ -1,20 +1,21 @@
+@use '../../scss/colors';
+
 .group-list {
   h4 {
-    background: hsl(0, 0%, 15%);
-    color: hsl(0, 0%, 100%);
+    background: colors.$secondary-background-color;
+    color: colors.$main-text-color;
     padding: 0.3em;
     margin: 0.1em auto;
     cursor: pointer;
   }
   p {
     cursor: pointer;
+    padding: 0.2em;
     &:hover {
-      color: white;
-      background-color: hsla(60, 81%, 28%, 0.3);
+      background-color: colors.$secondary-inactive-color;
       font-weight: 600;
-      margin: 0.3em auto;
-      padding: 3px;
-      box-shadow: 0 0 10px hsl(60, 100%, 35%);
+      box-shadow: 0 0 10px colors.$main-inactive-color, 0 0 15px colors.$main-inactive-color,
+        0 0 20px colors.$main-inactive-color;
     }
   }
   .closed {

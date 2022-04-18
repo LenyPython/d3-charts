@@ -9,6 +9,11 @@ const PendingOrderButtons: React.FC<{ transaction: TransactionInfoHook }> = ({ t
   const dispatch = useAppDispatch()
   const symbol = useAppSelector(getCurrentChartSymbol)
   const { sl, tp, vol: volume, price } = transaction
+  /***********************
+   *
+   * get the data streaming from websocket price instead of ahard coding ask bid values
+   *
+   ************************************/
   const bid = 1.3
   const ask = 1.25
   const upDisabled = ask >= price

@@ -1,4 +1,3 @@
-import { TYPE } from './../../commands/index'
 import { call, delay, fork, Effect, takeLeading, put, take } from 'redux-saga/effects'
 import { IndexInterface } from '../MainConnection/types'
 import { GetSymbol, GetTrades } from '../MainConnection/commands'
