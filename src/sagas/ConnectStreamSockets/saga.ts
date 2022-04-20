@@ -1,3 +1,4 @@
+import { ConnectPriceStream } from './../../store/OpenedInstrumentsStream/actions'
 import { Effect, takeLeading, put, delay, fork } from 'redux-saga/effects'
 import { ConnectBalanceStream } from '../../store/Balance/actions'
 import { ApiRequestWorker } from '../../store/MainConnection/saga'
@@ -12,6 +13,8 @@ function* ConnectWebsocketsStreamsWorker(action: Effect<MAIN_SOCKET_ACTION, WebS
   yield put(ConnectBalanceStream())
   yield delay(200)
   yield put(ConnectTradesStream())
+  yield delay(200)
+  yield put(ConnectPriceStream())
   yield delay(200)
   yield fork(DownloadOpenTradesWorker, socket)
   yield fork(ApiRequestWorker, socket)

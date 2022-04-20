@@ -8,16 +8,17 @@ export enum ORDER {
 }
 
 export enum TRADES_ACTIONS {
-  connectStream = 'Trades/connect-stream',
+  connectTradeStream = 'Trades/connect-trade-stream',
+  connectPriceStream = 'Trades/connect-price-stream',
   orderTransaction = 'Trades/open-transaction',
   createCommand = 'Trade/create-command',
 }
 
 // Define a type for the slice state
 export interface UserTradesInterface {
-  openTrades: Record<string, TradeInterface>
-  closedTrades: Record<string, TradeInterface>
-  pendingTrades: Record<string, TradeInterface>
+  openTrades: Record<string, TradeDataInterface>
+  closedTrades: Record<string, TradeDataInterface>
+  pendingTrades: Record<string, TradeDataInterface>
 }
 export interface TradeTransactionInterface {
   symbol: string
@@ -46,7 +47,7 @@ export interface OrderInfo {
   tp?: number
   sl?: number
 }
-export interface TradeInterface {
+export interface TradeDataInterface {
   cmd: CMD
   type: TYPE
   symbol: string
@@ -67,16 +68,16 @@ export interface TradeInterface {
   sl: number
   tp: number
 }
-export const isUserTradesResponse = (data: APIResponse): data is TradeInterface[] => {
+export const isUserTradesResponse = (data: APIResponse): data is TradeDataInterface[] => {
   return (
     Array.isArray(data) &&
     data?.length > 0 &&
-    (data[0] as TradeInterface).order !== undefined &&
-    (data[0] as TradeInterface).volume !== undefined
+    (data[0] as TradeDataInterface).order !== undefined &&
+    (data[0] as TradeDataInterface).volume !== undefined
   )
 }
 
 export interface TradeResponse {
   command: STREAM_ANSWERS
-  data: TradeInterface
+  data: TradeDataInterface
 }

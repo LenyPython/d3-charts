@@ -1,9 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { TYPE } from '../../commands'
-import { TradeInterface, UserTradesInterface } from './types'
+import { TradeDataInterface, UserTradesInterface } from './types'
 
 const reducers = {
-  setTrade: (state: UserTradesInterface, action: PayloadAction<TradeInterface>) => {
+  setTrade: (state: UserTradesInterface, action: PayloadAction<TradeDataInterface>) => {
     const trade = action.payload
     console.log(trade)
     if (trade.closed) {
@@ -17,7 +16,7 @@ const reducers = {
       state.openTrades[trade.order] = trade
     }
   },
-  setTrades: (state: UserTradesInterface, action: PayloadAction<TradeInterface[]>) => {
+  setTrades: (state: UserTradesInterface, action: PayloadAction<TradeDataInterface[]>) => {
     const trades = action.payload
     trades.forEach((trade) => {
       if (trade.closed) {

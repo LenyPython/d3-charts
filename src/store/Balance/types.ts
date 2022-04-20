@@ -6,7 +6,7 @@ export enum BALANCE {
 }
 // Define a type for the slice state
 export interface BalanceDataInterface {
-  balance: UserBalance
+  balance: UserBalanceData
 }
 interface GeneralBalance {
   balance: number
@@ -15,23 +15,22 @@ interface GeneralBalance {
   margin: number
 }
 
-export interface UserBalance extends GeneralBalance {
+export interface UserBalanceData extends GeneralBalance {
   marginFree: number
   marginLevel: number
 }
-export interface BalanceResponse extends GeneralBalance {
+export interface BalanceData extends GeneralBalance {
   margin_free: number
   margin_level: number
 }
 
 export interface BalanceResponse {
   command: STREAM_ANSWERS.balance
-  data: UserBalance
+  data: UserBalanceData
 }
 
-export const isBalanceResponse = (data: APIResponse): data is BalanceResponse => {
+export const isBalanceResponse = (data: APIResponse): data is BalanceData => {
   return (
-    (data as BalanceResponse)?.balance !== undefined &&
-    (data as BalanceResponse)?.margin_free !== undefined
+    (data as BalanceData)?.balance !== undefined && (data as BalanceData)?.margin_free !== undefined
   )
 }

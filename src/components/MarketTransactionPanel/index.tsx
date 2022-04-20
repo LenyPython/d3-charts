@@ -4,10 +4,12 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { CMD, TYPE } from '../../commands'
 import { sendMarketOrderRequest } from '../../store/UserTrades/actions'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
+import { getTradesPrices } from '../../store/OpenedInstrumentsStream/selectors'
 
 const MarketTransactionPanel = () => {
   const dispatch = useAppDispatch()
   const symbol = useAppSelector(getCurrentChartSymbol)
+  const prices = useAppSelector(getTradesPrices)
   const [volume, setVolume] = useState(0.01)
   const marketOpenOrderHandler = (cmd: CMD) => {
     dispatch(
@@ -33,7 +35,8 @@ const MarketTransactionPanel = () => {
         step="0.01"
         value={volume}
       />
-      <br />
+      <p>ASK: {prices?.[symbol]?.ask}</p>
+      <p>BID: {prices?.[symbol]?.bid}</p>
       <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
         sell
       </button>

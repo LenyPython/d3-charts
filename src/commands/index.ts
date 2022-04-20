@@ -16,6 +16,7 @@ export enum STREAM_COMMANDS {
   getKeepAlive = 'getKeepAlive',
   getCandles = 'getCandles',
   getTrades = 'getTrades',
+  getTickPrices = 'getTickPrices',
   ping = 'ping',
 }
 export enum STREAM_ANSWERS {
@@ -23,6 +24,7 @@ export enum STREAM_ANSWERS {
   keepAlive = 'keepAlive',
   balance = 'balance',
   candle = 'candle',
+  tickPrices = 'tickPrices',
 }
 export const cmd = ['BUY', 'SELL', 'BUY LIMIT', 'SELL LIMIT', 'BUY STOP', 'SELL STOP']
 export enum CMD {

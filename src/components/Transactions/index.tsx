@@ -1,7 +1,7 @@
 import './transactions.css'
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { ORDER, TradeInterface } from '../../store/UserTrades/types'
+import { ORDER, TradeDataInterface } from '../../store/UserTrades/types'
 import { getClosedTrades, getOpenTrades, getPendingTrades } from '../../store/UserTrades/selectors'
 import { cmd, CMD, TYPE } from '../../commands'
 import { sendMarketOrderRequest } from '../../store/UserTrades/actions'
@@ -16,7 +16,7 @@ const Transactions = () => {
 
   const trades = useAppSelector(action)
   const TradesRows = [] as JSX.Element[]
-  const handleCloseTransaction = (trade: TradeInterface) => {
+  const handleCloseTransaction = (trade: TradeDataInterface) => {
     const { cmd, volume, order, symbol, customComment } = trade
     dispatch(
       sendMarketOrderRequest({

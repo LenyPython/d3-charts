@@ -34,6 +34,10 @@ export function* OpenTransactionWorker(action: Effect<TRADES_ACTIONS, OrderInfo>
     tp = 0,
     sl = 0,
   } = action.payload
+  /****************
+   *
+   * instead of pingin for price gate current saved ask bid prices from stream
+   */
   if (price === 0) {
     yield put(MakeAPIRequest(GetSymbol(symbol)))
     const { payload: data }: Effect<TRADES_ACTIONS, IndexInterface> = yield take(
@@ -59,6 +63,6 @@ export function* OpenTransactionWorker(action: Effect<TRADES_ACTIONS, OrderInfo>
 
 export default function* UserTradesWatcherSaga() {
   //WebSocket data stream
-  yield takeLeading(TRADES_ACTIONS.connectStream, CreateUserTradesSocketWorker)
+  yield takeLeading(TRADES_ACTIONS.connectTradeStream, CreateUserTradesSocketWorker)
   yield takeLeading(TRADES_ACTIONS.orderTransaction, OpenTransactionWorker)
 }

@@ -1,8 +1,9 @@
-import { BalanceResponse } from './../store/Balance/types'
+import { TradePriceData } from './../store/OpenedInstrumentsStream/types'
+import { BalanceData } from './../store/Balance/types'
 import { STREAM_ANSWERS, API_COMMANDS, STREAM_COMMANDS } from '../commands'
-import { UserBalance } from '../store/Balance/types'
+import { UserBalanceData } from '../store/Balance/types'
 import { IndexInterface, PriceDataResponse } from '../store/MainConnection/types'
-import { TradeInterface } from '../store/UserTrades/types'
+import { TradeDataInterface } from '../store/UserTrades/types'
 export type Emmiter = (input: unknown) => void
 
 //try to find a way to change ant type to correct typing
@@ -11,13 +12,13 @@ export type RequestCreator = (sessionId: string) => wsRequest
 export type instrumentsResponse = IndexInterface[]
 
 export type APIResponse =
-  | BalanceResponse
+  | BalanceData
   | instrumentsResponse
   | PriceDataResponse
-  | TradeInterface[]
+  | TradeDataInterface[]
   | IndexInterface
 
-export type StreamResponse = TradeInterface | UserBalance
+export type StreamResponse = TradeDataInterface | UserBalanceData | TradePriceData
 
 export interface StreamHandlersInterface {
   openHandler?: RequestCreator

@@ -1,16 +1,27 @@
-import { Emmiter } from '../../types'
-import { addLog } from '../Logger/slice'
+import { FIRST_SYMBOL } from './../../constants/index'
+import { SubscribeSymbolPrice } from './commands'
+import { Emmiter, StreamHandlersInterface } from '../../types'
 import { wsResponse } from '../../types'
-import { LOG } from '../Logger/types'
+import { setInstrumentPrice } from './slice'
+import { TradePriceResponse } from './types'
+import { STREAM_ANSWERS } from '../../commands'
 
-const handleResponse = (socket: WebSocket, emit: Emmiter, response: wsResponse) => {
-  if (!response)
-    emit(
-      addLog({
-        class: LOG.error,
-        msg: '[Request Error]: status undefined',
-      }),
-    )
+const isTradePriceResponse = (data: wsResponse): data is TradePriceResponse => {
+  return data.command === STREAM_ANSWERS.tickPrices && data.data !== undefined
+}
+const handlePriceStream = (emit: Emmiter, response: wsResponse) => {
+  if (isTradePriceResponse(response)) {
+    const { symbol, ask, bid } = response.data
+    emit(setInstrumentPrice({ symbol, data: { ask, bid } }))
+  }
+}
+const openHandler = (sessionId: string) => {
+  return SubscribeSymbolPrice(sessionId, FIRST_SYMBOL)
 }
 
-export default handleResponse
+export const PriceStreamHandlers: StreamHandlersInterface = {
+  openHandler,
+  messageHandler: handlePriceStream,
+  title: 'Price stream',
+  errorMsg: 'error in price stream',
+}
