@@ -35,14 +35,14 @@ const MarketTransactionPanel = () => {
         step="0.01"
         value={volume}
       />
-      <p>ASK: {prices?.[symbol]?.ask}</p>
-      <p>BID: {prices?.[symbol]?.bid}</p>
-      <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
-        sell
-      </button>
-      <button className="btn buy" onClick={() => marketOpenOrderHandler(CMD.BUY)}>
-        buy
-      </button>
+      <div>
+        <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
+          sell {prices?.[symbol]?.bid}
+        </button>
+        <button className="btn buy" onClick={() => marketOpenOrderHandler(CMD.BUY)}>
+          buy {prices?.[symbol]?.ask}
+        </button>
+      </div>
     </div>
   )
 }

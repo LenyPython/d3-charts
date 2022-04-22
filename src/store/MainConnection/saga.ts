@@ -23,15 +23,20 @@ import { isUserTradesResponse } from '../UserTrades/types'
 import { downloadChartData } from '../OpenedInstruments/actions'
 import { GetBalance } from '../Balance/commands'
 import { setBalanceFromResponse } from '../Balance/slice'
+import { setPricesTicks } from '../OpenedInstrumentsStream/slice'
 
 //implement utillty type checks for checking specific response types
 function* AccountDataDispatcher({ payload }: Effect<MAIN_SOCKET_ACTION, APIResponse>) {
   const returnData = payload
   if (isGetSymbolResponse(returnData)) yield put(sendOpenTransactionRequest(returnData))
-  else if (isGetAllSymbolsResponse(returnData)) yield put(setIndexes(hashInstruments(returnData)))
   else if (isPriceDataResponse(returnData)) yield call(saveChartDataWorker, returnData)
   else if (isUserTradesResponse(returnData)) yield put(setTrades(returnData))
   else if (isBalanceResponse(returnData)) yield put(setBalanceFromResponse(returnData))
+  else if (isGetAllSymbolsResponse(returnData)) {
+    const { prices, hashedIndexes } = hashInstruments(returnData)
+    yield put(setIndexes(hashedIndexes))
+    yield put(setPricesTicks(prices))
+  }
 }
 
 function* EstablishMainConnectionSaga({

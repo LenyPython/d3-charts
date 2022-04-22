@@ -25,7 +25,7 @@ export interface SmallChartsData extends Record<string, PriceData[]> {
   Hour1: PriceData[]
   Min15: PriceData[]
 }
-export type HashedInstrument = Omit<IndexInterface, 'groupName' | 'categoryName'>
+export type HashedInstrument = Omit<IndexInterface, 'groupName' | 'categoryName' | 'ask' | 'bid'>
 export interface HashedInstruments {
   [key: string]: { [key: string]: HashedInstrument[] }
 }

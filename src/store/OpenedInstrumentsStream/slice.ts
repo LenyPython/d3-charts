@@ -13,6 +13,6 @@ const TradePricesStream = createSlice({
   reducers,
 })
 
-export const { setInstrumentPrice } = TradePricesStream.actions
+export const { setInstrumentPrice, setPricesTicks } = TradePricesStream.actions
 
 export default TradePricesStream.reducer
