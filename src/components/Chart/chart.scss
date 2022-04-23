@@ -1,10 +1,12 @@
-.chart{
-	background: hsl(0, 0%, 9%);
-	width: 100%;
-	flex: 1 1;
-	&.small { cursor: pointer; }
+.chart {
+  background: hsl(0, 0%, 9%);
+  width: 100%;
+  flex: 1 1;
+  &.small {
+    cursor: pointer;
+  }
 }
 
 svg {
-	fill: white;
+  fill: white;
 }

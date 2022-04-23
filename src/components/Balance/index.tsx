@@ -1,15 +1,17 @@
 import { useAppSelector } from '../../app/hooks'
 import { getBalance } from '../../store/Balance/selectors'
-import { UserBalance } from '../../store/Balance/types'
+import { UserBalanceData } from '../../store/Balance/types'
+import './balance.css'
 
-const Balance: React.FC<{
-  onClick: React.MouseEventHandler<HTMLElement>
-}> = ({ onClick }) => {
-  const balance = useAppSelector(getBalance) as UserBalance
+const Balance = () => {
+  const balance = useAppSelector(getBalance) as UserBalanceData
 
   return (
-    <div id="balance" onClick={onClick}>
-      {`Balance: ${balance.balance} Equity: ${balance.equity} Margin: ${balance.margin}% MarginFree: ${balance.marginFree}% MarginLevel: ${balance.marginLevel}%`}
+    <div id="container-balance">
+      Balance: <span>{balance.balance} </span> Equity: <span>{balance.equity} </span>
+      Margin: <span>{balance.margin}% </span>
+      MarginFree: <span>{balance.marginFree}% </span>
+      MarginLevel: <span>{balance.marginLevel}%</span>
     </div>
   )
 }

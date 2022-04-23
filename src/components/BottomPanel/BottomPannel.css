@@ -1,15 +1,1 @@
-#lower-panel {
-  display: flex;
-  flex-direction: column;
-  padding: 0.3em;
-}
-#lower-panel .hidden {
-  overflow: hidden;
-  height: 0;
-}
-#lower-panel div {
-  border: 1px solid grey;
-  padding: 0.1em;
-}
-
-/*# sourceMappingURL=BottomPannel.css.map */
+#container-bottom-panel{position:relative;padding:.3em}#container-bottom-panel .hidden{overflow:hidden;height:0}#container-bottom-panel>div{border:1px solid gray;padding:.2em}#transaction-toggle{background-color:#000;position:absolute;font-size:.7em;top:0;left:175px;transform:translate(-50%, -70%)}#transaction-toggle.open{--color: #df2020}

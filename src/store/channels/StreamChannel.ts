@@ -1,3 +1,4 @@
+import { LOG } from './../Logger/types'
 import { eventChannel } from 'redux-saga'
 import { send } from '../../utils/websocket'
 import { RequestCreator } from '../../types'
@@ -14,9 +15,20 @@ const createWebSocketSTREAMChannel = (
   openHandler?: RequestCreator,
 ) => {
   return eventChannel((emit) => {
-    const errorHandler = (e: Event) => emit(addLog(`[${title}]: ${errorMessage}`))
+    const errorHandler = (e: Event) =>
+      emit(
+        addLog({
+          class: LOG.error,
+          msg: `[${title}]: ${errorMessage}`,
+        }),
+      )
     const closeHandler = (e: CloseEvent) => {
-      emit(addLog(`[${title}]: ${e.reason ? e.reason : `code: ${e.code}`}`))
+      emit(
+        addLog({
+          class: LOG.warning,
+          msg: `[${title}]: ${e.reason ? e.reason : `code: ${e.code}`}`,
+        }),
+      )
     }
     const pingAlive = (socket: WebSocket) => {
       if (socket.readyState === socket.OPEN) {
@@ -42,9 +54,18 @@ const createWebSocketSTREAMChannel = (
     socket.onmessage = (event: MessageEvent<any>) => {
       const response = JSON.parse(event.data)
       try {
+        //debug purpose of retrieving data from API
+        if (process.env.REACT_APP_DEBUG === 'true' && response.command !== 'keepAlive')
+          console.log(response)
         messageHandler(emit, response)
       } catch (e) {
-        if (e instanceof Error) emit(addLog(`[STREAM Msg Error]: ${e.message}`))
+        if (e instanceof Error)
+          emit(
+            addLog({
+              class: LOG.error,
+              msg: `[${title} Error]: ${e.message}`,
+            }),
+          )
       }
     }
 

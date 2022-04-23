@@ -1,16 +1,13 @@
-#chart-tabs{
-	display: flex;
-	overflow: hidden;
-	.tab {
-		font-size: 1rem;
-		border-radius: 10px 10px 0 0;
-		margin-right: .1em;
-		background: hsl(0, 0%, 35%);
-		cursor: pointer;
-	}
-	.active {
-		background: hsl(0, 0%, 15%);
-		transform: scale(110%) translateY(2px);
-	}
+@use '../../scss/colors';
 
+#chart-tabs {
+  overflow: hidden;
+  padding: 0 7px;
+  & > button {
+    --color: #{colors.$third-background-color};
+    font-size: 1rem;
+    &:hover {
+      --color: #{colors.$secondary-inactive-color};
+    }
+  }
 }

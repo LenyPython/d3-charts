@@ -13,6 +13,7 @@
 
 # misc
 **.css.map 
+.yarn/*
 .map
 .DS_Store
 .env

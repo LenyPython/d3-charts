@@ -1,32 +1,77 @@
+@use '../../scss/colors';
+
 #transactions {
-	flex: 1 1;
-	.tabs {
-		border: none;
-	}
-	.tab {
-		font-size: 1rem;
-		border-radius: 10px 10px 0 0;
-		margin-right: .1em;
-		background: hsl(0, 0%, 35%);
-		cursor: pointer;
-	}
-	.active {
-		background: hsl(0, 0%, 15%);
-		transform: scale(110%) translateY(2px);
-	}
+  flex: 1 1;
 }
-#orders-table{
-	width: 100%;
-	color: white;
-	margin-top: 3px;
-	tr{
-		td{
-			width: auto;
-			background: hsl(0, 0%, 25%);
-			padding: .2em;
-		}
-		td:nth-of-type(odd){
-			background: hsl(0, 0%, 15%);
-		}
-	}
+#container-btns {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: colors.$main-background-color;
+  button {
+    --color: #{colors.$third-background-color};
+    margin: 0.3em;
+    &:hover {
+      --color: #{colors.$secondary-inactive-color};
+    }
+  }
+}
+#orders-table {
+  text-align: right;
+  width: 100%;
+  margin-top: 3px;
+  thead tr {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.2rem;
+  }
+  tr {
+    font-size: 1rem;
+    &:hover {
+      box-shadow: 0 0 15px var(--profit-color), 0 0 25px var(--profit-color);
+    }
+    td {
+      width: auto;
+      padding: 0.2em;
+      background-color: var(--profit-color2);
+    }
+    td:nth-of-type(odd) {
+      background-color: var(--profit-color3);
+    }
+    td:first-child {
+      background-color: transparent;
+      width: 1%;
+      padding: 0;
+      text-align: right;
+    }
+  }
+  button {
+    --color: #{colors.$info-accent};
+    font-size: 1em;
+    font-weight: 800;
+    padding: 2px 1em;
+    &:hover {
+      --color: var(--profit-color);
+    }
+  }
+}
+.winning {
+  --profit-color: #{colors.$main-succes-color};
+  --profit-color2: #{colors.$secondary-succes-color};
+  --profit-color3: #{colors.$third-succes-color};
+}
+.lossing {
+  --profit-color: #{colors.$main-error-color};
+  --profit-color2: #{colors.$secondary-error-color};
+  --profit-color3: #{colors.$third-error-color};
+}
+.order-buy {
+  --profit-color: #{colors.$main-succes-color};
+  --profit-color2: #{colors.$main-info-color};
+  --profit-color3: #{colors.$third-succes-color};
+}
+.order-sell {
+  --profit-color: #{colors.$main-error-color};
+  --profit-color2: #{colors.$main-info-color};
+  --profit-color3: #{colors.$third-error-color};
 }

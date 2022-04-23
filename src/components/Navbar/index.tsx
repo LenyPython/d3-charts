@@ -6,7 +6,11 @@ import './nav.css'
 
 const Navbar = () => {
   const sessionId = useAppSelector(getSessionId)
-  return <nav id="Navigation">{!sessionId ? <LoginForm /> : <Statusbar />}</nav>
+  return (
+    <nav id="Navigation" className="df jcsb aic">
+      {!sessionId ? <LoginForm /> : <Statusbar />}
+    </nav>
+  )
 }
 
 export default Navbar

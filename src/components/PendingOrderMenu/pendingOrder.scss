@@ -1,0 +1,16 @@
+@use '../../scss/colors';
+
+#container-pending-order {
+  h5 {
+    margin: auto auto 1em;
+  }
+  input {
+    text-align: right;
+  }
+  .buy {
+    --color: #{colors.$main-succes-color};
+  }
+  .sell {
+    --color: #{colors.$main-error-color};
+  }
+}

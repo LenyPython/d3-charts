@@ -1,22 +1,23 @@
 import './charts.css'
 import Chart from '../Chart'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { getChartsData } from '../../store/OpenedInstruments/selectors'
-import { setMainChartData } from '../../store/OpenedInstruments/slice'
-import { PriceData } from '../../types'
+import { useAppSelector } from '../../app/hooks'
+import { getOpenedChartsData, getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 
-const ChartsList: React.FC<{ symbol: string }> = ({ symbol }) => {
-  const dispatch = useAppDispatch()
-  const Charts = useAppSelector(getChartsData)[symbol]
-  const setChart = (data: PriceData[]) => dispatch(setMainChartData(data))
+const ChartsList = () => {
+  const symbol = useAppSelector(getCurrentChartSymbol)
+  const Charts = useAppSelector(getOpenedChartsData)[symbol]
   const charts = [] as JSX.Element[]
   for (let key in Charts) {
     charts.push(
-      <Chart key={symbol + key} data={Charts[key]} symbol={key} onClick={setChart} limit={30} />,
+      <Chart key={symbol + '-' + key + '-small-chart'} id={key} data={Charts[key]} limit={30} />,
     )
   }
 
-  return <div id="chart-list">{charts}</div>
+  return (
+    <div id="chart-list" className="df">
+      {charts}
+    </div>
+  )
 }
 
 export default ChartsList

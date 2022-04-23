@@ -1,13 +1,5 @@
+import createAction from '../../utils/actionCreator'
 import { USER_CONNECTION } from './types'
 
-export const LoginUser = (): {
-  type: USER_CONNECTION
-} => ({
-  type: USER_CONNECTION.connect,
-})
-
-export const LogoutUser = (): {
-  type: USER_CONNECTION
-} => ({
-  type: USER_CONNECTION.disconnect,
-})
+export const LoginUser = createAction(USER_CONNECTION.connect)
+export const LogoutUser = createAction(USER_CONNECTION.disconnect)

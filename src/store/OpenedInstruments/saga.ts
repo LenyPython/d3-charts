@@ -1,11 +1,11 @@
 import { Effect, put, delay, call, take, takeLeading } from 'redux-saga/effects'
 import { PriceData } from '../../types'
 import { send } from '../../utils/websocket'
-import { DownloadChartDataCommands } from '../LoginData/commands'
+import { DownloadChartDataCommands } from './commands'
 import { WS } from '../LoginData/saga'
 import { saveChartData } from '../MainConnection/actions'
 import { MAIN_SOCKET_ACTION, PriceDataResponse } from '../MainConnection/types'
-import { addChartDataTab } from './slice'
+import { addChartDataTab, setCurrentCharts } from './slice'
 import { INSTRUMENTS_ACTIONS, SmallChartsData } from './types'
 
 export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, string>) {
@@ -13,12 +13,13 @@ export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, stri
   //get array of charts requests
   const requests = DownloadChartDataCommands(symbol)
   let InstrumentData: SmallChartsData = {
-    Min15: [] as PriceData[],
-    Hour1: [] as PriceData[],
-    Hour4: [] as PriceData[],
+    Week: [] as PriceData[],
     Day: [] as PriceData[],
-    Month: [] as PriceData[],
+    Hour4: [] as PriceData[],
+    Hour1: [] as PriceData[],
+    Min15: [] as PriceData[],
   }
+
   if (WS !== null) {
     for (let request of requests) {
       //get chart period from request
@@ -41,7 +42,7 @@ export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, stri
           InstrumentData.Day = prices
           break
         case 10080:
-          InstrumentData.Month = prices
+          InstrumentData.Week = prices
           break
       }
       //delay making request to API
@@ -53,6 +54,7 @@ export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, stri
         data: InstrumentData,
       }),
     )
+    yield put(setCurrentCharts(symbol))
   }
 }
 export function* saveChartDataWorker(returnData: PriceDataResponse) {
@@ -63,7 +65,7 @@ export function* saveChartDataWorker(returnData: PriceDataResponse) {
     open: item.open / correct,
     high: (item.open + item.high) / correct,
     low: (item.open + item.low) / correct,
-    ctm: item.ctm,
+    ctm: new Date(item.ctm),
     ctmString: item.ctmString,
     vol: item.vol,
   }))

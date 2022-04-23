@@ -1,0 +1,13 @@
+@use '../../scss/colors';
+
+#container-side-menu {
+  width: 350px;
+  & > * {
+    width: 100%;
+  }
+  button {
+    --color: #{colors.$main-text-color};
+    font-size: 1rem;
+    font-weight: 600;
+  }
+}

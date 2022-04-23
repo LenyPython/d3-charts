@@ -3,17 +3,21 @@ import Chart from '../Chart'
 import ChartsList from '../ChartsList'
 import ChartTabs from '../ChartTabs'
 import { useAppSelector } from '../../app/hooks'
-import { useState } from 'react'
-import { getMainChartData } from '../../store/OpenedInstruments/selectors'
+import {
+  getCurrentChartSymbol,
+  getMainChartTimeStamp,
+  getOpenedChartsData,
+} from '../../store/OpenedInstruments/selectors'
 
 const MainCharts = () => {
-  const [symbol, setSymbol] = useState('EURUSD')
-  const mainChartData = useAppSelector(getMainChartData)
+  const symbol = useAppSelector(getCurrentChartSymbol)
+  const timeStamp = useAppSelector(getMainChartTimeStamp)
+  const OpenedChartsData = useAppSelector(getOpenedChartsData)
   return (
     <div id="main-charts">
-      <ChartTabs symbol={symbol} setSymbol={setSymbol} />
-      <ChartsList symbol={symbol} />
-      <Chart data={mainChartData} symbol={symbol} />
+      <ChartTabs />
+      <ChartsList />
+      <Chart data={OpenedChartsData?.[symbol]?.[timeStamp]} id={`${timeStamp}-main`} />
     </div>
   )
 }

@@ -1,19 +1,25 @@
+@use '../../scss/colors';
+
 .group-list {
-	h4{
-		background: hsl(0, 0%, 15%);
-		color: hsl(0, 0%, 100%);
-		padding: .3em;
-		margin: .1em auto;
-		cursor: pointer;
-	}
-	p {
-		cursor: pointer;
-		&:hover {
-			color: white;
-		}
-	}
-	.closed{
-		height: 0;
-		overflow: hidden;
-	}
+  h4 {
+    background: colors.$secondary-background-color;
+    color: colors.$main-text-color;
+    padding: 0.3em;
+    margin: 0.1em auto;
+    cursor: pointer;
+  }
+  p {
+    cursor: pointer;
+    padding: 0.2em;
+    &:hover {
+      background-color: colors.$secondary-inactive-color;
+      font-weight: 600;
+      box-shadow: 0 0 10px colors.$main-inactive-color, 0 0 15px colors.$main-inactive-color,
+        0 0 20px colors.$main-inactive-color;
+    }
+  }
+  .closed {
+    height: 0;
+    overflow: hidden;
+  }
 }

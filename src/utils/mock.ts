@@ -27,7 +27,7 @@ export const createData = (num = 70): PriceData[] => {
       high: upOrDown > 0 ? close + rand : lastClose + rand,
       low: upOrDown > 0 ? lastClose - rand : close - rand,
       vol: 10,
-      ctm: 1245,
+      ctm: new Date(),
     })
     lastClose = data[data.length - 1].close
   }

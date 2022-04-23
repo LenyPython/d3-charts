@@ -1,9 +1,8 @@
 import * as d3 from 'd3'
-import { Selection, ScaleBand, ScaleLinear } from 'd3'
+import * as fc from 'd3fc'
 import { PriceData } from '../../types'
 
-const MARGIN = 10
-
+/*
 export function clearSVG(SVG: Selection<SVGSVGElement, unknown, null, undefined>) {
   SVG.selectAll('g').remove()
   SVG.selectAll('text').remove()
@@ -96,3 +95,4 @@ export function drawCandlesticks(
     .attr('y1', (d) => yScale(d.high))
     .attr('y2', (d) => yScale(d.low))
 }
+*/

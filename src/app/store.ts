@@ -6,6 +6,7 @@ import LoginDataReducer from '../store/LoginData/slice'
 import OpenedInstrumentsReducer from '../store/OpenedInstruments/slice'
 import LoggerReducer from '../store/Logger/slice'
 import UserTradesReducer from '../store/UserTrades/slice'
+import TradePricesStreamReducer from '../store/OpenedInstrumentsStream/slice'
 
 const sagaMiddleaware = createSagaMiddleware()
 
@@ -16,6 +17,7 @@ export const store = configureStore({
     UserTrades: UserTradesReducer,
     OpenedInstruments: OpenedInstrumentsReducer,
     Logger: LoggerReducer,
+    TradePricesStream: TradePricesStreamReducer,
   },
   middleware: [sagaMiddleaware],
 })

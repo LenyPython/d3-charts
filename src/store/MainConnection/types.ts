@@ -1,11 +1,15 @@
 import { APIResponse, PriceData } from '../../types'
 
 export enum MAIN_SOCKET_ACTION {
-  establishMainConnection = 'establish-main-connection',
-  saveChartData = 'save-chart-data',
-  getAccountData = 'get-account-data',
-  checkMainSocketResponse = 'check-response-type',
-  connectStream = 'Websocket-stream-connect',
+  establishMainConnection = 'Main/establish-connection',
+  saveChartData = 'Main/save-chart-data',
+  getAccountData = 'Main/get-account-data',
+  checkMainSocketResponse = 'Main/check-response-type',
+  connectStream = 'Main/Websocket-stream-connect',
+}
+export enum API_ACTION {
+  makeRequest = 'API/make-request',
+  getSymbolPrice = 'API/get-symbol-price',
 }
 
 export interface RequiredConncectionData {
@@ -14,11 +18,20 @@ export interface RequiredConncectionData {
 }
 
 export interface IndexInterface {
+  ask: number
+  bid: number
   swapLong: number
   swapShort: number
   symbol: string
   categoryName: string
   groupName: string
+}
+export const isGetSymbolResponse = (data: APIResponse): data is IndexInterface => {
+  return (
+    data !== undefined &&
+    (data as IndexInterface).ask !== undefined &&
+    (data as IndexInterface).bid !== undefined
+  )
 }
 export const isGetAllSymbolsResponse = (data: APIResponse): data is IndexInterface[] => {
   return (
