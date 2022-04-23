@@ -8,6 +8,7 @@ import { max, min, scaleLinear, scaleTime, format } from 'd3'
 import { createData } from '../../utils/mock'
 import { useLayoutEffect, useRef, useState } from 'react'
 import './chart.css'
+import Axis from './d3components/Scales'
 
 const Chart: React.FC<{
   data: PriceData[]
@@ -28,14 +29,11 @@ const Chart: React.FC<{
 
   if (!data) data = createData(100)
   const chartID = `${symbol}-${id}`
-  /*   const height = SVG.clientHeight
-  const width = SVG.innerWidth */
   const MARGIN = { TOP: 50, BOTTOM: 50, LEFT: 50, RIGHT: 50 }
   const xScale = scaleDiscontinuous(scaleTime())
     .discontinuityProvider(discontinuitySkipWeekends())
     .domain([data[0].ctm, data[data.length - 1].ctm])
     .range([MARGIN.LEFT, WIDTH - MARGIN.RIGHT])
-  const xScaleFormat = format('.5f')
   const yScale = scaleLinear()
     .domain([min(data, (d: PriceData) => d.low)!, max(data, (d: PriceData) => d.high)!])
     .range([HEIGHT - MARGIN.BOTTOM, MARGIN.TOP])
@@ -46,17 +44,24 @@ const Chart: React.FC<{
       onClick={() => limit && dispatch(setMainChartData({ data, timeStamp: id }))}
     >
       <Title svgWidth={WIDTH} title={chartID} />
-      {xScale.ticks().map((tickValue: Date) => {
+      <Axis xScale={xScale} yScale={yScale} WIDTH={WIDTH} HEIGHT={HEIGHT} MARGIN={MARGIN} />
+      {data.map((d: PriceData) => {
         return (
-          <g key={tickValue.toDateString()} transform={`translate(${xScale(tickValue)}, 0)`}>
-            <text y={HEIGHT - MARGIN.BOTTOM}>{tickValue.toLocaleDateString()}</text>
-          </g>
-        )
-      })}
-      {yScale.ticks().map((tickValue: number) => {
-        return (
-          <g key={tickValue} transform={`translate(0, ${yScale(tickValue)})`}>
-            <text x={WIDTH - MARGIN.RIGHT}>{xScaleFormat(tickValue)}</text>
+          <g key={`candleStick-${d.ctmString}`}>
+            <line
+              className={d.open < d.close ? 'tick upCandle' : 'tick downCandle'}
+              x1={xScale(d.ctm)}
+              x2={xScale(d.ctm)}
+              y1={yScale(d.low)}
+              y2={yScale(d.high)}
+            />
+            <line
+              className={d.open < d.close ? 'body upCandle' : 'body downCandle'}
+              x1={xScale(d.ctm)}
+              x2={xScale(d.ctm)}
+              y1={yScale(d.open)}
+              y2={yScale(d.close)}
+            />
           </g>
         )
       })}

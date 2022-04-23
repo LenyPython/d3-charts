@@ -9,10 +9,27 @@
   &.small {
     cursor: pointer;
   }
-  g {
-    text {
-      fill: colors.$main-text-color;
-      text-anchor: middle;
+  text {
+    fill: colors.$main-text-color;
+    text-anchor: middle;
+    &.yTick {
+      font-size: 0.8em;
+      text-anchor: start;
+    }
+  }
+  line {
+    stroke: colors.$main-text-color;
+    &.tick {
+      stroke-width: 2px;
+    }
+    &.body {
+      stroke-width: 6px;
+    }
+    &.upCandle {
+      stroke: colors.$main-succes-color;
+    }
+    &.downCandle {
+      stroke: colors.$main-error-color;
     }
   }
 }
