@@ -1,12 +1,18 @@
+@use '../../scss/colors';
+
 .chart {
-  background: hsl(0, 0%, 9%);
+  border: 2px solid colors.$main-text-color;
+  background: colors.$main-background-color;
   width: 100%;
+  height: 100%;
   flex: 1 1;
   &.small {
     cursor: pointer;
   }
-}
-
-svg {
-  fill: white;
+  g {
+    text {
+      fill: colors.$main-text-color;
+      text-anchor: middle;
+    }
+  }
 }
