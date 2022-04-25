@@ -1,33 +1,29 @@
 import { PriceData } from '../types'
 
-let lastClose = Math.random() * 2 + 1
-let month = Math.floor(Math.random() * 11) + 1
-let year = Math.floor(Math.random() * 20) + 2000
+const startDate = new Date()
+const second = 1000
+const minute = second * 60
+const min15 = minute * 15
+const hour = min15 * 4
+const hour4 = hour * 4
+const day = hour4 * 6
 
 export const createData = (num = 70): PriceData[] => {
   let data = [] as PriceData[]
+  let lastClose = 1
   for (let i = 1; i <= num; i++) {
-    let j = i % 31
-    if (j === 0) {
-      month++
-      if (month === 13) {
-        year++
-        month = 1
-      }
-      continue
-    }
+    const date = new Date(startDate.getTime() + i * min15)
     let upOrDown = Math.random() < 0.5 ? 1 : -1
-    if (lastClose < 0.6) upOrDown = 1
     let close = lastClose + upOrDown * Math.random() * 0.2
     let rand = Math.random() * 0.02
     data.push({
-      ctmString: `${j}/${month}/${year}`,
+      ctmString: date.toDateString(),
       open: lastClose,
       close: close,
       high: upOrDown > 0 ? close + rand : lastClose + rand,
       low: upOrDown > 0 ? lastClose - rand : close - rand,
       vol: 10,
-      ctm: new Date(`${j}/${month}/${year}`),
+      ctm: date,
     })
     lastClose = data[data.length - 1].close
   }

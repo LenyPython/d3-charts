@@ -1,14 +1,14 @@
 import Title from './d3components/Title'
+import Axis from './d3components/Axis'
 import { PriceData } from '../../types'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { setMainChartData } from '../../store/OpenedInstruments/slice'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
-import { discontinuitySkipWeekends, scaleDiscontinuous } from 'd3fc'
-import { max, min, scaleLinear, scaleTime, format } from 'd3'
+import { max, min, scaleLinear, scaleBand } from 'd3'
 import { createData } from '../../utils/mock'
 import { useLayoutEffect, useRef, useState } from 'react'
 import './chart.css'
-import Axis from './d3components/Scales'
+import Candlesticks from './d3components/Candlesitcks'
 
 const Chart: React.FC<{
   data: PriceData[]
@@ -25,15 +25,18 @@ const Chart: React.FC<{
       setHeight(svgRef.current.clientHeight)
       setWidth(svgRef.current.clientWidth)
     }
-  }, [])
+  }, [svgRef.current.clientHeight, svgRef.current.clientWidth])
 
   if (!data) data = createData(100)
+  if (limit) data = data.slice(data.length - limit)
   const chartID = `${symbol}-${id}`
-  const MARGIN = { TOP: 50, BOTTOM: 50, LEFT: 50, RIGHT: 50 }
-  const xScale = scaleDiscontinuous(scaleTime())
-    .discontinuityProvider(discontinuitySkipWeekends())
-    .domain([data[0].ctm, data[data.length - 1].ctm])
-    .range([MARGIN.LEFT, WIDTH - MARGIN.RIGHT])
+  const MARGIN = { TOP: 40, BOTTOM: 50, LEFT: 30, RIGHT: 60 }
+  const xScale = scaleBand()
+    .domain(data.map((d: PriceData) => d.ctmString))
+    .rangeRound([MARGIN.LEFT, WIDTH - MARGIN.RIGHT])
+    .padding(0.1)
+    .align(0.5)
+
   const yScale = scaleLinear()
     .domain([min(data, (d: PriceData) => d.low)!, max(data, (d: PriceData) => d.high)!])
     .range([HEIGHT - MARGIN.BOTTOM, MARGIN.TOP])
@@ -44,27 +47,15 @@ const Chart: React.FC<{
       onClick={() => limit && dispatch(setMainChartData({ data, timeStamp: id }))}
     >
       <Title svgWidth={WIDTH} title={chartID} />
-      <Axis xScale={xScale} yScale={yScale} WIDTH={WIDTH} HEIGHT={HEIGHT} MARGIN={MARGIN} />
-      {data.map((d: PriceData) => {
-        return (
-          <g key={`candleStick-${d.ctmString}`}>
-            <line
-              className={d.open < d.close ? 'tick upCandle' : 'tick downCandle'}
-              x1={xScale(d.ctm)}
-              x2={xScale(d.ctm)}
-              y1={yScale(d.low)}
-              y2={yScale(d.high)}
-            />
-            <line
-              className={d.open < d.close ? 'body upCandle' : 'body downCandle'}
-              x1={xScale(d.ctm)}
-              x2={xScale(d.ctm)}
-              y1={yScale(d.open)}
-              y2={yScale(d.close)}
-            />
-          </g>
-        )
-      })}
+      <Axis
+        xScale={xScale}
+        yScale={yScale}
+        WIDTH={WIDTH}
+        HEIGHT={HEIGHT}
+        MARGIN={MARGIN}
+        limit={limit !== undefined}
+      />
+      <Candlesticks xScale={xScale} yScale={yScale} data={data} />
     </svg>
   )
 }
