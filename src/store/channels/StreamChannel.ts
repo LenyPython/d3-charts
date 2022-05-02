@@ -47,8 +47,7 @@ const createWebSocketSTREAMChannel = (
       //to specific types of data
       //i could start a saga on opening
       if (openHandler) {
-        msg = openHandler(sessionId)
-        send(socket, msg)
+        openHandler(sessionId, socket, emit)
       }
     }
     socket.onmessage = (event: MessageEvent<any>) => {

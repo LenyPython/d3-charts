@@ -4,11 +4,11 @@ import { STREAM_ANSWERS, API_COMMANDS, STREAM_COMMANDS } from '../commands'
 import { UserBalanceData } from '../store/Balance/types'
 import { IndexInterface, PriceDataResponse } from '../store/MainConnection/types'
 import { TradeDataInterface } from '../store/UserTrades/types'
-export type Emmiter = (input: unknown) => void
+export type Emitter = (input: unknown) => void
 
 //try to find a way to change ant type to correct typing
-export type ResponseHandler = (emit: Emmiter, data: wsResponse) => void
-export type RequestCreator = (sessionId: string) => wsRequest
+export type ResponseHandler = (emit: Emitter, data: wsResponse) => void
+export type RequestCreator = (sessionId: string, socket: WebSocket, emit: Emitter) => void
 export type instrumentsResponse = IndexInterface[]
 
 export type APIResponse =

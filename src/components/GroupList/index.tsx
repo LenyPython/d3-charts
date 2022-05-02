@@ -13,7 +13,7 @@ const GroupList: React.FC<{
   const symbol = useAppSelector(getCurrentChartSymbol)
   const [isOpen, setIsOpen] = useState(false)
 
-  const switchInsturment = (symbol: string) => dispatch(downloadChartData(symbol))
+  const switchInstrument = (symbol: string) => dispatch(downloadChartData(symbol))
 
   return (
     <div className="group-list">
@@ -23,7 +23,7 @@ const GroupList: React.FC<{
           <p
             key={instr.symbol}
             className={instr.symbol === symbol ? 'tab-active' : ''}
-            onClick={() => switchInsturment(instr.symbol)}
+            onClick={() => switchInstrument(instr.symbol)}
           >
             {instr.symbol}
           </p>

@@ -1,3 +1,4 @@
+import { subscribeToPriceStream } from './../OpenedInstrumentsStream/actions'
 import { Effect, put, delay, call, take, takeLeading } from 'redux-saga/effects'
 import { PriceData } from '../../types'
 import { send } from '../../utils/websocket'
@@ -21,6 +22,7 @@ export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, stri
   }
 
   if (WS !== null) {
+    yield put(subscribeToPriceStream(symbol))
     for (let request of requests) {
       //get chart period from request
       const period = request.arguments.info.period

@@ -8,7 +8,7 @@ import { max, min, scaleLinear, scaleBand } from 'd3'
 import { createData } from '../../utils/mock'
 import { useLayoutEffect, useRef, useState } from 'react'
 import './chart.css'
-import Candlesticks from './d3components/Candlesitcks'
+import Candlesticks from './d3components/Candlesticks'
 
 const Chart: React.FC<{
   data: PriceData[]
@@ -25,7 +25,7 @@ const Chart: React.FC<{
       setHeight(svgRef.current.clientHeight)
       setWidth(svgRef.current.clientWidth)
     }
-  }, [svgRef.current.clientHeight, svgRef.current.clientWidth])
+  }, [])
 
   if (!data) data = createData(100)
   if (limit) data = data.slice(data.length - limit)

@@ -1,18 +1,19 @@
-import { Emmiter, StreamHandlersInterface, wsResponse } from '../../types'
+import { Emitter, StreamHandlersInterface, wsResponse } from '../../types'
 import { setBalance } from '../../store/Balance/slice'
 import { SubscribeBalance } from './commands'
 import { BalanceResponse } from './types'
 import { STREAM_ANSWERS } from '../../commands'
+import { send } from '../../utils/websocket'
 
 const isBalance = (data: wsResponse): data is BalanceResponse => {
   return data.command === STREAM_ANSWERS.balance && data.data !== undefined
 }
-const handleBalanceStream = (emit: Emmiter, response: wsResponse) => {
+const handleBalanceStream = (emit: Emitter, response: wsResponse) => {
   if (isBalance(response)) emit(setBalance(response.data))
 }
 
-const openHandler = (sessionId: string) => {
-  return SubscribeBalance(sessionId)
+const openHandler = (sessionId: string, socket: WebSocket, emit: Emitter) => {
+  send(socket, SubscribeBalance(sessionId))
 }
 
 export const BalanceHandlers: StreamHandlersInterface = {

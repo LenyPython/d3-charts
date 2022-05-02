@@ -1,3 +1,4 @@
+import { subscribeToPriceStream } from './../OpenedInstrumentsStream/actions'
 import { CMD, TYPE, STREAM_ANSWERS } from '../../commands'
 import { APIResponse } from '../../types'
 
@@ -10,6 +11,8 @@ export enum ORDER {
 export enum TRADES_ACTIONS {
   connectTradeStream = 'Trades/connect-trade-stream',
   connectPriceStream = 'Trades/connect-price-stream',
+  subscribeToPriceStream = 'Trades/subscribe-to-price-stream',
+  OpenPriceStreamWorker = 'Trades/open-price-stream',
   orderTransaction = 'Trades/open-transaction',
   createCommand = 'Trade/create-command',
 }
