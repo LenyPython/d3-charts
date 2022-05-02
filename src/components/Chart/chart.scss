@@ -19,9 +19,22 @@
       font-size: 0.7em;
       text-anchor: start;
     }
+    &.price {
+      font-size: 0.6rem;
+      text-anchor: end;
+    }
+    &.buy {
+      fill: colors.$main-succes-color;
+    }
+    &.sell {
+      fill: colors.$main-error-color;
+    }
   }
   line {
     stroke: colors.$main-text-color;
+    &.currentPrice {
+      stroke-dasharray: (2, 3);
+    }
     &.upCandle {
       stroke: colors.$main-succes-color;
     }

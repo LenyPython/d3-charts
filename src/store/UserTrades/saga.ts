@@ -1,12 +1,14 @@
-import { call, delay, fork, Effect, takeLeading, put, take } from 'redux-saga/effects'
-import { IndexInterface } from '../MainConnection/types'
-import { GetSymbol, GetTrades } from '../MainConnection/commands'
+import { getInstrumentCurrentPrice } from './../OpenedInstrumentsStream/selectors'
+import { call, delay, fork, Effect, takeLeading, put, select } from 'redux-saga/effects'
+import { GetTrades } from '../MainConnection/commands'
 import { send } from '../../utils/websocket'
 import { WebSocketStreamCreator } from '../channels/WebSocketConnection'
 import { UserTradesHandlers } from './handler'
 import { OrderInfo, TRADES_ACTIONS } from './types'
 import { MakeAPIRequest } from './actions'
 import { OpenTransactionRequestCreator } from './commands'
+import { CMD } from '../../commands'
+import { TradePricesInterface } from '../OpenedInstrumentsStream/types'
 
 function* CreateUserTradesSocketWorker() {
   yield fork(WebSocketStreamCreator, UserTradesHandlers)
@@ -25,7 +27,7 @@ export function* OpenTransactionWorker(action: Effect<TRADES_ACTIONS, OrderInfo>
     symbol,
     cmd,
     type,
-    price = 0,
+    price = null,
     customComment = 'Bot buy',
     offset = 0,
     order = 0,
@@ -38,12 +40,10 @@ export function* OpenTransactionWorker(action: Effect<TRADES_ACTIONS, OrderInfo>
    *
    * instead of pingin for price gate current saved ask bid prices from stream
    */
-  if (price === 0) {
-    yield put(MakeAPIRequest(GetSymbol(symbol)))
-    const { payload: data }: Effect<TRADES_ACTIONS, IndexInterface> = yield take(
-      TRADES_ACTIONS.createCommand,
-    )
-    price = data.ask
+  if (price === null) {
+    const prices: Record<string, TradePricesInterface> = yield select(getInstrumentCurrentPrice)
+    if (cmd === CMD.SELL) price = prices[symbol].bid
+    else price = prices[symbol].ask
   }
   const msg = OpenTransactionRequestCreator({
     type,

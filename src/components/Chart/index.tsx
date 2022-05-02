@@ -9,6 +9,7 @@ import { createData } from '../../utils/mock'
 import { useLayoutEffect, useRef, useState } from 'react'
 import './chart.css'
 import Candlesticks from './d3components/Candlesticks'
+import PriceLine from './d3components/PriceLine'
 
 const Chart: React.FC<{
   data: PriceData[]
@@ -55,6 +56,15 @@ const Chart: React.FC<{
         MARGIN={MARGIN}
         limit={limit !== undefined}
       />
+      <PriceLine
+        yScale={yScale}
+        xScale={xScale}
+        WIDTH={WIDTH}
+        MARGIN={MARGIN}
+        limit={limit !== undefined}
+        xValue={data.slice(-1)[0].ctmString}
+      />
+
       <Candlesticks xScale={xScale} yScale={yScale} data={data} />
     </svg>
   )

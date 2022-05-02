@@ -1,4 +1,3 @@
-import { subscribeToPriceStream } from './../OpenedInstrumentsStream/actions'
 import { CMD, TYPE, STREAM_ANSWERS } from '../../commands'
 import { APIResponse } from '../../types'
 

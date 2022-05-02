@@ -4,12 +4,12 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { CMD, TYPE } from '../../commands'
 import { sendMarketOrderRequest } from '../../store/UserTrades/actions'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
-import { getTradesPrices } from '../../store/OpenedInstrumentsStream/selectors'
+import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
 
 const MarketTransactionPanel = () => {
   const dispatch = useAppDispatch()
   const symbol = useAppSelector(getCurrentChartSymbol)
-  const prices = useAppSelector(getTradesPrices)
+  const prices = useAppSelector(getInstrumentCurrentPrice)
   const [volume, setVolume] = useState(0.01)
   const marketOpenOrderHandler = (cmd: CMD) => {
     dispatch(
