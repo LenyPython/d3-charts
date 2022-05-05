@@ -14,6 +14,7 @@ export enum TRADES_ACTIONS {
   OpenPriceStreamWorker = 'Trades/open-price-stream',
   orderTransaction = 'Trades/open-transaction',
   createCommand = 'Trade/create-command',
+  updatePriceFromTick = 'Trade/update-price-from-tick',
 }
 
 // Define a type for the slice state

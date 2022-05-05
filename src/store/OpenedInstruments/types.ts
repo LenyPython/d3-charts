@@ -7,7 +7,6 @@ export enum INSTRUMENTS_ACTIONS {
 // Define a type for the slice state
 export interface OpenedInstrumentsInterface {
   indexes: HashedInstruments
-  mainChartData: PriceData[]
   timeStamp: string
   symbol: string
   //hash symbol to array of smaller charts

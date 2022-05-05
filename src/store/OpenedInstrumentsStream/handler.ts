@@ -1,9 +1,8 @@
-import { OpenPriceStreamWorker } from './actions'
+import { OpenPriceStreamWorker, updateInstrumentPriceFromTick } from './actions'
 import { FIRST_SYMBOL } from './../../constants/index'
 import { SubscribeToSymbolPriceStream } from './commands'
 import { Emitter, StreamHandlersInterface } from '../../types'
 import { wsResponse } from '../../types'
-import { setInstrumentPrice } from './slice'
 import { TradePriceResponse } from './types'
 import { STREAM_ANSWERS } from '../../commands'
 import { send } from '../../utils/websocket'
@@ -13,8 +12,7 @@ const isTradePriceResponse = (data: wsResponse): data is TradePriceResponse => {
 }
 const handlePriceStream = (emit: Emitter, response: wsResponse) => {
   if (isTradePriceResponse(response)) {
-    const { symbol, ask, bid } = response.data
-    emit(setInstrumentPrice({ symbol, data: { ask, bid } }))
+    emit(updateInstrumentPriceFromTick(response.data))
   }
 }
 const openHandler = (sessionId: string, socket: WebSocket, emit: Emitter) => {

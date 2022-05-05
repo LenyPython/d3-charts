@@ -4,12 +4,10 @@ const Axis: React.FC<{
   MARGIN: { TOP: number; BOTTOM: number; LEFT: number; RIGHT: number }
   WIDTH: number
   HEIGHT: number
-  xScale: any
   yScale: any
   limit?: boolean
-}> = ({ MARGIN, WIDTH, HEIGHT, xScale, yScale, limit }) => {
+}> = ({ MARGIN, WIDTH, HEIGHT, yScale, limit }) => {
   const xScaleFormat = format('.5f')
-  const yOffset = 20
   const xOffset = 2
   return (
     <>
@@ -19,23 +17,6 @@ const Axis: React.FC<{
         y1={MARGIN.TOP}
         y2={HEIGHT - MARGIN.BOTTOM}
       />
-      {!limit &&
-        xScale
-          .domain()
-          .filter((d: string, i: number) => i % 25 === 0)
-          .map((tick: string, i: number) => {
-            return (
-              <text
-                className="xTick"
-                key={`${i}-${tick}`}
-                transform={`translate(${xScale(tick)},${HEIGHT - MARGIN.BOTTOM + yOffset}) 
-                rotate(90)`}
-              >
-                {tick}
-              </text>
-            )
-          })}
-
       <line
         x1={MARGIN.LEFT}
         x2={WIDTH - MARGIN.RIGHT}
