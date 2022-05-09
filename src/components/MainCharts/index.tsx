@@ -1,6 +1,5 @@
 import './maincharts.css'
 import Chart from '../Chart'
-import ChartsList from '../ChartsList'
 import ChartTabs from '../ChartTabs'
 import { useAppSelector } from '../../app/hooks'
 import {
@@ -14,10 +13,14 @@ const MainCharts = () => {
   const timeStamp = useAppSelector(getMainChartTimeStamp)
   const OpenedChartsData = useAppSelector(getOpenedChartsData)
   return (
-    <div id="main-charts">
+    <div id="main-charts" className="container dfc">
       <ChartTabs />
-      <ChartsList />
-      <Chart data={OpenedChartsData?.[symbol]?.[timeStamp]} id={`${timeStamp}-main`} />
+      <div className="container df fw jcs ais">
+        <Chart data={OpenedChartsData?.[symbol]?.[timeStamp]} />
+        <Chart data={OpenedChartsData?.[symbol]?.[timeStamp]} />
+        <Chart data={OpenedChartsData?.[symbol]?.[timeStamp]} />
+        <Chart data={OpenedChartsData?.[symbol]?.[timeStamp]} />
+      </div>
     </div>
   )
 }

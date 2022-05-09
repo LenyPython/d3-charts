@@ -16,6 +16,22 @@ const Candlesticks: React.FC<{
                         High ${d.high}
                         Low ${d.low}
         `}</title>
+            {i >= 2 &&
+              i < data.length - 3 &&
+              data[i - 1].low > d.low &&
+              data[i - 2].low > d.low &&
+              data[i + 1].low > d.low &&
+              data[i + 2].low > d.low && (
+                <circle cx={xScale(d.ctmString)} cy={yScale(d.low) + 5} r={2} fill={'blue'} />
+              )}
+            {i >= 2 &&
+              i < data.length - 3 &&
+              data[i - 1].high < d.high &&
+              data[i - 2].high < d.high &&
+              data[i + 1].high < d.high &&
+              data[i + 2].high < d.high && (
+                <circle cx={xScale(d.ctmString)} cy={yScale(d.high) - 5} r={2} fill={'orange'} />
+              )}
             <line
               className={d.open < d.close ? 'tick upCandle' : 'tick downCandle'}
               x1={xScale(d.ctmString)}

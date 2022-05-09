@@ -10,11 +10,12 @@ const reducers = {
     const { symbol, ask: price } = action.payload
     if (state.openedChartsTabs[symbol] === undefined) return
     for (let timestamp in state.openedChartsTabs[symbol]) {
-      const low = state.openedChartsTabs[symbol][timestamp].at(-1)!.low
-      const high = state.openedChartsTabs[symbol][timestamp].at(-1)!.high
-      if (low > price) state.openedChartsTabs[symbol][timestamp].at(-1)!.low = price
-      if (high < price) state.openedChartsTabs[symbol][timestamp].at(-1)!.high = price
-      state.openedChartsTabs[symbol][timestamp].at(-1)!.close = price
+      const last = state.openedChartsTabs[symbol][timestamp].length - 1
+      const low = state.openedChartsTabs[symbol][timestamp][last]!.low
+      const high = state.openedChartsTabs[symbol][timestamp][last]!.high
+      if (low > price) state.openedChartsTabs[symbol][timestamp][last]!.low = price
+      if (high < price) state.openedChartsTabs[symbol][timestamp][last]!.high = price
+      state.openedChartsTabs[symbol][timestamp][last]!.close = price
     }
   },
   setCurrentCharts: (state: OpenedInstrumentsInterface, action: PayloadAction<string>) => {

@@ -36,10 +36,6 @@ export function* OpenTransactionWorker(action: Effect<TRADES_ACTIONS, OrderInfo>
     tp = 0,
     sl = 0,
   } = action.payload
-  /****************
-   *
-   * instead of pingin for price gate current saved ask bid prices from stream
-   */
   if (price === null) {
     const prices: Record<string, TradePricesInterface> = yield select(getInstrumentCurrentPrice)
     if (cmd === CMD.SELL) price = prices[symbol].bid

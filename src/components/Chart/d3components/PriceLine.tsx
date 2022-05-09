@@ -7,13 +7,11 @@ const PriceLine: React.FC<{
   WIDTH: number
   yScale: any
   xScale: any
-  limit: boolean
   xValue: string
-}> = ({ MARGIN, WIDTH, limit, yScale, xScale, xValue }) => {
+}> = ({ MARGIN, WIDTH, yScale, xScale, xValue }) => {
   const symbol = useAppSelector(getCurrentChartSymbol)
   const price = useAppSelector(getInstrumentCurrentPrice)[symbol]
   const offSet = 5
-  if (limit || !price?.ask || !price.bid) return <></>
   return (
     <>
       <line

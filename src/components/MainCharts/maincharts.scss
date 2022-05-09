@@ -1,9 +1,9 @@
+@use '../../scss/colors';
+
 #main-charts {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid grey;
+  border: 1px solid colors.$secondary-background-color;
   padding: 0.3em;
   margin: 0 0.3em;
 }

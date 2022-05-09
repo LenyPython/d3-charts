@@ -18,7 +18,6 @@ export interface ChartsDataPayload {
   data: SmallChartsData
 }
 export interface SmallChartsData extends Record<string, PriceData[]> {
-  Week: PriceData[]
   Day: PriceData[]
   Hour4: PriceData[]
   Hour1: PriceData[]

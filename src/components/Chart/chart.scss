@@ -2,15 +2,17 @@
 
 .chart {
   background: colors.$main-background-color;
-  width: inherit;
-  height: inherit;
-  flex: 1 1;
+  width: 50%;
   &.small {
     cursor: pointer;
+  }
+  .none-selectable {
+    pointer-events: none;
   }
   text {
     fill: colors.$main-text-color;
     text-anchor: middle;
+    z-index: -1;
     &.xTick {
       text-anchor: start;
       font-size: 0.6em;

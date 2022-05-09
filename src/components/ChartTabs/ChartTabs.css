@@ -1,1 +1,1 @@
-#chart-tabs{overflow:hidden;padding:0 7px}#chart-tabs>button{--color: gray;font-size:1rem}#chart-tabs>button:hover{--color: rgba(255, 255, 0, 0.7)}
+#chart-tabs{overflow-x:auto;padding:0 7px}#chart-tabs>button{--color: gray;font-size:1rem}#chart-tabs>button:hover{--color: rgba(255, 255, 0, 0.6)}

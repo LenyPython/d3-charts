@@ -14,7 +14,6 @@ export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, stri
   //get array of charts requests
   const requests = DownloadChartDataCommands(symbol)
   let InstrumentData: SmallChartsData = {
-    Week: [] as PriceData[],
     Day: [] as PriceData[],
     Hour4: [] as PriceData[],
     Hour1: [] as PriceData[],
