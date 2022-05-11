@@ -2,11 +2,11 @@ import { PriceData } from '../types'
 
 const startDate = new Date()
 const second = 1000
-const minute = second * 60
-const min15 = minute * 15
-// const hour = min15 * 4
-// const hour4 = hour * 4
-// const day = hour4 * 6
+export const minute = second * 60
+export const min15 = minute * 15
+export const hour = min15 * 4
+export const hour4 = hour * 4
+export const day = hour4 * 6
 
 export const createData = (num = 70): PriceData[] => {
   let data = [] as PriceData[]
