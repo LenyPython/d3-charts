@@ -17,16 +17,12 @@ const Chart: React.FC<{
   if (process.env.REACT_DEBUG === 'true') data = createData(100)
   if (!data) data = []
 
-  const xScale = scaleTime().range([MARGIN.LEFT, WIDTH - MARGIN.RIGHT])
-  const yScale = scaleLinear().range([HEIGHT - MARGIN.BOTTOM, MARGIN.TOP])
-
   const yExtent = fc.extentLinear().accessors([(d: PriceData) => d.high, (d: PriceData) => d.low])
   const xExtent = fc.extentTime().accessors([(d: PriceData) => d.ctm])
 
   const candlestick = fc
-    .seriesSvgCandlestick()
-    .xScale(xScale)
-    .yScale(yScale)
+    .autoBandwidth(fc.seriesSvgCandlestick())
+    .crossValue((d: PriceData) => d.ctm)
     .highValue((d: PriceData) => d.high)
     .lowValue((d: PriceData) => d.low)
     .openValue((d: PriceData) => d.open)
@@ -34,7 +30,7 @@ const Chart: React.FC<{
 
   const multi = fc.seriesSvgMulti().series([candlestick])
 
-  const chart = fc.chartCartesian(xScale, yScale).svgPlotArea(multi)
+  const chart = fc.chartCartesian({ xScale: scaleTime(), yScale: scaleLinear() }).svgPlotArea(multi)
 
   chart.xDomain(xExtent(data))
   chart.yDomain(yExtent(data))
