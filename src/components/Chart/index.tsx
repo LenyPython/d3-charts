@@ -20,6 +20,13 @@ const Chart: React.FC<{
   const yExtent = fc.extentLinear().accessors([(d: PriceData) => d.high, (d: PriceData) => d.low])
   const xExtent = fc.extentTime().accessors([(d: PriceData) => d.ctm])
 
+  const yScale = scaleLinear()
+  const xScale = fc
+    .scaleDiscontinuous(scaleTime())
+    .discontinuityProvider(fc.discontinuitySkipWeekends())
+    .domain(xExtent(data))
+    .ticks(8)
+
   const candlestick = fc
     .autoBandwidth(fc.seriesSvgCandlestick())
     .crossValue((d: PriceData) => d.ctm)
@@ -30,9 +37,8 @@ const Chart: React.FC<{
 
   const multi = fc.seriesSvgMulti().series([candlestick])
 
-  const chart = fc.chartCartesian({ xScale: scaleTime(), yScale: scaleLinear() }).svgPlotArea(multi)
+  const chart = fc.chartCartesian({ xScale, yScale }).svgPlotArea(multi)
 
-  chart.xDomain(xExtent(data))
   chart.yDomain(yExtent(data))
 
   useEffect(() => {
