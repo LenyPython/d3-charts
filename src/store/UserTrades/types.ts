@@ -10,8 +10,11 @@ export enum ORDER {
 export enum TRADES_ACTIONS {
   connectTradeStream = 'Trades/connect-trade-stream',
   connectPriceStream = 'Trades/connect-price-stream',
+  subscribeToPriceStream = 'Trades/subscribe-to-price-stream',
+  OpenPriceStreamWorker = 'Trades/open-price-stream',
   orderTransaction = 'Trades/open-transaction',
   createCommand = 'Trade/create-command',
+  updatePriceFromTick = 'Trade/update-price-from-tick',
 }
 
 // Define a type for the slice state

@@ -1,1 +1,1 @@
-.chart{background:#171717;width:100%;flex:1 1}.chart.small{cursor:pointer}svg{fill:#fff}
+.svg-chart{width:100%;height:100%}path.domain{stroke:#fff}g.tick path{stroke:#fff}g.tick text{fill:#fff}

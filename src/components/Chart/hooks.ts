@@ -16,6 +16,9 @@ export const useDrawCandleStickChart = (
     if (!chartRef.current) return
     if (!data) return
     const DIV = d3.select(chartRef.current)
+    const render = () => {
+      DIV.datum(data).call(chart)
+    }
 
     const yExtent = fc.extentLinear().accessors([(d: PriceData) => d.high, (d: PriceData) => d.low])
     const xExtent = fc.extentTime().accessors([(d: PriceData) => d.ctm])
@@ -25,7 +28,7 @@ export const useDrawCandleStickChart = (
       .domain(xExtent(data))
       .nice()
     const mainScaleY = d3.scaleLinear()
-    // const zoom = fc.zoom().on('zoom', render)
+    const zoom = fc.zoom().on('zoom', render)
 
     const candlestick = fc
       .autoBandwidth(fc.seriesSvgCandlestick())
@@ -35,7 +38,7 @@ export const useDrawCandleStickChart = (
       .openValue((d: PriceData) => d.open)
       .closeValue((d: PriceData) => d.close)
     const multi = fc.seriesSvgMulti().series([candlestick])
-    const TICKS = smallChart ? { ticks: 0, format: '' } : getTicks(ID)
+    const TICKS = smallChart ? { ticks: 0, formatX: '', formatY: '' } : getTicks(ID)
     const chart = fc
       .chartCartesian({
         xScale: mainDiscontinuedScaleX,
@@ -45,7 +48,8 @@ export const useDrawCandleStickChart = (
       .svgPlotArea(multi)
       .yDomain(yExtent(data))
       .xTicks(TICKS.ticks)
-      .xTickFormat(TICKS.format)
+      .xTickFormat(TICKS.formatX)
+      .yTickFormat(TICKS.formatY)
       .yDecorate((selection: any) => {
         selection.select('text').attr('fill', 'white')
       })
@@ -55,9 +59,6 @@ export const useDrawCandleStickChart = (
           .attr('transform', 'translate(0 25) rotate(90)')
           .attr('fill', 'white')
       })
-
-    DIV.datum(data).call(chart)
-    /*
       .decorate((sel: any) => {
         if (!smallChart) {
           sel.enter().select('.plot-area').call(zoom, mainDiscontinuedScaleX, mainScaleY)
@@ -65,12 +66,7 @@ export const useDrawCandleStickChart = (
           sel.enter().select('.y-axis').call(zoom, null, mainScaleY)
         }
       })
-
     render()
-    */
-    /*     return () => {
-      DIV.on('.zoom', null)
-    } */
   }, [data, symbol, ID, downColor, upColor, chartRef, smallChart])
 }
 
@@ -90,5 +86,5 @@ function getTicks(ID: string) {
     ticks = d3.timeHour.filter((d) => d.getDay() !== 0 && d.getDay() !== 6)
     format = d3.timeFormat('%H.00')
   }
-  return { ticks, format }
+  return { ticks, formatX: format, formatY: d3.format('.5f') }
 }

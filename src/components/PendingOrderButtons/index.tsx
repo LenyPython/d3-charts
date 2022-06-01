@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { CMD, TYPE } from '../../commands'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
+import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
 import { sendMarketOrderRequest } from '../../store/UserTrades/actions'
 import { TransactionInfoHook } from '../PendingOrderMenu'
 import './pendingOrderBtn.css'
@@ -9,13 +10,7 @@ const PendingOrderButtons: React.FC<{ transaction: TransactionInfoHook }> = ({ t
   const dispatch = useAppDispatch()
   const symbol = useAppSelector(getCurrentChartSymbol)
   const { sl, tp, vol: volume, price } = transaction
-  /***********************
-   *
-   * get the data streaming from websocket price instead of ahard coding ask bid values
-   *
-   ************************************/
-  const bid = 1.3
-  const ask = 1.25
+  const { ask, bid } = useAppSelector(getInstrumentCurrentPrice)[symbol]
   const upDisabled = ask >= price
   const downDisabled = bid <= price
   const handlePlacePendingOrder = (cmd: CMD) => {

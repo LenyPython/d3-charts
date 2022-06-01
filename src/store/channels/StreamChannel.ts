@@ -47,16 +47,16 @@ const createWebSocketSTREAMChannel = (
       //to specific types of data
       //i could start a saga on opening
       if (openHandler) {
-        msg = openHandler(sessionId)
-        send(socket, msg)
+        openHandler(sessionId, socket, emit)
       }
     }
     socket.onmessage = (event: MessageEvent<any>) => {
       const response = JSON.parse(event.data)
       try {
         //debug purpose of retrieving data from API
-        if (process.env.REACT_APP_DEBUG === 'true' && response.command !== 'keepAlive')
+        if (process.env.REACT_APP_DEBUG === 'true' && response.command !== 'keepAlive') {
           console.log(response)
+        }
         messageHandler(emit, response)
       } catch (e) {
         if (e instanceof Error)

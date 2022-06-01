@@ -1,5 +1,5 @@
-import { wsRequest } from './../../types/index';
-import { API_COMMANDS } from './../../commands/index';
+import { wsRequest } from './../../types/index'
+import { API_COMMANDS } from './../../commands/index'
 
 //comented out not interesting times periods
 const PERIOD: Record<string, number> = {
@@ -7,7 +7,7 @@ const PERIOD: Record<string, number> = {
   HOUR_1: 60,
   HOUR_4: 240,
   DAY: 1440,
-  WEEK: 10080,
+  //WEEK: 10080,
   //MIN = 1,
   //MIN_5 = 5,
   //MIN_30 = 30,

@@ -1,1 +1,1 @@
-#main-charts{width:100%;min-height:100%;display:flex;flex-direction:column;border:1px solid gray;resize:vertical;overflow-y:auto;padding:.3em;margin:0 .3em}
+#main-charts{width:100%;height:100%;border:1px solid #262626;padding:.3em;margin:0 .3em}#chart-container{position:relative;display:grid;grid-template-columns:50% 50%;grid-template-rows:50% 50%}

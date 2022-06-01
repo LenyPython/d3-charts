@@ -1,4 +1,4 @@
-import { Emmiter } from '../../types'
+import { Emitter } from '../../types'
 import { addLog } from '../../store/Logger/slice'
 import {
   sendResponseToTypeCheck,
@@ -7,7 +7,7 @@ import {
 import { wsResponse } from '../../types'
 import { LOG } from '../Logger/types'
 
-const handleResponse = (socket: WebSocket, emit: Emmiter, response: wsResponse) => {
+const handleResponse = (socket: WebSocket, emit: Emitter, response: wsResponse) => {
   if (!response)
     emit(
       addLog({
