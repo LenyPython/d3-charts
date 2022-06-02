@@ -11,6 +11,9 @@
 # production
 /build
 
+#files that might be needed
+/trash
+
 # misc
 **.css.map 
 .yarn/*
