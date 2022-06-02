@@ -9,7 +9,7 @@ const SideMenu = () => {
   const [type, setType] = useState<string>(IDX)
   const [isOpen, setIsOpen] = useState<boolean>(true)
   const handleClick = () => {
-    setIsOpen(!isOpen)
+    setIsOpen((isOpen) => !isOpen)
   }
   return (
     <div id="container-main-side-menu">
