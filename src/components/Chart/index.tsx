@@ -5,10 +5,6 @@ import { PriceData } from '../../types'
 import { createData } from '../../utils/mock'
 import './chart.css'
 
-const MARGIN = { TOP: 40, BOTTOM: 50, LEFT: 30, RIGHT: 60 }
-const WIDTH = 800
-const HEIGHT = 600
-
 const Chart: React.FC<{
   data: PriceData[]
 }> = ({ data }) => {
@@ -25,7 +21,6 @@ const Chart: React.FC<{
     .scaleDiscontinuous(scaleTime())
     .discontinuityProvider(fc.discontinuitySkipWeekends())
     .domain(xExtent(data))
-    .ticks(8)
 
   const candlestick = fc
     .autoBandwidth(fc.seriesSvgCandlestick())
