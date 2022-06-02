@@ -1,1 +1,1 @@
-#container-side-menu{width:350px}#container-side-menu>*{width:100%}#container-side-menu button{--color: white;font-size:1rem;font-weight:600}
+#container-main-side-menu{position:relative}#container-side-menu.open{width:350px}#container-side-menu.closed{width:0;overflow:hidden}#container-side-menu>*{width:100%}#container-side-menu button{--color: white;font-size:1rem;font-weight:600}#button-instruments-toggle{background-color:#000;position:fixed;width:25px;padding:50px 5px;font-size:.6em;top:10%;left:1px;z-index:10}#button-instruments-toggle.closed{--color: #df2020}
