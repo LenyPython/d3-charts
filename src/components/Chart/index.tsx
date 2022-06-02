@@ -1,31 +1,45 @@
-import './chart.css'
-import { useRef } from 'react'
-import { useDrawCandleStickChart } from './hooks'
+import { select, scaleLinear, scaleTime } from 'd3'
+import * as fc from 'd3fc'
+import { useEffect, useRef } from 'react'
 import { PriceData } from '../../types'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { setMainChartData } from '../../store/OpenedInstruments/slice'
-import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
+import { createData } from '../../utils/mock'
+import './chart.css'
 
 const Chart: React.FC<{
   data: PriceData[]
-  id: string
-  limit?: number
-}> = ({ data, limit, id }) => {
-  let croped = data
-  if (limit) croped = data?.slice(-limit)
-  const symbol = useAppSelector(getCurrentChartSymbol)
-  const dispatch = useAppDispatch()
-  const chartID = `${symbol}-${id}`
-  const chartRef = useRef<HTMLDivElement>(null!)
-  useDrawCandleStickChart(chartRef, chartID, symbol, croped, limit !== undefined)
+}> = ({ data }) => {
+  const svgRef = useRef<HTMLDivElement>(null!)
 
-  return (
-    <div
-      ref={chartRef}
-      className={`chart ${limit ? 'small' : ''}`}
-      onClick={() => limit && dispatch(setMainChartData({ data, timeStamp: id }))}
-    ></div>
-  )
+  if (process.env.REACT_DEBUG === 'true') data = createData(100)
+  if (!data) data = []
+
+  const yExtent = fc.extentLinear().accessors([(d: PriceData) => d.high, (d: PriceData) => d.low])
+  const xExtent = fc.extentTime().accessors([(d: PriceData) => d.ctm])
+
+  const yScale = scaleLinear()
+  const xScale = fc
+    .scaleDiscontinuous(scaleTime())
+    .discontinuityProvider(fc.discontinuitySkipWeekends())
+    .domain(xExtent(data))
+
+  const candlestick = fc
+    .autoBandwidth(fc.seriesSvgCandlestick())
+    .crossValue((d: PriceData) => d.ctm)
+    .highValue((d: PriceData) => d.high)
+    .lowValue((d: PriceData) => d.low)
+    .openValue((d: PriceData) => d.open)
+    .closeValue((d: PriceData) => d.close)
+
+  const multi = fc.seriesSvgMulti().series([candlestick])
+
+  const chart = fc.chartCartesian({ xScale, yScale }).svgPlotArea(multi)
+
+  chart.yDomain(yExtent(data))
+
+  useEffect(() => {
+    select(svgRef.current).datum(data).call(chart)
+  }, [data, chart])
+  return <div ref={svgRef}></div>
 }
 
 export default Chart

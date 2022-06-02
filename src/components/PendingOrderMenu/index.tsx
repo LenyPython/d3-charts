@@ -1,14 +1,20 @@
 import MarketTransactionPanel from '../MarketTransactionPanel'
-import { useAppSelector } from '../../app/hooks'
-import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
-import './pendingOrder.css'
-import React, { useState } from 'react'
 import PendingOrderButtons from '../PendingOrderButtons'
+import { useAppSelector } from '../../app/hooks'
+import { useState, useEffect } from 'react'
+import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
+import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
+import './pendingOrder.css'
 
-const PendingOrdenMenu = () => {
+const PendingOrderMenu = () => {
   const symbol = useAppSelector(getCurrentChartSymbol)
   const transaction = useTransactionInfo()
+  const currentPrice = useAppSelector(getInstrumentCurrentPrice)[symbol].bid
   const { sl, setSl, tp, setTp, vol, setVol, price, setPrice } = transaction
+  useEffect(() => {
+    setPrice(currentPrice)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     if (target.name === 'tp') setTp(+target.value)
@@ -41,7 +47,7 @@ const PendingOrdenMenu = () => {
     </div>
   )
 }
-export default PendingOrdenMenu
+export default PendingOrderMenu
 
 const useTransactionInfo = () => {
   const [sl, setSl] = useState<number>(0)

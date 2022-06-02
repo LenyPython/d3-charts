@@ -1,12 +1,23 @@
-.chart {
-  background: hsl(0, 0%, 9%);
+@use '../../scss/colors';
+
+.svg-chart {
   width: 100%;
-  flex: 1 1;
-  &.small {
-    cursor: pointer;
+  height: 100%;
+}
+
+path {
+  &.domain {
+    stroke: white;
   }
 }
 
-svg {
-  fill: white;
+g {
+  &.tick {
+    path {
+      stroke: white;
+    }
+    text {
+      fill: white;
+    }
+  }
 }

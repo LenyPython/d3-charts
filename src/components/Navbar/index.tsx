@@ -8,7 +8,7 @@ const Navbar = () => {
   const sessionId = useAppSelector(getSessionId)
   return (
     <nav id="Navigation" className="df jcsb aic">
-      {!sessionId ? <LoginForm /> : <Statusbar />}
+      {sessionId ? <Statusbar /> : <LoginForm />}
     </nav>
   )
 }
