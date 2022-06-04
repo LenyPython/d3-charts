@@ -9,12 +9,12 @@ const Chart: React.FC<{
   data: PriceData[]
 }> = ({ data }) => {
   const svgRef = useRef<HTMLDivElement>(null!)
-  const length = data.length
   const [zoomIndex, setZoomIndex] = useState<number>(0)
 
   if (process.env.REACT_DEBUG === 'true') data = createData(100)
   if (!data) data = []
-  else data = data.slice(zoomIndex)
+  const length = data.length
+  data = data.slice(zoomIndex)
 
   const yExtent = fc.extentLinear().accessors([(d: PriceData) => d.high, (d: PriceData) => d.low])
   // const xExtent = fc.extentTime().accessors([(d: PriceData) => d.ctmString])
