@@ -18,11 +18,11 @@ const Chart: React.FC<{
 
   const xScale = scaleBand()
     .domain(data.map((d: PriceData) => d.ctmString))
-    .range([0, 100])
+    .range([0, 800])
     .paddingOuter(5)
   const yScale = scaleLinear()
     .domain([min(data, (d: PriceData) => d.low)!, max(data, (d: PriceData) => d.low)!])
-    .range([0, 100])
+    .range([0, 600])
   /*   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (e.deltaY > 0 && zoomIndex >= 15) setZoomIndex((idx: number) => idx - 10)
     else if (e.deltaY > 0) setZoomIndex(0)
@@ -37,7 +37,13 @@ const Chart: React.FC<{
         <button className="btn-resize">{'<>'}</button>
       </div>
       <div className="svg-container df jcc aic">
-        <svg className="svg-main-chart" viewTarget="0 0 800 600" ref={svgRef}>
+        <svg
+          className="svg-main-chart"
+          viewTarget="0 0 800 600"
+          viewBox="0 0 800 600"
+          preserveAspectRatio="none"
+          ref={svgRef}
+        >
           {data.map((d: PriceData) => (
             <g key={d.ctmString}>
               <line
@@ -45,7 +51,8 @@ const Chart: React.FC<{
                 x2={xScale(d.ctmString)}
                 y1={yScale(d.high)}
                 y2={yScale(d.low)}
-                fill="red"
+                stroke="red"
+                strokeWidth={2}
               />{' '}
             </g>
           ))}
