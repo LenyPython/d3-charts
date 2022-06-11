@@ -1,63 +1,36 @@
-import { select, min, max, scaleLinear, scaleBand, extent } from 'd3'
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { PriceData } from '../../types'
 import { createData } from '../../utils/mock'
 import './chart.css'
+import Candlesticks from './d3components/Candlesticks'
+import { useResizeObserver } from './d3components/hooks'
+import createScales from './d3components/utils'
 
 const Chart: React.FC<{
   data: PriceData[]
   title: string
 }> = ({ data, title }) => {
-  const svgRef = useRef<SVGSVGElement>(null!)
-  const [zoomIndex, setZoomIndex] = useState<number>(0)
+  const candlesRef = useRef<HTMLDivElement>(null)
+  const size = useResizeObserver(candlesRef)
 
   if (process.env.REACT_DEBUG === 'true') data = createData(100)
   if (!data) data = []
-  const length = data.length
-  data = data.slice(zoomIndex)
-
-  const xScale = scaleBand()
-    .domain(data.map((d: PriceData) => d.ctmString))
-    .range([0, 800])
-    .paddingOuter(5)
-  const yScale = scaleLinear()
-    .domain([min(data, (d: PriceData) => d.low)!, max(data, (d: PriceData) => d.low)!])
-    .range([0, 600])
-  /*   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    if (e.deltaY > 0 && zoomIndex >= 15) setZoomIndex((idx: number) => idx - 10)
-    else if (e.deltaY > 0) setZoomIndex(0)
-    else if (zoomIndex < length - 30) setZoomIndex((idx: number) => idx + 10)
-  } */
+  const { xScale, yScale } = createScales(data, size)
   return (
-    <div className="chart-container" /* onWheel={handleWheel} */>
+    <div className="container-single-chart">
       <div className="chart-title df jcc aic">
-        <h3>{title}</h3>
+        <h3>------- {title} -------</h3>
       </div>
       <div className="container-top-right container df jcc aic">
         <button className="btn-resize">{'<>'}</button>
       </div>
-      <div className="svg-container df jcc aic">
-        <svg
-          className="svg-main-chart"
-          viewTarget="0 0 800 600"
-          viewBox="0 0 800 600"
-          preserveAspectRatio="none"
-          ref={svgRef}
-        >
-          {data.map((d: PriceData) => (
-            <g key={d.ctmString}>
-              <line
-                x1={xScale(d.ctmString)}
-                x2={xScale(d.ctmString)}
-                y1={yScale(d.high)}
-                y2={yScale(d.low)}
-                stroke="red"
-                strokeWidth={2}
-              />{' '}
-            </g>
-          ))}
-        </svg>
-      </div>
+      <Candlesticks
+        candlesRef={candlesRef}
+        size={size}
+        data={data}
+        xScale={xScale}
+        yScale={yScale}
+      />
     </div>
   )
 }
