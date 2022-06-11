@@ -7,8 +7,8 @@
   padding: 0.3em;
   margin: 0 0.3em;
 }
-#chart-container {
+#container-charts {
   position: relative;
-  display: grid;
-  grid-template-rows: 50% 50%;
+  display: flex;
+  flex-wrap: wrap;
 }

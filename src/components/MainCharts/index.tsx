@@ -10,7 +10,7 @@ const MainCharts = () => {
   return (
     <div id="main-charts" className="container dfc">
       <ChartTabs />
-      <div id="chart-container" className="container">
+      <div id="container-charts" className="container">
         <Chart data={OpenedChartsData?.[symbol]?.['Day']} title={symbol + ' Day'} />
         <Chart data={OpenedChartsData?.[symbol]?.['Hour4']} title={symbol + ' Hour4'} />
         <Chart data={OpenedChartsData?.[symbol]?.['Hour1']} title={symbol + ' Hour1'} />
