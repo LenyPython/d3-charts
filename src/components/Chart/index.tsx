@@ -1,5 +1,4 @@
-import { select, scaleLinear, scaleBand } from 'd3'
-import * as fc from 'd3fc'
+import { select, min, max, scaleLinear, scaleBand, extent } from 'd3'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import { PriceData } from '../../types'
 import { createData } from '../../utils/mock'
@@ -7,8 +6,9 @@ import './chart.css'
 
 const Chart: React.FC<{
   data: PriceData[]
-}> = ({ data }) => {
-  const svgRef = useRef<HTMLDivElement>(null!)
+  title: string
+}> = ({ data, title }) => {
+  const svgRef = useRef<SVGSVGElement>(null!)
   const [zoomIndex, setZoomIndex] = useState<number>(0)
 
   if (process.env.REACT_DEBUG === 'true') data = createData(100)
@@ -16,35 +16,43 @@ const Chart: React.FC<{
   const length = data.length
   data = data.slice(zoomIndex)
 
-  const yExtent = fc.extentLinear().accessors([(d: PriceData) => d.high, (d: PriceData) => d.low])
-  // const xExtent = fc.extentTime().accessors([(d: PriceData) => d.ctmString])
-
-  const yScale = scaleLinear().domain(yExtent(data))
   const xScale = scaleBand()
-    .domain(data.map((d) => d.ctmString))
+    .domain(data.map((d: PriceData) => d.ctmString))
+    .range([0, 100])
     .paddingOuter(5)
-
-  const candlestick = fc
-    .autoBandwidth(fc.seriesSvgCandlestick())
-    .crossValue((d: PriceData) => d.ctmString)
-    .highValue((d: PriceData) => d.high)
-    .lowValue((d: PriceData) => d.low)
-    .openValue((d: PriceData) => d.open)
-    .closeValue((d: PriceData) => d.close)
-
-  const multi = fc.seriesSvgMulti().series([candlestick])
-
-  const chart = fc.chartCartesian({ xScale, yScale }).svgPlotArea(multi).xTickValues([]).yNice()
-
-  useLayoutEffect(() => {
-    select(svgRef.current).datum(data).call(chart)
-  }, [data, chart])
-  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+  const yScale = scaleLinear()
+    .domain([min(data, (d: PriceData) => d.low)!, max(data, (d: PriceData) => d.low)!])
+    .range([0, 100])
+  /*   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (e.deltaY > 0 && zoomIndex >= 15) setZoomIndex((idx: number) => idx - 10)
     else if (e.deltaY > 0) setZoomIndex(0)
     else if (zoomIndex < length - 30) setZoomIndex((idx: number) => idx + 10)
-  }
-  return <div onWheel={handleWheel} ref={svgRef}></div>
+  } */
+  return (
+    <div className="chart-container" /* onWheel={handleWheel} */>
+      <div className="chart-title df jcc aic">
+        <h3>{title}</h3>
+      </div>
+      <div className="container-top-right container df jcc aic">
+        <button className="btn-resize">{'<>'}</button>
+      </div>
+      <div className="svg-container df jcc aic">
+        <svg className="svg-main-chart" viewTarget="0 0 800 600" ref={svgRef}>
+          {data.map((d: PriceData) => (
+            <g key={d.ctmString}>
+              <line
+                x1={xScale(d.ctmString)}
+                x2={xScale(d.ctmString)}
+                y1={yScale(d.high)}
+                y2={yScale(d.low)}
+                fill="red"
+              />{' '}
+            </g>
+          ))}
+        </svg>
+      </div>
+    </div>
+  )
 }
 
 export default Chart
