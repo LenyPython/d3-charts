@@ -5,8 +5,6 @@ import './chart.css'
 import Candlesticks from './d3components/Candlesticks'
 import { useResizeObserver } from './d3components/hooks'
 import createScales from './d3components/utils'
-import { ReactComponent as Maximize } from '../../svg/maximize.svg'
-import { ReactComponent as Minimize } from '../../svg/minimize.svg'
 import AxisBottom from './d3components/AxisBottom'
 import AxisRight from './d3components/AxisRight'
 
