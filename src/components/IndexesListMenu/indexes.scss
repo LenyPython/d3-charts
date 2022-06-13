@@ -19,7 +19,7 @@
       text-shadow: 0 0 20px var(--color), 0 0 15px var(--color), 0 0 10px var(--color);
     }
     &.active-group {
-      --color: #{colors.$main-succes-color};
+      --color: #{colors.$main-success-color};
       text-shadow: 0 0 20px var(--color), 0 0 15px var(--color), 0 0 10px var(--color);
     }
   }

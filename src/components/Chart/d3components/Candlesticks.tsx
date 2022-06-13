@@ -11,7 +11,7 @@ const Candlesticks: React.FC<{
   const svgRef = useRef<SVGSVGElement>(null)
 
   return (
-    <div className="svg-container df jcc aic container" ref={candlesRef}>
+    <div className="svg-container container" ref={candlesRef}>
       <svg
         className="svg-main-chart"
         viewBox={`0 0 ${size?.width ?? 500} ${size?.height ?? 300}`}

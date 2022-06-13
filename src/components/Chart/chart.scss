@@ -1,53 +1,77 @@
 @use '../../scss/colors';
 
-.container-single-chart {
-  $width: 40px;
-  $height: 40px;
-  width: 48%;
-  display: grid;
-  grid-template-rows: $height 50% $height;
-  grid-template-columns: $width 1fr $width;
-  grid-template-areas:
-    'btn-top-left title btn-top-right'
-    'panel-left main panel-right'
-    'btn-bottom-left panel-bottom-center btn-bottom-right';
+.wrapper-single-chart {
+  display: block;
+  border: 1px solid colors.$main-text-color;
   &.maximized {
     background-color: colors.$main-background-color;
     position: absolute;
     width: 100%;
-    height: 190%;
+    height: 100%;
+    z-index: 100;
+    svg {
+      fill: colors.$main-error-color !important;
+    }
   }
+}
+
+.container-single-chart {
+  div {
+    position: relative;
+  }
+  $width: 40px;
+  $height: 40px;
+  display: grid;
+  grid-template-rows: auto 1fr $height;
+  grid-template-columns: $width 1fr $width;
+  grid-template-areas:
+    'title title title'
+    'panel-left main panel-right'
+    'btn-bottom-left panel-bottom-center btn-bottom-right';
   .chart-title {
+    background-color: colors.$secondary-background-color;
+    border: 1px solid colors.$main-text-color;
     grid-area: title;
     h3 {
+      margin: 3px auto;
       font-size: 13px;
       letter-spacing: 2px;
       color: colors.$main-text-color;
     }
-  }
-  .container-top-right {
-    grid-area: btn-top-right;
-    .btn-resize {
-      --color: #{colors.$main-text-color};
-      font-size: 10px;
-      padding: auto;
-      width: calc($width / 2);
-      height: calc($height / 2);
+    &:hover {
+      cursor: pointer;
     }
   }
+  .panel-right {
+    grid-area: panel-right;
+  }
+  .container-bottom-center {
+    grid-area: panel-bottom-center;
+  }
   .svg-container {
+    position: relative;
+    display: block;
     grid-area: main;
   }
-  .svg-main-chart {
-    border: 1px solid white;
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 }
 
 line {
+  stroke: colors.$main-text-color;
   &.bull-candle {
-    stroke: colors.$secondary-succes-color;
+    stroke: colors.$secondary-success-color;
   }
   &.bear-candle {
     stroke: colors.$secondary-error-color;
+  }
+}
+text {
+  &.tick {
+    fill: colors.$main-text-color;
+    font-size: 10px;
   }
 }
