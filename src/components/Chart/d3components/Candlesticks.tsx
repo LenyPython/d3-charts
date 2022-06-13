@@ -1,4 +1,4 @@
-import { useRef, RefObject } from 'react'
+import React, { useRef, RefObject } from 'react'
 import { PriceData } from '../../../types'
 
 const Candlesticks: React.FC<{
@@ -6,12 +6,13 @@ const Candlesticks: React.FC<{
   candlesRef: RefObject<HTMLDivElement>
   xScale: any
   yScale: any
+  rescaleX: (e: React.WheelEvent) => void
   size: { width: number; height: number } | undefined
-}> = ({ data, xScale, yScale, candlesRef, size }) => {
+}> = ({ data, rescaleX, xScale, yScale, candlesRef, size }) => {
   const svgRef = useRef<SVGSVGElement>(null)
 
   return (
-    <div className="svg-container container" ref={candlesRef}>
+    <div className="svg-container container" onWheel={rescaleX} ref={candlesRef}>
       <svg
         className="svg-main-chart"
         viewBox={`0 0 ${size?.width ?? 500} ${size?.height ?? 300}`}

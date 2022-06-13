@@ -16,16 +16,24 @@ const Chart: React.FC<{
   const size = useResizeObserver(candlesRef)
   const [isOpen, setIsOpen] = useState(false)
   const [yResize, setYResize] = useState<number>(0)
+  const [xResize, setXResize] = useState<number>(0)
   useEffect(() => setYResize(0), [title])
 
   if (process.env.REACT_DEBUG === 'true') data = createData(100)
   if (!data) data = []
-  const { xScale, yScale } = createScales(data, size)
+  const length = data.length
+  const { xScale, yScale } = createScales(data.slice(xResize), size)
   const toggleFullScreen = () => setIsOpen((v) => !v)
   const rescaleY = (e: React.WheelEvent) => {
     if (e.deltaY > 0) setYResize((curr) => curr + data[0].high / 100)
     else setYResize((curr) => curr - data[0].high / 100)
   }
+  const rescaleX = (e: React.WheelEvent) => {
+    if (e.deltaY > 0 && xResize < length - 25) setXResize((curr) => curr + 5)
+    else if (xResize >= 5) setXResize((curr) => curr - 5)
+    else setXResize(0)
+  }
+
   const domain = yScale.domain()
   yScale.domain([domain[0] - yResize, domain[1] + yResize])
   return (
@@ -39,6 +47,7 @@ const Chart: React.FC<{
           candlesRef={candlesRef}
           size={size}
           data={data}
+          rescaleX={rescaleX}
           xScale={xScale}
           yScale={yScale}
         />
