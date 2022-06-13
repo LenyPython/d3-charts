@@ -29,7 +29,7 @@ const Chart: React.FC<{
     else setYResize((curr) => curr - data[0].high / 100)
   }
   const rescaleX = (e: React.WheelEvent) => {
-    if (e.deltaY > 0 && xResize < length - 25) setXResize((curr) => curr + 5)
+    if (e.deltaY < 0 && xResize < length - 25) setXResize((curr) => curr + 5)
     else if (xResize >= 5) setXResize((curr) => curr - 5)
     else setXResize(0)
   }
