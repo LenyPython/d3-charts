@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PriceData } from '../../types'
 import { createData } from '../../utils/mock'
 import './chart.css'
@@ -17,11 +17,19 @@ const Chart: React.FC<{
   const candlesRef = useRef<HTMLDivElement>(null)
   const size = useResizeObserver(candlesRef)
   const [isOpen, setIsOpen] = useState(false)
+  const [yResize, setYResize] = useState<number>(0)
+  useEffect(() => setYResize(0), [title])
 
   if (process.env.REACT_DEBUG === 'true') data = createData(100)
   if (!data) data = []
   const { xScale, yScale } = createScales(data, size)
   const toggleFullScreen = () => setIsOpen((v) => !v)
+  const rescaleY = (e: React.WheelEvent) => {
+    if (e.deltaY > 0) setYResize((curr) => curr + data[0].high / 100)
+    else setYResize((curr) => curr - data[0].high / 100)
+  }
+  const domain = yScale.domain()
+  yScale.domain([domain[0] - yResize, domain[1] + yResize])
   return (
     <div className={`wrapper-single-chart${isOpen ? ' maximized' : ''}`}>
       <div className="container-single-chart container">
@@ -37,7 +45,7 @@ const Chart: React.FC<{
           yScale={yScale}
         />
         <AxisBottom size={size} />
-        <AxisRight yScale={yScale} />
+        <AxisRight yScale={yScale} rescaleY={rescaleY} />
       </div>
     </div>
   )
