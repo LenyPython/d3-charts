@@ -4,13 +4,13 @@
   font-size: 1.3rem;
   font-weight: 600;
   span {
-    animation: colorfull 10s infinite alternate;
+    animation: colorful 10s infinite alternate;
   }
 }
 
-@keyframes colorfull {
+@keyframes colorful {
   0% {
-    color: colors.$main-succes-color;
+    color: colors.$main-success-color;
   }
   20% {
     color: colors.$main-text-color;

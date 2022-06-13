@@ -1,50 +1,61 @@
-import { select, scaleLinear, scaleBand } from 'd3'
-import * as fc from 'd3fc'
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PriceData } from '../../types'
 import { createData } from '../../utils/mock'
 import './chart.css'
+import Candlesticks from './d3components/Candlesticks'
+import { useResizeObserver } from './d3components/hooks'
+import createScales from './d3components/utils'
+import AxisBottom from './d3components/AxisBottom'
+import AxisRight from './d3components/AxisRight'
 
 const Chart: React.FC<{
   data: PriceData[]
-}> = ({ data }) => {
-  const svgRef = useRef<HTMLDivElement>(null!)
-  const [zoomIndex, setZoomIndex] = useState<number>(0)
+  title: string
+}> = ({ data, title }) => {
+  const candlesRef = useRef<HTMLDivElement>(null)
+  const size = useResizeObserver(candlesRef)
+  const [isOpen, setIsOpen] = useState(false)
+  const [yResize, setYResize] = useState<number>(0)
+  const [xResize, setXResize] = useState<number>(0)
+  useEffect(() => setYResize(0), [title])
 
   if (process.env.REACT_DEBUG === 'true') data = createData(100)
   if (!data) data = []
   const length = data.length
-  data = data.slice(zoomIndex)
-
-  const yExtent = fc.extentLinear().accessors([(d: PriceData) => d.high, (d: PriceData) => d.low])
-  // const xExtent = fc.extentTime().accessors([(d: PriceData) => d.ctmString])
-
-  const yScale = scaleLinear().domain(yExtent(data))
-  const xScale = scaleBand()
-    .domain(data.map((d) => d.ctmString))
-    .paddingOuter(5)
-
-  const candlestick = fc
-    .autoBandwidth(fc.seriesSvgCandlestick())
-    .crossValue((d: PriceData) => d.ctmString)
-    .highValue((d: PriceData) => d.high)
-    .lowValue((d: PriceData) => d.low)
-    .openValue((d: PriceData) => d.open)
-    .closeValue((d: PriceData) => d.close)
-
-  const multi = fc.seriesSvgMulti().series([candlestick])
-
-  const chart = fc.chartCartesian({ xScale, yScale }).svgPlotArea(multi).xTickValues([]).yNice()
-
-  useLayoutEffect(() => {
-    select(svgRef.current).datum(data).call(chart)
-  }, [data, chart])
-  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    if (e.deltaY > 0 && zoomIndex >= 15) setZoomIndex((idx: number) => idx - 10)
-    else if (e.deltaY > 0) setZoomIndex(0)
-    else if (zoomIndex < length - 30) setZoomIndex((idx: number) => idx + 10)
+  const { xScale, yScale } = createScales(data.slice(xResize), size)
+  const toggleFullScreen = () => setIsOpen((v) => !v)
+  const rescaleY = (e: React.WheelEvent) => {
+    if (e.deltaY > 0) setYResize((curr) => curr + data[0].high / 100)
+    else setYResize((curr) => curr - data[0].high / 100)
   }
-  return <div onWheel={handleWheel} ref={svgRef}></div>
+  const rescaleX = (e: React.WheelEvent) => {
+    if (e.deltaY < 0 && xResize < length - 25) setXResize((curr) => curr + 5)
+    else if (xResize >= 5) setXResize((curr) => curr - 5)
+    else setXResize(0)
+  }
+
+  const domain = yScale.domain()
+  yScale.domain([domain[0] - yResize, domain[1] + yResize])
+  return (
+    <div className={`wrapper-single-chart${isOpen ? ' maximized' : ''}`}>
+      <div className="container-single-chart container">
+        <div className="chart-title df jcc aic" onClick={toggleFullScreen}>
+          <h3>------- {title} -------</h3>
+        </div>
+        <div className="container-top-right container"></div>
+        <Candlesticks
+          candlesRef={candlesRef}
+          size={size}
+          data={data}
+          rescaleX={rescaleX}
+          xScale={xScale}
+          yScale={yScale}
+        />
+        <AxisBottom size={size} />
+        <AxisRight yScale={yScale} rescaleY={rescaleY} />
+      </div>
+    </div>
+  )
 }
 
 export default Chart

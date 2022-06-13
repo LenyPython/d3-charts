@@ -56,9 +56,9 @@
   }
 }
 .winning {
-  --profit-color: #{colors.$main-succes-color};
-  --profit-color2: #{colors.$secondary-succes-color};
-  --profit-color3: #{colors.$third-succes-color};
+  --profit-color: #{colors.$main-success-color};
+  --profit-color2: #{colors.$secondary-success-color};
+  --profit-color3: #{colors.$third-success-color};
 }
 .lossing {
   --profit-color: #{colors.$main-error-color};
@@ -66,9 +66,9 @@
   --profit-color3: #{colors.$third-error-color};
 }
 .order-buy {
-  --profit-color: #{colors.$main-succes-color};
+  --profit-color: #{colors.$main-success-color};
   --profit-color2: #{colors.$main-info-color};
-  --profit-color3: #{colors.$third-succes-color};
+  --profit-color3: #{colors.$third-success-color};
 }
 .order-sell {
   --profit-color: #{colors.$main-error-color};

@@ -7,9 +7,10 @@
   padding: 0.3em;
   margin: 0 0.3em;
 }
-#chart-container {
+#container-charts {
   position: relative;
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-gap: 4px;
   grid-template-rows: 50% 50%;
+  grid-template-columns: 50% 50%;
 }

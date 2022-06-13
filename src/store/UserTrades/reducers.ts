@@ -4,7 +4,6 @@ import { TradeDataInterface, UserTradesInterface } from './types'
 const reducers = {
   setTrade: (state: UserTradesInterface, action: PayloadAction<TradeDataInterface>) => {
     const trade = action.payload
-    console.log(trade)
     if (trade.closed) {
       delete state.openTrades[trade.position]
       state.closedTrades[trade.order2] = trade
