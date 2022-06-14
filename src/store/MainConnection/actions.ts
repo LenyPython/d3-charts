@@ -1,8 +1,8 @@
-import { RequiredConncectionData, MAIN_SOCKET_ACTION } from './types'
+import { RequiredConnectionData, MAIN_SOCKET_ACTION } from './types'
 import { APIResponse, PriceData } from '../../types'
 import createAction from '../../utils/actionCreator'
 
-export const EstablishMainConnection = createAction<RequiredConncectionData>(
+export const EstablishMainConnection = createAction<RequiredConnectionData>(
   MAIN_SOCKET_ACTION.establishMainConnection,
 )
 export const ConnectWebsockets = createAction<WebSocket>(MAIN_SOCKET_ACTION.connectStream)

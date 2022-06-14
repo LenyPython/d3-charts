@@ -1,7 +1,7 @@
 import { wsRequest } from './../../types/index'
 import { API_COMMANDS } from './../../commands/index'
 
-//comented out not interesting times periods
+//commented out not interesting times periods
 const PERIOD: Record<string, number> = {
   MIN_15: 15,
   HOUR_1: 60,

@@ -9,3 +9,9 @@ export const SubscribeToSymbolPriceStream = (
   streamSessionId,
   symbol,
 })
+
+export const SubscribeToGet1MinCandle = (streamSessionId: string, symbol: string): wsRequest => ({
+  command: STREAM_COMMANDS.get1MinCandle,
+  streamSessionId,
+  symbol,
+})
