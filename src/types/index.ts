@@ -18,7 +18,7 @@ export type APIResponse =
   | TradeDataInterface[]
   | IndexInterface
 
-export type StreamResponse = TradeDataInterface | UserBalanceData | TradePriceData
+export type StreamResponse = TradeDataInterface | UserBalanceData | TradePriceData | PriceData
 
 export interface StreamHandlersInterface {
   openHandler?: RequestCreator

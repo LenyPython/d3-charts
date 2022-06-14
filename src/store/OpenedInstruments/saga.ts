@@ -1,3 +1,4 @@
+import { TRADES_ACTIONS } from './../UserTrades/types'
 import { subscribeToPriceStream } from './../OpenedInstrumentsStream/actions'
 import { Effect, put, delay, call, take, takeLeading } from 'redux-saga/effects'
 import { PriceData } from '../../types'
@@ -73,7 +74,14 @@ export function* saveChartDataWorker(returnData: PriceDataResponse) {
   yield put(saveChartData(data))
 }
 
+function* updateOpenedCharts({ payload }: Effect<TRADES_ACTIONS, PriceData>) {
+  /*********************************
+   * *
+   * * implement this feature to update Daily, 4h, 1h chart */
+}
+
 export default function* OpenedInstrumentsWatcherSaga() {
   //get API chart data worker
   yield takeLeading(INSTRUMENTS_ACTIONS.downloadChartData, downloadChartDataWorker)
+  yield takeLeading(TRADES_ACTIONS.updateAllCharts, updateOpenedCharts)
 }

@@ -12,7 +12,7 @@ export enum API_ACTION {
   getSymbolPrice = 'API/get-symbol-price',
 }
 
-export interface RequiredConncectionData {
+export interface RequiredConnectionData {
   sessionId: string
   socket: WebSocket
 }

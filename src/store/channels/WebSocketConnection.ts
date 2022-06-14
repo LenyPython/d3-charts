@@ -15,7 +15,7 @@ export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
     const socket = new WebSocket(URL)
     yield put(
       addLog({
-        class: LOG.succes,
+        class: LOG.success,
         msg: `[${title}]: stream open`,
       }),
     )

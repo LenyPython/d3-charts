@@ -25,8 +25,9 @@ const Chart: React.FC<{
   const { xScale, yScale } = createScales(data.slice(xResize), size)
   const toggleFullScreen = () => setIsOpen((v) => !v)
   const rescaleY = (e: React.WheelEvent) => {
-    if (e.deltaY > 0) setYResize((curr) => curr + data[0].high / 100)
-    else setYResize((curr) => curr - data[0].high / 100)
+    const currentDomain = yScale.domain()
+    if (e.deltaY > 0) setYResize((curr) => curr + currentDomain[0] / 200)
+    else setYResize((curr) => curr - currentDomain[0] / 200)
   }
   const rescaleX = (e: React.WheelEvent) => {
     if (e.deltaY < 0 && xResize < length - 25) setXResize((curr) => curr + 5)

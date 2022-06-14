@@ -17,14 +17,17 @@ export enum STREAM_COMMANDS {
   getCandles = 'getCandles',
   getTrades = 'getTrades',
   getTickPrices = 'getTickPrices',
+  get1MinCandle = 'getCandle',
   ping = 'ping',
 }
+
 export enum STREAM_ANSWERS {
   trades = 'trade',
   keepAlive = 'keepAlive',
   balance = 'balance',
   candle = 'candle',
   tickPrices = 'tickPrices',
+  getCandleResponse = 'candle',
 }
 export const cmd = ['BUY', 'SELL', 'BUY LIMIT', 'SELL LIMIT', 'BUY STOP', 'SELL STOP']
 export enum CMD {

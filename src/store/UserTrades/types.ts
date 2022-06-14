@@ -15,6 +15,7 @@ export enum TRADES_ACTIONS {
   orderTransaction = 'Trades/open-transaction',
   createCommand = 'Trade/create-command',
   updatePriceFromTick = 'Trade/update-price-from-tick',
+  updateAllCharts = 'Trade/update-all-charts',
 }
 
 // Define a type for the slice state

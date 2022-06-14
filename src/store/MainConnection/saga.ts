@@ -15,7 +15,7 @@ import {
   isGetSymbolResponse,
   isPriceDataResponse,
   MAIN_SOCKET_ACTION,
-  RequiredConncectionData,
+  RequiredConnectionData,
 } from './types'
 import { APIResponse } from '../../types'
 import { setTrades } from '../UserTrades/slice'
@@ -25,7 +25,7 @@ import { GetBalance } from '../Balance/commands'
 import { setBalanceFromResponse } from '../Balance/slice'
 import { setPricesTicks } from '../OpenedInstrumentsStream/slice'
 
-//implement utillty type checks for checking specific response types
+//implement utility type checks for checking specific response types
 function* AccountDataDispatcher({ payload }: Effect<MAIN_SOCKET_ACTION, APIResponse>) {
   const returnData = payload
   if (isGetSymbolResponse(returnData)) yield put(sendOpenTransactionRequest(returnData))
@@ -41,7 +41,7 @@ function* AccountDataDispatcher({ payload }: Effect<MAIN_SOCKET_ACTION, APIRespo
 
 function* EstablishMainConnectionSaga({
   payload,
-}: Effect<MAIN_SOCKET_ACTION, RequiredConncectionData>) {
+}: Effect<MAIN_SOCKET_ACTION, RequiredConnectionData>) {
   const { sessionId, socket } = payload
   yield put(setSessionId(sessionId))
   //send request for all indexes
@@ -52,7 +52,7 @@ function* EstablishMainConnectionSaga({
   yield call(send, socket, GetBalance())
   yield delay(200)
   yield put(downloadChartData('EURUSD'))
-  yield delay(200)
+  yield delay(1000)
   //open all websockets and subscriptions
   yield put(ConnectWebsockets(socket))
 }
