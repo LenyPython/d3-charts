@@ -11,7 +11,7 @@ const createScales = (data: PriceData[], size?: { width: number; height: number 
     .paddingOuter(5)
   const yScale = scaleLinear()
     .domain([min(data, (d: PriceData) => d.low)!, max(data, (d: PriceData) => d.low)!])
-    .range([0, height])
+    .range([height, 0])
   return {
     xScale,
     yScale,
