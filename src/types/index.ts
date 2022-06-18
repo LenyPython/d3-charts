@@ -4,6 +4,7 @@ import { STREAM_ANSWERS, API_COMMANDS, STREAM_COMMANDS } from '../commands'
 import { UserBalanceData } from '../store/Balance/types'
 import { IndexInterface, PriceDataResponse } from '../store/MainConnection/types'
 import { TradeDataInterface } from '../store/UserTrades/types'
+import createAction from '../utils/actionCreator'
 export type Emitter = (input: unknown) => void
 
 //try to find a way to change ant type to correct typing
@@ -23,6 +24,7 @@ export type StreamResponse = TradeDataInterface | UserBalanceData | TradePriceDa
 export interface StreamHandlersInterface {
   openHandler?: RequestCreator
   messageHandler: ResponseHandler
+  reconnect: ReturnType<typeof createAction>
   errorMsg: string
   title: string
 }

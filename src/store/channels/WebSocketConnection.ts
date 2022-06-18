@@ -9,7 +9,7 @@ import createWebSocketSTREAMChannel from './StreamChannel'
 const URL = process.env.REACT_APP_SOCKET_STREAM_URL
 
 export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
-  const { openHandler, messageHandler, errorMsg, title } = handlers
+  const { openHandler, messageHandler, errorMsg, reconnect, title } = handlers
   try {
     if (!URL) throw new Error('You forgot to declare REACT_APP_SOCKET_STREAM_URL')
     const socket = new WebSocket(URL)
@@ -34,6 +34,9 @@ export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
       const action: PayloadAction = yield take(socketChannel)
       yield put(action)
     }
+    //check if user is logged and reconnect the socket
+    const session: string = yield select(getSessionId)
+    if (session !== '') yield put(reconnect())
   } catch (e) {
     if (e instanceof Error)
       put(

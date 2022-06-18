@@ -1,4 +1,9 @@
-import { OpenPriceStreamWorker, updateAllCharts, updateInstrumentPriceFromTick } from './actions'
+import {
+  ConnectPriceStream,
+  OpenPriceStreamWorker,
+  updateAllCharts,
+  updateInstrumentPriceFromTick,
+} from './actions'
 import { FIRST_SYMBOL } from './../../constants/index'
 import { SubscribeToSymbolPriceStream } from './commands'
 import { Emitter, StreamHandlersInterface } from '../../types'
@@ -28,6 +33,7 @@ const openHandler = (sessionId: string, socket: WebSocket, emit: Emitter) => {
 export const PriceStreamHandlers: StreamHandlersInterface = {
   openHandler,
   messageHandler: handlePriceStream,
+  reconnect: ConnectPriceStream,
   title: 'Price stream',
   errorMsg: 'error in price stream',
 }

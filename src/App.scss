@@ -28,7 +28,7 @@ body {
   text-shadow: 0 0 15px var(--color);
 }
 button {
-  --color: #{colors.$main-succes-color};
+  --color: #{colors.$main-success-color};
   background-color: transparent;
   border: 2px solid var(--color);
   color: var(--color);
@@ -73,5 +73,5 @@ button {
 }
 .tab-active {
   @extend %active;
-  --color: #{colors.$main-succes-color} !important;
+  --color: #{colors.$main-success-color} !important;
 }

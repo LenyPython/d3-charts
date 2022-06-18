@@ -1,3 +1,4 @@
+import { ConnectBalanceStream } from './actions'
 import { Emitter, StreamHandlersInterface, wsResponse } from '../../types'
 import { setBalance } from '../../store/Balance/slice'
 import { SubscribeBalance } from './commands'
@@ -19,6 +20,7 @@ const openHandler = (sessionId: string, socket: WebSocket, emit: Emitter) => {
 export const BalanceHandlers: StreamHandlersInterface = {
   openHandler,
   messageHandler: handleBalanceStream,
+  reconnect: ConnectBalanceStream,
   title: 'Balance stream',
-  errorMsg: 'error on reciving balance data',
+  errorMsg: 'error on receiving balance data',
 }

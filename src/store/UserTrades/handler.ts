@@ -4,6 +4,7 @@ import { STREAM_ANSWERS } from '../../commands'
 import { TradeResponse } from './types'
 import { SubscribeUserTrades } from './commands'
 import { send } from '../../utils/websocket'
+import { ConnectTradesStream } from './actions'
 
 const isTrade = (res: wsResponse): res is TradeResponse => {
   return res.command === STREAM_ANSWERS.trades && res.data !== undefined
@@ -19,6 +20,7 @@ const openHandler = (sessionId: string, socket: WebSocket, emit: Emitter) => {
 export const UserTradesHandlers: StreamHandlersInterface = {
   openHandler,
   messageHandler: handleUserTradesStream,
+  reconnect: ConnectTradesStream,
   title: 'Trades stream',
   errorMsg: 'error on receiving trades data',
 }
