@@ -15,18 +15,17 @@ const createWebSocketAPIChannel = (socket: WebSocket, { userId, password }: Logi
     const errorHandler = (e: Event) =>
       emit(
         addLog({
-          class: LOG.error,
+          class: LOG.warning,
           msg: `[Main Error]: error occurred`,
         }),
       )
     const closeHandler = (e: CloseEvent) => {
       emit(
         addLog({
-          class: LOG.warning,
+          class: LOG.error,
           msg: `[Main Close]: ${e.reason ? e.reason : `code: ${e.code}`}`,
         }),
       )
-      emit(setMainSocketState(false))
     }
     const pingAlive = (socket: WebSocket) => {
       if (socket.readyState === socket.OPEN) {
