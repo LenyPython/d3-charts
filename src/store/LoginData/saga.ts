@@ -10,6 +10,7 @@ import { createWebSocketAPIChannel } from '../channels'
 import { getPassword, getUserId } from './selectors'
 import { resetChartDataTab } from '../OpenedInstruments/slice'
 import { LOG } from '../Logger/types'
+import { setMainSocketState } from '../SocketsStates/slice'
 
 export let WS: WebSocket | null = null
 const URL = process.env.REACT_APP_SOCKET_URL
@@ -42,6 +43,7 @@ export function* WebSocketAPIWatcher() {
       const action: PayloadAction = yield take(socketChannel)
       yield put(action)
     }
+    yield put(setMainSocketState(false))
   } catch (e) {
     if (e instanceof Error)
       put(
