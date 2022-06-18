@@ -19,6 +19,7 @@ export function* PriceSubscribeRequestWorker(action: Effect<TRADES_ACTIONS, WebS
   while (socket.readyState !== socket.CLOSED) {
     const action: Effect<TRADES_ACTIONS, string> = yield take(TRADES_ACTIONS.subscribeToPriceStream)
     const { payload: symbol } = action
+    yield delay(1000)
     yield call(send, socket, SubscribeToSymbolPriceStream(sessionId, symbol))
     yield delay(500)
     yield call(send, socket, SubscribeToGet1MinCandle(sessionId, symbol))

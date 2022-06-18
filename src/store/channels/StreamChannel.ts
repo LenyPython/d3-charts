@@ -1,13 +1,15 @@
-import { LOG } from './../Logger/types'
 import { eventChannel } from 'redux-saga'
 import { send } from '../../utils/websocket'
-import { OpenHandlerType } from '../../types'
-import { ResponseHandler } from '../../types'
 import { addLog } from '../../store/Logger/slice'
 import { PING_STREAM, KEEP_ALIVE } from '../MainConnection/commands'
+import { reconnectSocketIfRequired } from '../MainConnection/actions'
+import { LOG } from './../Logger/types'
+import { actionType, selectorType, ResponseHandler, OpenHandlerType } from '../../types'
 
 const createWebSocketSTREAMChannel = (
   socket: WebSocket,
+  reconnect: actionType,
+  getSocketState: selectorType,
   sessionId: string,
   messageHandler: ResponseHandler,
   errorMessage = '[STREAM Error]: error occurred',
@@ -18,34 +20,34 @@ const createWebSocketSTREAMChannel = (
     const errorHandler = (e: Event) =>
       emit(
         addLog({
-          class: LOG.error,
+          class: LOG.warning,
           msg: `[${title}]: ${errorMessage}`,
         }),
       )
     const closeHandler = (e: CloseEvent) => {
       emit(
         addLog({
-          class: LOG.warning,
+          class: LOG.error,
           msg: `[${title}]: ${e.reason ? e.reason : `Connection closed: ${e.code}`}`,
         }),
       )
+      emit(reconnectSocketIfRequired({ reconnect, getSocketState }))
     }
     const pingAlive = (socket: WebSocket) => {
       if (socket.readyState === socket.OPEN) {
-        send(socket, PING_STREAM(sessionId))
-        setTimeout(() => pingAlive(socket), 7500)
+        setTimeout(() => {
+          send(socket, PING_STREAM(sessionId))
+          pingAlive(socket)
+        }, 5000)
       }
     }
 
     socket.onerror = errorHandler
     socket.onclose = closeHandler
     socket.onopen = () => {
+      send(socket, KEEP_ALIVE(sessionId))
       pingAlive(socket)
-      let msg = KEEP_ALIVE(sessionId)
-      send(socket, msg)
-      //on open i should emit action which will start subscription
-      //to specific types of data
-      //i could start a saga on opening
+
       if (openHandler) {
         openHandler(sessionId, title, socket, emit)
       }

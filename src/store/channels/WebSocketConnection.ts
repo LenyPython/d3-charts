@@ -5,7 +5,6 @@ import { StreamHandlersInterface } from '../../types'
 import { addLog } from '../Logger/slice'
 import { getSessionId } from '../LoginData/selectors'
 import createWebSocketSTREAMChannel from './StreamChannel'
-import { reconnectSocketIfRequired } from '../MainConnection/actions'
 
 const URL = process.env.REACT_APP_SOCKET_STREAM_URL
 
@@ -32,6 +31,8 @@ export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
     const socketChannel: ReturnType<typeof createWebSocketSTREAMChannel> = yield call(
       createWebSocketSTREAMChannel,
       socket,
+      reconnect,
+      getSocketState,
       sessionId,
       messageHandler,
       errorMsg,
@@ -45,7 +46,8 @@ export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
     }
     //set socket state to disconnected
     yield put(setSocketState(false))
-    yield put(reconnectSocketIfRequired({ reconnect, getSocketState }))
+    const action: PayloadAction = yield take(socketChannel)
+    yield put(action)
   } catch (e) {
     if (e instanceof Error)
       put(
