@@ -6,6 +6,7 @@ import { LoginCommand } from '../LoginData/commands'
 import { LoginCredentials } from '../LoginData/types'
 import { PING } from '../MainConnection/commands'
 import handleResponse from '../MainConnection/handler'
+import { setMainSocketState } from '../SocketsStates/slice'
 
 const appName = process.env.REACT_APP_APP_NAME
 
@@ -25,6 +26,7 @@ const createWebSocketAPIChannel = (socket: WebSocket, { userId, password }: Logi
           msg: `[Main Close]: ${e.reason ? e.reason : `code: ${e.code}`}`,
         }),
       )
+      emit(setMainSocketState(false))
     }
     const pingAlive = (socket: WebSocket) => {
       if (socket.readyState === socket.OPEN) {
@@ -36,10 +38,11 @@ const createWebSocketAPIChannel = (socket: WebSocket, { userId, password }: Logi
     socket.onerror = errorHandler
     socket.onclose = closeHandler
     socket.onopen = () => {
-      pingAlive(socket)
+      setTimeout(() => pingAlive(socket), 1000)
       //create login command/credentials and send login request
       const msg = LoginCommand(userId, password, appName)
       send(socket, msg)
+      emit(setMainSocketState(true))
     }
     socket.onmessage = (event: MessageEvent<any>) => {
       try {
