@@ -10,7 +10,7 @@ const createWebSocketSTREAMChannel = (
   socket: WebSocket,
   sessionId: string,
   messageHandler: ResponseHandler,
-  errorMessage = '[STREAM Error]: error occured',
+  errorMessage = '[STREAM Error]: error occurred',
   title = '[STREAM]',
   openHandler?: RequestCreator,
 ) => {
@@ -26,7 +26,7 @@ const createWebSocketSTREAMChannel = (
       emit(
         addLog({
           class: LOG.warning,
-          msg: `[${title}]: ${e.reason ? e.reason : `code: ${e.code}`}`,
+          msg: `[${title}]: ${e.reason ? e.reason : `Connection closed: ${e.code}`}`,
         }),
       )
     }

@@ -1,11 +1,17 @@
+import { ActionCreatorWithPayload } from '@reduxjs/toolkit'
+import { RootState } from './../app/store'
 import { TradePriceData } from './../store/OpenedInstrumentsStream/types'
-import { BalanceData } from './../store/Balance/types'
+import { BalanceData } from '../store/BalanceStream/types'
 import { STREAM_ANSWERS, API_COMMANDS, STREAM_COMMANDS } from '../commands'
-import { UserBalanceData } from '../store/Balance/types'
+import { UserBalanceData } from '../store/BalanceStream/types'
 import { IndexInterface, PriceDataResponse } from '../store/MainConnection/types'
-import { TradeDataInterface } from '../store/UserTrades/types'
+import { TradeDataInterface } from '../store/UserTradesStream/types'
 import createAction from '../utils/actionCreator'
+
 export type Emitter = (input: unknown) => void
+export type actionType = ReturnType<typeof createAction>
+export type actionCreator = ActionCreatorWithPayload<any, string>
+export type selectorType = (state: RootState) => any
 
 //try to find a way to change ant type to correct typing
 export type ResponseHandler = (emit: Emitter, data: wsResponse) => void
@@ -24,7 +30,9 @@ export type StreamResponse = TradeDataInterface | UserBalanceData | TradePriceDa
 export interface StreamHandlersInterface {
   openHandler?: RequestCreator
   messageHandler: ResponseHandler
-  reconnect: ReturnType<typeof createAction>
+  reconnect: actionType
+  getSocketState: selectorType
+  setSocketState: actionCreator
   errorMsg: string
   title: string
 }

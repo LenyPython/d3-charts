@@ -1,6 +1,6 @@
-import { sendOpenTransactionRequest } from './../UserTrades/actions'
+import { sendOpenTransactionRequest } from '../UserTradesStream/actions'
 import { wsRequest } from './../../types/index'
-import { isBalanceResponse } from './../Balance/types'
+import { isBalanceResponse } from '../BalanceStream/types'
 import { takeLeading, takeEvery, Effect, put, call, delay, take } from 'redux-saga/effects'
 import { send } from '../../utils/websocket'
 import { hashInstruments } from '../../utils/websocket/hashInstruments'
@@ -18,11 +18,11 @@ import {
   RequiredConnectionData,
 } from './types'
 import { APIResponse } from '../../types'
-import { setTrades } from '../UserTrades/slice'
-import { isUserTradesResponse } from '../UserTrades/types'
+import { setTrades } from '../UserTradesStream/slice'
+import { isUserTradesResponse } from '../UserTradesStream/types'
 import { downloadChartData } from '../OpenedInstruments/actions'
-import { GetBalance } from '../Balance/commands'
-import { setBalanceFromResponse } from '../Balance/slice'
+import { GetBalance } from '../BalanceStream/commands'
+import { setBalanceFromResponse } from '../BalanceStream/slice'
 import { setPricesTicks } from '../OpenedInstrumentsStream/slice'
 
 //implement utility type checks for checking specific response types

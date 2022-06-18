@@ -1,4 +1,4 @@
-import { TRADES_ACTIONS } from './../UserTrades/types'
+import { TRADES_ACTIONS } from '../UserTradesStream/types'
 import { subscribeToPriceStream } from './../OpenedInstrumentsStream/actions'
 import { Effect, put, delay, call, take, takeLeading } from 'redux-saga/effects'
 import { PriceData } from '../../types'

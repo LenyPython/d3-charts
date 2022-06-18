@@ -2,7 +2,7 @@ import { delay, call, Effect, fork, put, select, take, takeLeading } from 'redux
 import { TradePriceData } from './types'
 import { SubscribeToGet1MinCandle, SubscribeToSymbolPriceStream } from './commands'
 import { PriceStreamHandlers } from './handler'
-import { TRADES_ACTIONS } from './../UserTrades/types'
+import { TRADES_ACTIONS } from '../UserTradesStream/types'
 import { WebSocketStreamCreator } from '../channels/WebSocketConnection'
 import { send } from '../../utils/websocket'
 import { getSessionId } from '../LoginData/selectors'

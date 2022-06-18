@@ -1,10 +1,10 @@
 import { fork, all } from 'redux-saga/effects'
-import BalanceWatcherSaga from '../store/Balance/saga'
+import BalanceWatcherSaga from '../store/BalanceStream/saga'
 import ConnectUserSaga from '../store/LoginData/saga'
 import MainSocketWatcherSaga from '../store/MainConnection/saga'
 import OpenedInstrumentsWatcherSaga from '../store/OpenedInstruments/saga'
 import InstrumentPriceStreamWatcher from '../store/OpenedInstrumentsStream/saga'
-import UserTradesWatcherSaga from '../store/UserTrades/saga'
+import UserTradesWatcherSaga from '../store/UserTradesStream/saga'
 import ConnectStreamsWatcherSaga from './ConnectStreamSockets/saga'
 
 export default function* MainSaga() {

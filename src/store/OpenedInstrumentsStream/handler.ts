@@ -11,6 +11,8 @@ import { wsResponse } from '../../types'
 import { TradePriceResponse, MinuteCandleResponse } from './types'
 import { STREAM_ANSWERS } from '../../commands'
 import { send } from '../../utils/websocket'
+import { setPriceSocketState } from '../SocketsStates/slice'
+import { getPriceSocketState } from '../SocketsStates/selectors'
 
 const isTradePriceResponse = (data: wsResponse): data is TradePriceResponse => {
   return data.command === STREAM_ANSWERS.tickPrices && data.data !== undefined
@@ -28,12 +30,15 @@ const handlePriceStream = (emit: Emitter, response: wsResponse) => {
 const openHandler = (sessionId: string, socket: WebSocket, emit: Emitter) => {
   send(socket, SubscribeToSymbolPriceStream(sessionId, FIRST_SYMBOL))
   emit(OpenPriceStreamWorker(socket))
+  emit(setPriceSocketState(true))
 }
 
 export const PriceStreamHandlers: StreamHandlersInterface = {
   openHandler,
   messageHandler: handlePriceStream,
   reconnect: ConnectPriceStream,
+  setSocketState: setPriceSocketState,
+  getSocketState: getPriceSocketState,
   title: 'Price stream',
   errorMsg: 'error in price stream',
 }
