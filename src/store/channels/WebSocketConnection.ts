@@ -1,10 +1,11 @@
 import { LOG } from './../Logger/types'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { put, delay, take, select, call } from 'redux-saga/effects'
+import { put, take, select, call } from 'redux-saga/effects'
 import { StreamHandlersInterface } from '../../types'
 import { addLog } from '../Logger/slice'
 import { getSessionId } from '../LoginData/selectors'
 import createWebSocketSTREAMChannel from './StreamChannel'
+import { reconnectSocketIfRequired } from '../MainConnection/actions'
 
 const URL = process.env.REACT_APP_SOCKET_STREAM_URL
 
@@ -23,8 +24,8 @@ export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
     const socket = new WebSocket(URL)
     yield put(
       addLog({
-        class: LOG.success,
-        msg: `[${title}]: stream open`,
+        class: LOG.info,
+        msg: `[${title}]: connecting stream...`,
       }),
     )
     let sessionId: string = yield select(getSessionId)
@@ -44,14 +45,7 @@ export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
     }
     //set socket state to disconnected
     yield put(setSocketState(false))
-    let socketState = false
-    //check if user is logged and reconnect the socket
-    while (sessionId !== '' && !socketState) {
-      yield delay(2000)
-      yield put(reconnect())
-      sessionId = yield select(getSessionId)
-      socketState = yield select(getSocketState)
-    }
+    yield put(reconnectSocketIfRequired({ reconnect, getSocketState }))
   } catch (e) {
     if (e instanceof Error)
       put(

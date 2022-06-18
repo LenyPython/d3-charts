@@ -15,7 +15,12 @@ export type selectorType = (state: RootState) => any
 
 //try to find a way to change ant type to correct typing
 export type ResponseHandler = (emit: Emitter, data: wsResponse) => void
-export type RequestCreator = (sessionId: string, socket: WebSocket, emit: Emitter) => void
+export type OpenHandlerType = (
+  sessionId: string,
+  title: string,
+  socket: WebSocket,
+  emit: Emitter,
+) => void
 export type instrumentsResponse = IndexInterface[]
 
 export type APIResponse =
@@ -28,7 +33,7 @@ export type APIResponse =
 export type StreamResponse = TradeDataInterface | UserBalanceData | TradePriceData | PriceData
 
 export interface StreamHandlersInterface {
-  openHandler?: RequestCreator
+  openHandler?: OpenHandlerType
   messageHandler: ResponseHandler
   reconnect: actionType
   getSocketState: selectorType

@@ -1,7 +1,7 @@
 import { LOG } from './../Logger/types'
 import { eventChannel } from 'redux-saga'
 import { send } from '../../utils/websocket'
-import { RequestCreator } from '../../types'
+import { OpenHandlerType } from '../../types'
 import { ResponseHandler } from '../../types'
 import { addLog } from '../../store/Logger/slice'
 import { PING_STREAM, KEEP_ALIVE } from '../MainConnection/commands'
@@ -12,7 +12,7 @@ const createWebSocketSTREAMChannel = (
   messageHandler: ResponseHandler,
   errorMessage = '[STREAM Error]: error occurred',
   title = '[STREAM]',
-  openHandler?: RequestCreator,
+  openHandler?: OpenHandlerType,
 ) => {
   return eventChannel((emit) => {
     const errorHandler = (e: Event) =>
@@ -47,7 +47,7 @@ const createWebSocketSTREAMChannel = (
       //to specific types of data
       //i could start a saga on opening
       if (openHandler) {
-        openHandler(sessionId, socket, emit)
+        openHandler(sessionId, title, socket, emit)
       }
     }
     socket.onmessage = (event: MessageEvent<any>) => {

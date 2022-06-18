@@ -7,6 +7,8 @@ import { SubscribeUserTrades } from './commands'
 import { send } from '../../utils/websocket'
 import { ConnectTradesStream } from './actions'
 import { setTradesSocketState } from '../SocketsStates/slice'
+import { addLog } from '../Logger/slice'
+import { LOG } from '../Logger/types'
 
 const isTrade = (res: wsResponse): res is TradeResponse => {
   return res.command === STREAM_ANSWERS.trades && res.data !== undefined
@@ -15,9 +17,15 @@ const isTrade = (res: wsResponse): res is TradeResponse => {
 const handleUserTradesStream = (emit: Emitter, response: wsResponse) => {
   if (isTrade(response)) emit(setTrade(response.data))
 }
-const openHandler = (sessionId: string, socket: WebSocket, emit: Emitter) => {
+const openHandler = (sessionId: string, title: string, socket: WebSocket, emit: Emitter) => {
   send(socket, SubscribeUserTrades(sessionId))
   emit(setTradesSocketState(true))
+  emit(
+    addLog({
+      class: LOG.success,
+      msg: `[${title}]: stream connected`,
+    }),
+  )
 }
 
 export const UserTradesHandlers: StreamHandlersInterface = {

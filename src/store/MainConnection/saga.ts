@@ -1,7 +1,7 @@
 import { sendOpenTransactionRequest } from '../UserTradesStream/actions'
-import { wsRequest } from './../../types/index'
+import { actionType, selectorType, wsRequest } from './../../types'
 import { isBalanceResponse } from '../BalanceStream/types'
-import { takeLeading, takeEvery, Effect, put, call, delay, take } from 'redux-saga/effects'
+import { takeLeading, takeEvery, Effect, put, call, delay, take, select } from 'redux-saga/effects'
 import { send } from '../../utils/websocket'
 import { hashInstruments } from '../../utils/websocket/hashInstruments'
 import { setSessionId } from '../LoginData/slice'
@@ -24,6 +24,7 @@ import { downloadChartData } from '../OpenedInstruments/actions'
 import { GetBalance } from '../BalanceStream/commands'
 import { setBalanceFromResponse } from '../BalanceStream/slice'
 import { setPricesTicks } from '../OpenedInstrumentsStream/slice'
+import { getSessionId } from '../LoginData/selectors'
 
 //implement utility type checks for checking specific response types
 function* AccountDataDispatcher({ payload }: Effect<MAIN_SOCKET_ACTION, APIResponse>) {
@@ -63,8 +64,22 @@ export function* ApiRequestWorker(socket: WebSocket) {
     yield call(send, socket, request)
   }
 }
+
+function* ReconnectSocketAfterDisconnection(action: Effect) {
+  const { reconnect, getSocketState } = action.payload
+  let isSocketConnected: boolean = yield select(getSocketState)
+  let sessionId: string = yield select(getSessionId)
+  //check if user is logged and reconnect the socket if lost connection
+  while (sessionId !== '' && isSocketConnected === false) {
+    yield put(reconnect())
+    yield delay(3000)
+    sessionId = yield select(getSessionId)
+    isSocketConnected = yield select(getSocketState)
+  }
+}
 export default function* MainSocketWatcherSaga() {
   //onopen get indexes worker
   yield takeEvery(MAIN_SOCKET_ACTION.checkMainSocketResponse, AccountDataDispatcher)
+  yield takeEvery(MAIN_SOCKET_ACTION.reconnectSocket, ReconnectSocketAfterDisconnection)
   yield takeLeading(MAIN_SOCKET_ACTION.establishMainConnection, EstablishMainConnectionSaga)
 }
