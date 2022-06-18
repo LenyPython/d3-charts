@@ -1,5 +1,5 @@
 import { sendOpenTransactionRequest } from '../UserTradesStream/actions'
-import { actionType, selectorType, wsRequest } from './../../types'
+import { wsRequest } from './../../types'
 import { isBalanceResponse } from '../BalanceStream/types'
 import { takeLeading, takeEvery, Effect, put, call, delay, take, select } from 'redux-saga/effects'
 import { send } from '../../utils/websocket'
