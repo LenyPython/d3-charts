@@ -1,4 +1,4 @@
-import { API_COMMANDS } from './../../commands/index';
+import { API_COMMANDS } from '../../commands/index'
 import { STREAM_COMMANDS } from '../../commands'
 import { wsRequest } from '../../types'
 

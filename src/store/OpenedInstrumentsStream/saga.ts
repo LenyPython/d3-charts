@@ -2,7 +2,7 @@ import { delay, call, Effect, fork, put, select, take, takeLeading } from 'redux
 import { TradePriceData } from './types'
 import { SubscribeToGet1MinCandle, SubscribeToSymbolPriceStream } from './commands'
 import { PriceStreamHandlers } from './handler'
-import { TRADES_ACTIONS } from './../UserTrades/types'
+import { TRADES_ACTIONS } from '../UserTradesStream/types'
 import { WebSocketStreamCreator } from '../channels/WebSocketConnection'
 import { send } from '../../utils/websocket'
 import { getSessionId } from '../LoginData/selectors'
@@ -19,6 +19,7 @@ export function* PriceSubscribeRequestWorker(action: Effect<TRADES_ACTIONS, WebS
   while (socket.readyState !== socket.CLOSED) {
     const action: Effect<TRADES_ACTIONS, string> = yield take(TRADES_ACTIONS.subscribeToPriceStream)
     const { payload: symbol } = action
+    yield delay(1000)
     yield call(send, socket, SubscribeToSymbolPriceStream(sessionId, symbol))
     yield delay(500)
     yield call(send, socket, SubscribeToGet1MinCandle(sessionId, symbol))

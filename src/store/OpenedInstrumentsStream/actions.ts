@@ -1,5 +1,5 @@
 import { TradePriceData } from './types'
-import { TRADES_ACTIONS } from './../UserTrades/types'
+import { TRADES_ACTIONS } from '../UserTradesStream/types'
 import createAction from '../../utils/actionCreator'
 import { PriceData } from '../../types'
 

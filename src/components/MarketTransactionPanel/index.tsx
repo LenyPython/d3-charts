@@ -2,7 +2,7 @@ import './MarketTransactionPanel.css'
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { CMD, TYPE } from '../../commands'
-import { sendMarketOrderRequest } from '../../store/UserTrades/actions'
+import { sendMarketOrderRequest } from '../../store/UserTradesStream/actions'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
 

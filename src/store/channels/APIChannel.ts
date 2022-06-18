@@ -15,7 +15,7 @@ const createWebSocketAPIChannel = (socket: WebSocket, { userId, password }: Logi
       emit(
         addLog({
           class: LOG.error,
-          msg: `[Main Error]: error occured`,
+          msg: `[Main Error]: error occurred`,
         }),
       )
     const closeHandler = (e: CloseEvent) => {

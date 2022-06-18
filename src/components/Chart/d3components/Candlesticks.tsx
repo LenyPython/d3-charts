@@ -48,7 +48,7 @@ const Candlesticks: React.FC<{
                   <circle cx={xScale(d.ctmString)} cy={yScale(d.high) - 5} r={2} fill={'orange'} />
                 )} */}
               <line
-                className={d.open < d.close ? 'bull-candle' : 'bear-candle'}
+                className={d.open > d.close ? 'bull-candle' : 'bear-candle'}
                 x1={xScale(d.ctmString)}
                 x2={xScale(d.ctmString)}
                 y1={yScale(d.low)}
@@ -56,7 +56,7 @@ const Candlesticks: React.FC<{
                 strokeWidth={Math.max(xScale.bandwidth() * 0.2, 1)}
               />
               <line
-                className={d.open < d.close ? 'bull-candle' : 'bear-candle'}
+                className={d.open > d.close ? 'bull-candle' : 'bear-candle'}
                 x1={xScale(d.ctmString)}
                 x2={xScale(d.ctmString)}
                 y1={yScale(d.open)}

@@ -1,10 +1,14 @@
 import './transactions.css'
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { ORDER, TradeDataInterface } from '../../store/UserTrades/types'
-import { getClosedTrades, getOpenTrades, getPendingTrades } from '../../store/UserTrades/selectors'
+import { ORDER, TradeDataInterface } from '../../store/UserTradesStream/types'
+import {
+  getClosedTrades,
+  getOpenTrades,
+  getPendingTrades,
+} from '../../store/UserTradesStream/selectors'
 import { cmd, CMD, TYPE } from '../../commands'
-import { sendMarketOrderRequest } from '../../store/UserTrades/actions'
+import { sendMarketOrderRequest } from '../../store/UserTradesStream/actions'
 
 const Transactions = () => {
   const dispatch = useAppDispatch()
