@@ -1,4 +1,4 @@
-import { getInstrumentCurrentPrice } from './../OpenedInstrumentsStream/selectors'
+import { getInstrumentCurrentPrice } from '../OpenedInstrumentsStream/selectors'
 import { call, delay, fork, Effect, takeLeading, put, select } from 'redux-saga/effects'
 import { GetTrades } from '../MainConnection/commands'
 import { send } from '../../utils/websocket'

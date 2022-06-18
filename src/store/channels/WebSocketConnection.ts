@@ -9,20 +9,30 @@ import createWebSocketSTREAMChannel from './StreamChannel'
 const URL = process.env.REACT_APP_SOCKET_STREAM_URL
 
 export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
-  const { openHandler, messageHandler, errorMsg, title } = handlers
+  const {
+    openHandler,
+    messageHandler,
+    errorMsg,
+    setSocketState,
+    getSocketState,
+    reconnect,
+    title,
+  } = handlers
   try {
     if (!URL) throw new Error('You forgot to declare REACT_APP_SOCKET_STREAM_URL')
     const socket = new WebSocket(URL)
     yield put(
       addLog({
-        class: LOG.succes,
-        msg: `[${title}]: stream open`,
+        class: LOG.info,
+        msg: `[${title}]: connecting stream...`,
       }),
     )
-    const sessionId: string = yield select(getSessionId)
+    let sessionId: string = yield select(getSessionId)
     const socketChannel: ReturnType<typeof createWebSocketSTREAMChannel> = yield call(
       createWebSocketSTREAMChannel,
       socket,
+      reconnect,
+      getSocketState,
       sessionId,
       messageHandler,
       errorMsg,
@@ -34,6 +44,10 @@ export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
       const action: PayloadAction = yield take(socketChannel)
       yield put(action)
     }
+    //set socket state to disconnected
+    yield put(setSocketState(false))
+    const action: PayloadAction = yield take(socketChannel)
+    yield put(action)
   } catch (e) {
     if (e instanceof Error)
       put(

@@ -1,6 +1,6 @@
 import { useAppSelector } from '../../app/hooks'
-import { getBalance } from '../../store/Balance/selectors'
-import { UserBalanceData } from '../../store/Balance/types'
+import { getBalance } from '../../store/BalanceStream/selectors'
+import { UserBalanceData } from '../../store/BalanceStream/types'
 import './balance.css'
 
 const Balance = () => {

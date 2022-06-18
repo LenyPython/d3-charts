@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["DOM", "dom", "dom.iterable", "esnext"],
+    "types": ["resize-observer-browser"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

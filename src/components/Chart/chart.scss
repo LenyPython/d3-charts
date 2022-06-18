@@ -1,23 +1,77 @@
 @use '../../scss/colors';
 
-.svg-chart {
-  width: 100%;
-  height: 100%;
-}
-
-path {
-  &.domain {
-    stroke: white;
+.wrapper-single-chart {
+  display: block;
+  border: 1px solid colors.$main-text-color;
+  &.maximized {
+    background-color: colors.$main-background-color;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    svg {
+      fill: colors.$main-error-color !important;
+    }
   }
 }
 
-g {
+.container-single-chart {
+  div {
+    position: relative;
+  }
+  $width: 40px;
+  $height: 40px;
+  display: grid;
+  grid-template-rows: auto 1fr $height;
+  grid-template-columns: $width 1fr $width;
+  grid-template-areas:
+    'title title title'
+    'panel-left main panel-right'
+    'btn-bottom-left panel-bottom-center btn-bottom-right';
+  .chart-title {
+    background-color: colors.$secondary-background-color;
+    border: 1px solid colors.$main-text-color;
+    grid-area: title;
+    h3 {
+      margin: 3px auto;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: colors.$main-text-color;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .panel-right {
+    grid-area: panel-right;
+  }
+  .container-bottom-center {
+    grid-area: panel-bottom-center;
+  }
+  .svg-container {
+    position: relative;
+    display: block;
+    grid-area: main;
+  }
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+line {
+  stroke: colors.$main-text-color;
+  &.bull-candle {
+    stroke: colors.$secondary-success-color;
+  }
+  &.bear-candle {
+    stroke: colors.$secondary-error-color;
+  }
+}
+text {
   &.tick {
-    path {
-      stroke: white;
-    }
-    text {
-      fill: white;
-    }
+    fill: colors.$main-text-color;
+    font-size: 10px;
   }
 }

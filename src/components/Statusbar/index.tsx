@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { LogoutUser } from '../../store/LoginData/actions'
 import { getUserId } from '../../store/LoginData/selectors'
+import SocketsStatus from '../SocketsStatus'
 
 const Statusbar = () => {
   const dispatch = useAppDispatch()
@@ -8,7 +9,7 @@ const Statusbar = () => {
   const logout = () => dispatch(LogoutUser())
   return (
     <>
-      <div>othe connection statuses</div>
+      <SocketsStatus />
       <div>UserID: {UserID}</div>
       <button id="btn-logout" onClick={logout}>
         Logout

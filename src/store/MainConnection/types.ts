@@ -1,6 +1,7 @@
 import { APIResponse, PriceData } from '../../types'
 
 export enum MAIN_SOCKET_ACTION {
+  reconnectSocket = 'Main/reconnect-socket-if-required',
   establishMainConnection = 'Main/establish-connection',
   saveChartData = 'Main/save-chart-data',
   getAccountData = 'Main/get-account-data',
@@ -12,7 +13,7 @@ export enum API_ACTION {
   getSymbolPrice = 'API/get-symbol-price',
 }
 
-export interface RequiredConncectionData {
+export interface RequiredConnectionData {
   sessionId: string
   socket: WebSocket
 }

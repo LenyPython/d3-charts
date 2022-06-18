@@ -10,5 +10,5 @@ export enum LOG {
   error = 'error',
   info = 'info',
   warning = 'warning',
-  succes = 'succes',
+  success = 'success',
 }

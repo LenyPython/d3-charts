@@ -1,5 +1,5 @@
-import { API_ACTION, IndexInterface } from './../MainConnection/types'
-import { wsRequest } from './../../types'
+import { API_ACTION, IndexInterface } from '../MainConnection/types'
+import { wsRequest } from '../../types'
 import { TRADES_ACTIONS, OrderInfo } from './types'
 import createAction from '../../utils/actionCreator'
 
