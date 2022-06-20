@@ -2,12 +2,11 @@ import { PriceData } from '../../types'
 import { IndexInterface } from '../MainConnection/types'
 
 export enum INSTRUMENTS_ACTIONS {
-  downloadChartData = 'get-main-chart-data',
+  downloadChartData = 'Instruments/get-main-chart-data',
 }
 // Define a type for the slice state
 export interface OpenedInstrumentsInterface {
   indexes: HashedInstruments
-  timeStamp: string
   symbol: string
   //hash symbol to array of smaller charts
   openedChartsTabs: Record<string, SmallChartsData>
