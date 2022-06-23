@@ -1,6 +1,8 @@
 import { PriceData } from './../../../types/index'
 import { min, max, scaleLinear, scaleBand } from 'd3'
 
+const heightFromContainerSingleChart = 40
+const topSpacing = 25
 const createScales = (data: PriceData[], size?: { width: number; height: number }) => {
   const width = size?.width ?? 500
   const height = size?.height ?? 300
@@ -11,10 +13,14 @@ const createScales = (data: PriceData[], size?: { width: number; height: number 
     .paddingOuter(5)
   const yScale = scaleLinear()
     .domain([min(data, (d: PriceData) => d.low)!, max(data, (d: PriceData) => d.low)!])
-    .range([height, 0])
+    .range([height - heightFromContainerSingleChart, topSpacing])
+  const yVolumeScale = scaleLinear()
+    .domain([min(data, (d: PriceData) => d.vol)!, max(data, (d: PriceData) => d.vol)!])
+    .range([height, height - heightFromContainerSingleChart])
   return {
     xScale,
     yScale,
+    yVolumeScale,
   }
 }
 

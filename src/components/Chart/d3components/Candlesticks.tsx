@@ -6,9 +6,10 @@ const Candlesticks: React.FC<{
   candlesRef: RefObject<HTMLDivElement>
   xScale: any
   yScale: any
+  yVolumeScale: any
   rescaleX: (e: React.WheelEvent) => void
   size: { width: number; height: number } | undefined
-}> = ({ data, rescaleX, xScale, yScale, candlesRef, size }) => {
+}> = ({ data, rescaleX, xScale, yScale, yVolumeScale, candlesRef, size }) => {
   const svgRef = useRef<SVGSVGElement>(null)
 
   return (
@@ -62,6 +63,14 @@ const Candlesticks: React.FC<{
                 y1={yScale(d.open)}
                 y2={yScale(d.close)}
                 strokeWidth={xScale.bandwidth()}
+              />
+              <line
+                className={d.open < d.close ? 'bull-candle' : 'bear-candle'}
+                x1={xScale(d.ctmString)}
+                x2={xScale(d.ctmString)}
+                y1={yVolumeScale(0)}
+                y2={yVolumeScale(d.vol)}
+                strokeWidth={xScale.bandwidth() * 0.8}
               />
             </g>
           )
