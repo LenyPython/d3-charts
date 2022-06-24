@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
 import './pendingOrder.css'
+import DepthOfMarket from '../DepthOfMarket'
 
 const PendingOrderMenu = () => {
   const symbol = useAppSelector(getCurrentChartSymbol)
@@ -44,6 +45,7 @@ const PendingOrderMenu = () => {
       <label htmlFor="sl">SL:</label>
       <input type="number" name="sl" min={0} step={0.001} value={sl} onChange={handleChange} />
       <PendingOrderButtons transaction={transaction} />
+      <DepthOfMarket />
     </div>
   )
 }
