@@ -16,7 +16,7 @@ const MarketTransactionPanel = () => {
     const item = prices[level]
     asks.push(
       <div key={`market-ask-${level}`}>
-        <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
+        <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.SELL, item.ask)}>
           {item.ask}
         </button>
         {item.askVolume}
@@ -24,7 +24,7 @@ const MarketTransactionPanel = () => {
     )
     buys.push(
       <div key={`market-bid-${level}`}>
-        <button className="btn buy" onClick={() => marketOpenOrderHandler(CMD.BUY)}>
+        <button className="btn buy" onClick={() => marketOpenOrderHandler(CMD.BUY, item.bid)}>
           {item.bid}
         </button>
         {item.bidVolume}
@@ -32,13 +32,14 @@ const MarketTransactionPanel = () => {
     )
   }
   const [volume, setVolume] = useState(0.01)
-  const marketOpenOrderHandler = (cmd: CMD) => {
+  const marketOpenOrderHandler = (cmd: CMD, price: number) => {
     dispatch(
       sendMarketOrderRequest({
         cmd,
         type: TYPE.OPEN,
         symbol,
         volume,
+        price,
       }),
     )
   }
@@ -48,6 +49,7 @@ const MarketTransactionPanel = () => {
   }
   return (
     <div id="transaction-panel-container">
+      <h5>Market Transaction</h5>
       <input
         type="number"
         onChange={handleVolumeChange}

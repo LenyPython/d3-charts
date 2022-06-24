@@ -1,12 +1,10 @@
-import MarketTransactionPanel from '../MarketTransactionPanel'
-import PendingOrderButtons from '../PendingOrderButtons'
+import { useEffect, useState } from 'react'
 import { useAppSelector } from '../../app/hooks'
-import { useState, useEffect } from 'react'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
-import './pendingOrder.css'
+import PendingOrderButtons from '../PendingOrderButtons'
 
-const PendingOrderMenu = () => {
+const PendingTransactionMenu = () => {
   const symbol = useAppSelector(getCurrentChartSymbol)
   const transaction = useTransactionInfo()
   const currentPrice = useAppSelector(getInstrumentCurrentPrice)[symbol]['level0'].bid
@@ -23,9 +21,7 @@ const PendingOrderMenu = () => {
     else setPrice(+target.value)
   }
   return (
-    <div id="container-pending-order" className="dfc aic">
-      <MarketTransactionPanel />
-      <h5>Market Transaction</h5>
+    <div>
       <h3>{symbol}</h3>
       <h5>order:</h5>
       <label htmlFor="vol">Volume:</label>
@@ -47,7 +43,8 @@ const PendingOrderMenu = () => {
     </div>
   )
 }
-export default PendingOrderMenu
+
+export default PendingTransactionMenu
 
 const useTransactionInfo = () => {
   const [sl, setSl] = useState<number>(0)

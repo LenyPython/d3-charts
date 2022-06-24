@@ -1,5 +1,5 @@
 import IndexesListMenu from '../IndexesListMenu'
-import PendingOrderMenu from '../PendingOrderMenu'
+import OrderMenu from '../OrderMenu'
 import { useState } from 'react'
 import './sidemenu.css'
 
@@ -22,7 +22,7 @@ const SideMenu = () => {
             Order
           </button>
         </div>
-        {type === IDX ? <IndexesListMenu /> : <PendingOrderMenu />}
+        {type === IDX ? <IndexesListMenu /> : <OrderMenu />}
       </div>
       <button
         id="button-instruments-toggle"

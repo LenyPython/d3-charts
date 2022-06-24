@@ -1,6 +1,9 @@
 @use '../../scss/colors';
 
-#container-pending-order {
+#order-menu-container {
+  .btn-top {
+    margin-top: 20px;
+  }
   h5 {
     margin: auto auto 1em;
   }

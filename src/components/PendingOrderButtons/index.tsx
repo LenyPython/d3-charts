@@ -3,7 +3,7 @@ import { CMD, TYPE } from '../../commands'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
 import { sendMarketOrderRequest } from '../../store/UserTradesStream/actions'
-import { TransactionInfoHook } from '../PendingOrderMenu'
+import { TransactionInfoHook } from '../PendingTransactionMenu'
 import './pendingOrderBtn.css'
 
 const PendingOrderButtons: React.FC<{ transaction: TransactionInfoHook }> = ({ transaction }) => {
