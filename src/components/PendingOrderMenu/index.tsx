@@ -9,7 +9,7 @@ import './pendingOrder.css'
 const PendingOrderMenu = () => {
   const symbol = useAppSelector(getCurrentChartSymbol)
   const transaction = useTransactionInfo()
-  const currentPrice = useAppSelector(getInstrumentCurrentPrice)[symbol].bid
+  const currentPrice = useAppSelector(getInstrumentCurrentPrice)[symbol]['level0'].bid
   const { sl, setSl, tp, setTp, vol, setVol, price, setPrice } = transaction
   useEffect(() => {
     setPrice(currentPrice)

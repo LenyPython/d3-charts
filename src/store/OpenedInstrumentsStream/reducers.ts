@@ -13,21 +13,32 @@ const reducers = {
   ) => {
     const prices = action.payload
     for (let symbol in action.payload) {
-      state.currentPrices[symbol]['level0'] = {
-        symbol: symbol,
-        ask: prices[symbol].ask,
-        bid: prices[symbol].bid,
-        askVolume: 0,
-        bidVolume: 0,
-        high: 0,
-        level: 0,
-        low: 0,
-        quiteId: 0,
-        spreadRaw: 0,
-        spreadTable: 0,
-        timestamp: 0,
+      const dummyLevel = createLevel(symbol, prices[symbol])
+      state.currentPrices[symbol] = {
+        level0: dummyLevel,
+        level1: dummyLevel,
+        level2: dummyLevel,
+        level3: dummyLevel,
+        level4: dummyLevel,
       }
     }
   },
 }
 export default reducers
+
+const createLevel = (symbol: string, prices: any) => {
+  return {
+    symbol: symbol,
+    ask: prices.ask,
+    bid: prices.bid,
+    askVolume: 0,
+    bidVolume: 0,
+    high: 0,
+    level: 0,
+    low: 0,
+    quiteId: 0,
+    spreadRaw: 0,
+    spreadTable: 0,
+    timestamp: 0,
+  }
+}

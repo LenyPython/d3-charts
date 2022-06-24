@@ -37,10 +37,10 @@ const MarketTransactionPanel = () => {
       />
       <div>
         <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
-          sell {prices?.[symbol]?.bid}
+          sell {prices?.[symbol]?.['level0'].bid}
         </button>
         <button className="btn buy" onClick={() => marketOpenOrderHandler(CMD.BUY)}>
-          buy {prices?.[symbol]?.ask}
+          buy {prices?.[symbol]?.['level0'].ask}
         </button>
       </div>
     </div>
