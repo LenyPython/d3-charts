@@ -5,7 +5,7 @@ import {
   updateInstrumentPriceFromTick,
 } from './actions'
 import { FIRST_SYMBOL } from './../../constants/index'
-import { SubscribeToSymbolPriceStream } from './commands'
+import { SubscribeToDepthOfMarketStream } from './commands'
 import { Emitter, StreamHandlersInterface } from '../../types'
 import { wsResponse } from '../../types'
 import { TradePriceResponse, MinuteCandleResponse } from './types'
@@ -30,7 +30,7 @@ const handlePriceStream = (emit: Emitter, response: wsResponse) => {
   }
 }
 const openHandler = (sessionId: string, title: string, socket: WebSocket, emit: Emitter) => {
-  send(socket, SubscribeToSymbolPriceStream(sessionId, FIRST_SYMBOL))
+  send(socket, SubscribeToDepthOfMarketStream(sessionId, FIRST_SYMBOL))
   emit(OpenPriceStreamWorker(socket))
   emit(setPriceSocketState(true))
   emit(

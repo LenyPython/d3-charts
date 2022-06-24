@@ -1,6 +1,6 @@
 import { delay, call, Effect, fork, put, select, take, takeLeading } from 'redux-saga/effects'
 import { TradePriceData } from './types'
-import { SubscribeToGet1MinCandle, SubscribeToSymbolPriceStream } from './commands'
+import { SubscribeToGet1MinCandle, SubscribeToDepthOfMarketStream } from './commands'
 import { PriceStreamHandlers } from './handler'
 import { TRADES_ACTIONS } from '../UserTradesStream/types'
 import { WebSocketStreamCreator } from '../channels/WebSocketConnection'
@@ -20,15 +20,17 @@ export function* PriceSubscribeRequestWorker(action: Effect<TRADES_ACTIONS, WebS
     const action: Effect<TRADES_ACTIONS, string> = yield take(TRADES_ACTIONS.subscribeToPriceStream)
     const { payload: symbol } = action
     yield delay(1000)
-    yield call(send, socket, SubscribeToSymbolPriceStream(sessionId, symbol))
+    yield call(send, socket, SubscribeToDepthOfMarketStream(sessionId, symbol))
     yield delay(500)
     yield call(send, socket, SubscribeToGet1MinCandle(sessionId, symbol))
   }
 }
 function* updateInstrumentPriceWorker(action: Effect<TRADES_ACTIONS, TradePriceData>) {
-  const { symbol, ask, bid } = action.payload
-  yield put(setInstrumentPrice({ symbol, data: { ask, bid } }))
-  yield put(updateLastCandlePrice({ symbol, ask }))
+  const DepthOfMarket = action.payload
+  yield put(setInstrumentPrice(DepthOfMarket))
+  if (DepthOfMarket.level === 0) {
+    yield put(updateLastCandlePrice({ symbol: DepthOfMarket.symbol, ask: DepthOfMarket.ask }))
+  }
 }
 
 export default function* InstrumentPriceStreamWatcher() {
