@@ -1,4 +1,4 @@
-import './MarketTransactionPanel.css'
+import './MarketTransactionMenu.css'
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { CMD, TYPE } from '../../commands'
@@ -6,7 +6,7 @@ import { sendMarketOrderRequest } from '../../store/UserTradesStream/actions'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
 
-const MarketTransactionPanel = () => {
+const MarketTransactionMenu = () => {
   const dispatch = useAppDispatch()
   const [volume, setVolume] = useState(0.01)
   const symbol = useAppSelector(getCurrentChartSymbol)
@@ -41,13 +41,13 @@ const MarketTransactionPanel = () => {
     setVolume(parseFloat(target.value))
   }
   return (
-    <div id="transaction-panel-container" className="dfc aic">
-      <h5>Market Transaction</h5>
+    <div id="market-transaction-container" className="dfc aic">
+      <h5>Market Transaction:</h5>
       <div>Daily High: {prices['level0'].high}</div>
       {asks.reverse()}
       {prices['level0'].askVolume}
-      <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
-        {prices['level0'].ask}
+      <button className="btn buy" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
+        Buy {prices['level0'].ask}
       </button>
       <input
         type="number"
@@ -57,8 +57,8 @@ const MarketTransactionPanel = () => {
         step="0.01"
         value={volume}
       />
-      <button className="btn buy" onClick={() => marketOpenOrderHandler(CMD.BUY)}>
-        {prices['level0'].bid}
+      <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.BUY)}>
+        Sell {prices['level0'].bid}
       </button>
       {prices['level0'].bidVolume}
       {buys}
@@ -67,4 +67,4 @@ const MarketTransactionPanel = () => {
   )
 }
 
-export default MarketTransactionPanel
+export default MarketTransactionMenu

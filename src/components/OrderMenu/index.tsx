@@ -1,19 +1,22 @@
 import { useState } from 'react'
-import MarketTransactionPanel from '../MarketTransactionPanel'
+import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
+import { useAppSelector } from '../../app/hooks'
+import MarketTransactionMenu from '../MarketTransactionMenu'
 import PendingTransactionMenu from '../PendingTransactionMenu'
 import './orderMenu.css'
 
 const OrderMenu = () => {
   const [isPendingOrder, setIsPendingOrder] = useState(false)
+  const symbol = useAppSelector(getCurrentChartSymbol)
   const changeMenuType = () => {
     setIsPendingOrder((v) => !v)
   }
   return (
     <div id="order-menu-container" className="dfc aic">
-      <button className="btn-top" onClick={changeMenuType}>
-        toggle
+      <button onClick={changeMenuType}>
+        {symbol} {isPendingOrder ? 'market' : 'pending'}
       </button>
-      {isPendingOrder ? <MarketTransactionPanel /> : <PendingTransactionMenu />}
+      {isPendingOrder ? <PendingTransactionMenu /> : <MarketTransactionMenu />}
     </div>
   )
 }

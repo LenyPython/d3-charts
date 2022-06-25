@@ -3,6 +3,7 @@ import { useAppSelector } from '../../app/hooks'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
 import PendingOrderButtons from '../PendingOrderButtons'
+import './PendingTransactionMenu.css'
 
 const PendingTransactionMenu = () => {
   const symbol = useAppSelector(getCurrentChartSymbol)
@@ -21,9 +22,8 @@ const PendingTransactionMenu = () => {
     else setPrice(+target.value)
   }
   return (
-    <div>
-      <h3>{symbol}</h3>
-      <h5>order:</h5>
+    <div id="pending-transaction-container" className="dfc aic">
+      <h5>Market order:</h5>
       <label htmlFor="vol">Volume:</label>
       <input type="number" name="vol" min={0} step={0.01} value={vol} onChange={handleChange} />
       <label htmlFor="price">Price:</label>
