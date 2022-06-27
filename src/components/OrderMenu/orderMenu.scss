@@ -1,11 +1,15 @@
 @use '../../scss/colors';
 
-#container-pending-order {
+#order-menu-container {
+  padding-top: 1rem;
   h5 {
-    margin: auto auto 1em;
+    margin: 0.4rem auto;
   }
   input {
     text-align: right;
+    font-size: 20px;
+    padding: 3px 6px;
+    margin: 0.5rem 1rem;
   }
   .buy {
     --color: #{colors.$main-success-color};
