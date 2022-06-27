@@ -1,6 +1,9 @@
 @use '../../scss/_colors.scss';
 
 #market-transaction-container {
+  div {
+    position: relative;
+  }
   width: 100%;
   button {
     margin: 0.2em;
@@ -14,6 +17,15 @@
     right: 0;
     bottom: 0;
     min-width: 1px;
+    &.askers {
+      top: unset;
+      color: colors.$main-error-color;
+    }
+    &.bidders {
+      left: 0;
+      right: unset;
+      color: colors.$main-success-color;
+    }
     &.sellers {
       background-color: colors.$main-error-color;
     }

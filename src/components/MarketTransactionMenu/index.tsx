@@ -16,8 +16,12 @@ const MarketTransactionMenu = () => {
   const priceFormat = format('.5f')
   const asks = [] as JSX.Element[]
   const buys = [] as JSX.Element[]
+  let totalAsk = 0
+  let totalBid = 0
   for (let i = 0; i < prices.length; i++) {
     const item = prices[i]
+    totalBid += item.bidVolume
+    totalAsk += item.askVolume
     asks.push(
       <div key={`market-ask-${i}`} className="depth-container df">
         <div className="price">{priceFormat(item.ask)}</div>
@@ -54,24 +58,36 @@ const MarketTransactionMenu = () => {
   return (
     <div id="market-transaction-container" className="dfc">
       <h5>Market Transaction:</h5>
-      <div>Daily High: {priceFormat(prices[0].high)}</div>
+      <div>
+        Daily High: {priceFormat(prices[0].high)} total: {volumeFormat(totalAsk)}
+      </div>
       {asks.reverse()}
       <button className="btn buy" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
         Buy {priceFormat(prices[0].ask)}
       </button>
-      <input
-        type="number"
-        onChange={handleVolumeChange}
-        min="0.01"
-        max="2"
-        step="0.01"
-        value={volume}
-      />
+      <div className="df jcc aic">
+        <span className="bidders">
+          {totalAsk < totalBid ? volumeFormat(totalBid - totalAsk) : ''}
+        </span>
+        <input
+          type="number"
+          onChange={handleVolumeChange}
+          min="0.01"
+          max="2"
+          step="0.01"
+          value={volume}
+        />
+        <span className="askers">
+          {totalAsk > totalBid ? volumeFormat(totalAsk - totalBid) : ''}
+        </span>
+      </div>
       <button className="btn sell" onClick={() => marketOpenOrderHandler(CMD.BUY)}>
         Sell {priceFormat(prices[0].bid)}
       </button>
       {buys}
-      <div>Daily Low: {priceFormat(prices[0].low)}</div>
+      <div>
+        Daily Low: {priceFormat(prices[0].low)} total: {volumeFormat(totalBid)}
+      </div>
     </div>
   )
 }
