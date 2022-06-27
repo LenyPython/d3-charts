@@ -1,16 +1,12 @@
 import { PriceData } from './../../types/index'
 import { STREAM_ANSWERS } from './../../commands/index'
+
 export interface PriceStreamInterface {
   currentPrices: { [key: string]: PriceLevelsInterface }
 }
 
-interface PriceLevelsInterface extends Record<string, TradePriceData> {
-  level0: TradePriceData
-  level1: TradePriceData
-  level2: TradePriceData
-  level3: TradePriceData
-  level4: TradePriceData
-}
+type PriceLevelsInterface = TradePriceData[]
+
 export interface TradePricesInterface {
   ask: number
   bid: number

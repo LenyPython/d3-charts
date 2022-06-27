@@ -8,7 +8,7 @@ import './PendingTransactionMenu.css'
 const PendingTransactionMenu = () => {
   const symbol = useAppSelector(getCurrentChartSymbol)
   const transaction = useTransactionInfo()
-  const currentPrice = useAppSelector(getInstrumentCurrentPrice)[symbol]['level0'].bid
+  const currentPrice = useAppSelector(getInstrumentCurrentPrice)[symbol][0].bid
   const { sl, setSl, tp, setTp, vol, setVol, price, setPrice } = transaction
   useEffect(() => {
     setPrice(currentPrice)
