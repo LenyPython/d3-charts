@@ -1,4 +1,4 @@
-import React, { useRef, RefObject } from 'react'
+import React, { RefObject } from 'react'
 import { PriceData } from '../../../types'
 
 const Candlesticks: React.FC<{

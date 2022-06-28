@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react'
+import { useRef } from 'react'
 import { useAppSelector } from '../../app/hooks'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
@@ -19,12 +19,12 @@ const MarketDepthChart = () => {
   const height = size?.height ?? 30
   const symbol = useAppSelector(getCurrentChartSymbol)
   const depthOfMarket = useAppSelector(getInstrumentCurrentPrice)[symbol]
-  const mainChartWidth = useMemo(() => width - marginRight, [width])
-  const xTickPos = useMemo(() => mainChartWidth + xOffset, [mainChartWidth])
-  if (!depthOfMarket) return <h2>awaiting data</h2>
+  const mainChartWidth = width - marginRight
+  const xTickPos = mainChartWidth + xOffset
+  if (!depthOfMarket) return <div ref={divRef}></div>
   const yScale = scaleLinear()
-    .domain([depthOfMarket[4].low, depthOfMarket[4].high])
-    .range([margin, height - margin])
+    .domain([depthOfMarket[0].low, depthOfMarket[0].high])
+    .range([height - margin, margin])
   return (
     <div id="market-depth-container" ref={divRef}>
       <svg viewBox={`0 0 ${width} ${height}`}>
@@ -37,7 +37,7 @@ const MarketDepthChart = () => {
         />
         {yScale.ticks(10).map((tickValue: number) => {
           return (
-            <g key={`y-tick-${tickValue}`}>
+            <g key={`DOM-y-tick-${tickValue}`}>
               <text className="tick" dx={xTickPos} dy={yScale(tickValue)}>
                 {priceFormat(tickValue)}
               </text>
@@ -46,9 +46,8 @@ const MarketDepthChart = () => {
         })}
         {depthOfMarket.map((item: TradePriceData, i: number) => {
           return (
-            <>
+            <g key={`market-depth-level-${i}`}>
               <line
-                key={`asker-market-depth-${i}`}
                 className="askers"
                 y1={yScale(item.ask)}
                 y2={yScale(item.ask)}
@@ -56,14 +55,13 @@ const MarketDepthChart = () => {
                 x2={(mainChartWidth * item.askVolume) / 10000000}
               />
               <line
-                key={`biders-market-depth-${i}`}
                 className="biders"
                 y1={yScale(item.bid)}
                 y2={yScale(item.bid)}
                 x1={0}
                 x2={(mainChartWidth * item.bidVolume) / 10000000}
               />
-            </>
+            </g>
           )
         })}
       </svg>
