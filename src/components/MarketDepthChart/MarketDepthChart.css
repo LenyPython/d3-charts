@@ -1,0 +1,1 @@
+#market-depth-container{position:relative;display:block;width:25%;margin:4px}#market-depth-container svg{position:absolute;top:0;left:0}#market-depth-container line{opacity:.5;stroke-width:5px}#market-depth-container line.askers{stroke:#20df20}#market-depth-container line.biders{stroke:#df2020}

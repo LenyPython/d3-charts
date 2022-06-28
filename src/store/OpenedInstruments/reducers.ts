@@ -1,4 +1,3 @@
-import { NEW_CHART_TIME_STAMP } from './../../constants/index'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { ChartsDataPayload, HashedInstruments, OpenedInstrumentsInterface } from './types'
 
@@ -19,13 +18,9 @@ const reducers = {
   },
   setCurrentCharts: (state: OpenedInstrumentsInterface, action: PayloadAction<string>) => {
     state.symbol = action.payload
-    state.timeStamp = NEW_CHART_TIME_STAMP
   },
   setIndexes: (state: OpenedInstrumentsInterface, action: PayloadAction<HashedInstruments>) => {
     state.indexes = action.payload
-  },
-  setMainChartTimestamp: (state: OpenedInstrumentsInterface, action: PayloadAction<string>) => {
-    state.timeStamp = action.payload
   },
   addChartDataTab: (
     state: OpenedInstrumentsInterface,

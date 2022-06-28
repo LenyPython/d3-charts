@@ -1,8 +1,11 @@
 import { PriceData } from './../../types/index'
 import { STREAM_ANSWERS } from './../../commands/index'
+
 export interface PriceStreamInterface {
-  currentPrices: { [key: string]: TradePricesInterface }
+  currentPrices: { [key: string]: PriceLevelsInterface }
 }
+
+export type PriceLevelsInterface = TradePriceData[]
 
 export interface TradePricesInterface {
   ask: number

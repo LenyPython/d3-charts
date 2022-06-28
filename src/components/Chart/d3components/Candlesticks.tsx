@@ -1,4 +1,4 @@
-import React, { useRef, RefObject } from 'react'
+import React, { RefObject } from 'react'
 import { PriceData } from '../../../types'
 
 const Candlesticks: React.FC<{
@@ -6,18 +6,13 @@ const Candlesticks: React.FC<{
   candlesRef: RefObject<HTMLDivElement>
   xScale: any
   yScale: any
+  yVolumeScale: any
   rescaleX: (e: React.WheelEvent) => void
   size: { width: number; height: number } | undefined
-}> = ({ data, rescaleX, xScale, yScale, candlesRef, size }) => {
-  const svgRef = useRef<SVGSVGElement>(null)
-
+}> = ({ data, rescaleX, xScale, yScale, yVolumeScale, candlesRef, size }) => {
   return (
     <div className="svg-container container" onWheel={rescaleX} ref={candlesRef}>
-      <svg
-        className="svg-main-chart"
-        viewBox={`0 0 ${size?.width ?? 500} ${size?.height ?? 300}`}
-        ref={svgRef}
-      >
+      <svg className="svg-main-chart" viewBox={`0 0 ${size?.width ?? 500} ${size?.height ?? 300}`}>
         {data.map((d: PriceData, i: number) => {
           return (
             <g key={`candleStick${i}-${d.ctmString}`}>
@@ -62,6 +57,14 @@ const Candlesticks: React.FC<{
                 y1={yScale(d.open)}
                 y2={yScale(d.close)}
                 strokeWidth={xScale.bandwidth()}
+              />
+              <line
+                className={d.open < d.close ? 'bull-candle' : 'bear-candle'}
+                x1={xScale(d.ctmString)}
+                x2={xScale(d.ctmString)}
+                y1={yVolumeScale(0)}
+                y2={yVolumeScale(d.vol)}
+                strokeWidth={xScale.bandwidth() * 0.8}
               />
             </g>
           )

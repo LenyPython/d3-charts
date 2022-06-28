@@ -3,14 +3,14 @@ import { CMD, TYPE } from '../../commands'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
 import { sendMarketOrderRequest } from '../../store/UserTradesStream/actions'
-import { TransactionInfoHook } from '../PendingOrderMenu'
+import { TransactionInfoHook } from '../PendingTransactionMenu'
 import './pendingOrderBtn.css'
 
 const PendingOrderButtons: React.FC<{ transaction: TransactionInfoHook }> = ({ transaction }) => {
   const dispatch = useAppDispatch()
   const symbol = useAppSelector(getCurrentChartSymbol)
   const { sl, tp, vol: volume, price } = transaction
-  const { ask, bid } = useAppSelector(getInstrumentCurrentPrice)[symbol]
+  const { ask, bid } = useAppSelector(getInstrumentCurrentPrice)[symbol][0]
   const upDisabled = ask >= price
   const downDisabled = bid <= price
   const handlePlacePendingOrder = (cmd: CMD) => {

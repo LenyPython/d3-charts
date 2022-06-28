@@ -17,12 +17,15 @@ const Chart: React.FC<{
   const [isOpen, setIsOpen] = useState(false)
   const [yResize, setYResize] = useState<number>(0)
   const [xResize, setXResize] = useState<number>(0)
-  useEffect(() => setYResize(0), [title])
+  useEffect(() => {
+    setYResize(0)
+    setXResize(0)
+  }, [title])
 
   if (process.env.REACT_DEBUG === 'true') data = createData(100)
   if (!data) data = []
   const length = data.length
-  const { xScale, yScale } = createScales(data.slice(xResize), size)
+  const { xScale, yScale, yVolumeScale } = createScales(data.slice(xResize), size)
   const toggleFullScreen = () => setIsOpen((v) => !v)
   const rescaleY = (e: React.WheelEvent) => {
     const currentDomain = yScale.domain()
@@ -51,6 +54,7 @@ const Chart: React.FC<{
           rescaleX={rescaleX}
           xScale={xScale}
           yScale={yScale}
+          yVolumeScale={yVolumeScale}
         />
         <AxisBottom size={size} />
         <AxisRight yScale={yScale} rescaleY={rescaleY} />

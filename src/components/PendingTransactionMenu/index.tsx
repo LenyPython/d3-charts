@@ -1,15 +1,14 @@
-import MarketTransactionPanel from '../MarketTransactionPanel'
-import PendingOrderButtons from '../PendingOrderButtons'
+import { useEffect, useState } from 'react'
 import { useAppSelector } from '../../app/hooks'
-import { useState, useEffect } from 'react'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
-import './pendingOrder.css'
+import PendingOrderButtons from '../PendingOrderButtons'
+import './PendingTransactionMenu.css'
 
-const PendingOrderMenu = () => {
+const PendingTransactionMenu = () => {
   const symbol = useAppSelector(getCurrentChartSymbol)
   const transaction = useTransactionInfo()
-  const currentPrice = useAppSelector(getInstrumentCurrentPrice)[symbol].bid
+  const currentPrice = useAppSelector(getInstrumentCurrentPrice)[symbol][0].bid
   const { sl, setSl, tp, setTp, vol, setVol, price, setPrice } = transaction
   useEffect(() => {
     setPrice(currentPrice)
@@ -23,11 +22,8 @@ const PendingOrderMenu = () => {
     else setPrice(+target.value)
   }
   return (
-    <div id="container-pending-order" className="dfc aic">
-      <MarketTransactionPanel />
-      <h5>Market Transaction</h5>
-      <h3>{symbol}</h3>
-      <h5>order:</h5>
+    <div id="pending-transaction-container" className="dfc aic">
+      <h5>Market order:</h5>
       <label htmlFor="vol">Volume:</label>
       <input type="number" name="vol" min={0} step={0.01} value={vol} onChange={handleChange} />
       <label htmlFor="price">Price:</label>
@@ -47,7 +43,8 @@ const PendingOrderMenu = () => {
     </div>
   )
 }
-export default PendingOrderMenu
+
+export default PendingTransactionMenu
 
 const useTransactionInfo = () => {
   const [sl, setSl] = useState<number>(0)

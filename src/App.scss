@@ -49,9 +49,6 @@ button {
 .jcc {
   justify-content: center;
 }
-.aic {
-  align-items: center;
-}
 .jcsa {
   justify-content: space-around;
 }
@@ -65,8 +62,14 @@ button {
 .jcs {
   justify-content: stretch;
 }
+.aic {
+  align-items: center;
+}
 .ais {
   align-items: stretch;
+}
+.aie {
+  align-items: flex-end;
 }
 .fw {
   flex-wrap: wrap;
