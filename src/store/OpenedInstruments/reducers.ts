@@ -1,4 +1,3 @@
-import { NEW_CHART_TIME_STAMP } from './../../constants/index'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { ChartsDataPayload, HashedInstruments, OpenedInstrumentsInterface } from './types'
 
