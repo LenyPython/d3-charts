@@ -3,6 +3,7 @@ import ChartTabs from '../ChartTabs'
 import MarketDepthChart from '../MarketDepthChart'
 import { useAppSelector } from '../../app/hooks'
 import { getCurrentChartSymbol, getOpenedChartsData } from '../../store/OpenedInstruments/selectors'
+import { PERIODS } from '../../store/OpenedInstruments/types'
 import './maincharts.css'
 
 const MainCharts = () => {
@@ -14,10 +15,10 @@ const MainCharts = () => {
       <div className="df container">
         <MarketDepthChart />
         <div id="charts-container" className="container">
-          <Chart data={OpenedChartsData?.[symbol]?.['Day']} title={symbol + ' Day'} />
-          <Chart data={OpenedChartsData?.[symbol]?.['Hour4']} title={symbol + ' Hour4'} />
-          <Chart data={OpenedChartsData?.[symbol]?.['Hour1']} title={symbol + ' Hour1'} />
-          <Chart data={OpenedChartsData?.[symbol]?.['Min15']} title={symbol + ' Min15'} />
+          <Chart data={OpenedChartsData?.[symbol]?.[PERIODS.DAY]} title={symbol + ' Day'} />
+          <Chart data={OpenedChartsData?.[symbol]?.[PERIODS.HOUR_4]} title={symbol + ' Hour4'} />
+          <Chart data={OpenedChartsData?.[symbol]?.[PERIODS.HOUR_1]} title={symbol + ' Hour1'} />
+          <Chart data={OpenedChartsData?.[symbol]?.[PERIODS.MIN_15]} title={symbol + ' Min15'} />
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
-import { ChartsDataPayload, HashedInstruments, OpenedInstrumentsInterface } from './types'
+import { ChartsDataPayload, HashedInstruments, OpenedInstrumentsInterface, PERIODS } from './types'
 
 const reducers = {
   updateLastCandlePrice: (
@@ -8,13 +8,13 @@ const reducers = {
   ) => {
     const { symbol, ask: price } = action.payload
     if (state.openedChartsTabs[symbol] === undefined) return
-    const timestamp = 'Min15'
-    const last = state.openedChartsTabs[symbol][timestamp].length - 1
-    const low = state.openedChartsTabs[symbol][timestamp][last]!.low
-    const high = state.openedChartsTabs[symbol][timestamp][last]!.high
-    if (low > price) state.openedChartsTabs[symbol][timestamp][last]!.low = price
-    if (high < price) state.openedChartsTabs[symbol][timestamp][last]!.high = price
-    state.openedChartsTabs[symbol][timestamp][last]!.close = price
+    const lowestTime = PERIODS.MIN_15
+    const last = state.openedChartsTabs[symbol][lowestTime].length - 1
+    const low = state.openedChartsTabs[symbol][lowestTime][last]!.low
+    const high = state.openedChartsTabs[symbol][lowestTime][last]!.high
+    if (low > price) state.openedChartsTabs[symbol][lowestTime][last]!.low = price
+    if (high < price) state.openedChartsTabs[symbol][lowestTime][last]!.high = price
+    state.openedChartsTabs[symbol][lowestTime][last]!.close = price
   },
   setCurrentCharts: (state: OpenedInstrumentsInterface, action: PayloadAction<string>) => {
     state.symbol = action.payload

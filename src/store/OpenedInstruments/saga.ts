@@ -8,18 +8,13 @@ import { WS } from '../LoginData/saga'
 import { saveChartData } from '../MainConnection/actions'
 import { MAIN_SOCKET_ACTION, PriceDataResponse } from '../MainConnection/types'
 import { addChartDataTab, setCurrentCharts } from './slice'
-import { INSTRUMENTS_ACTIONS, SmallChartsData } from './types'
+import { INSTRUMENTS_ACTIONS, PERIODS, SmallChartsData } from './types'
 
 export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, string>) {
   const symbol = action.payload
   //get array of charts requests
   const requests = DownloadChartDataCommands(symbol)
-  let InstrumentData: SmallChartsData = {
-    Day: [] as PriceData[],
-    Hour4: [] as PriceData[],
-    Hour1: [] as PriceData[],
-    Min15: [] as PriceData[],
-  }
+  let InstrumentData: SmallChartsData = {} as SmallChartsData
 
   if (WS !== null) {
     yield put(subscribeToPriceStream(symbol))
@@ -31,20 +26,23 @@ export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, stri
       const { payload } = yield take(MAIN_SOCKET_ACTION.saveChartData)
       const prices = payload
       switch (period) {
+        case 1:
+          InstrumentData[PERIODS.MIN_1] = prices
+          break
         case 15:
-          InstrumentData.Min15 = prices
+          InstrumentData[PERIODS.MIN_15] = prices
           break
         case 60:
-          InstrumentData.Hour1 = prices
+          InstrumentData[PERIODS.HOUR_1] = prices
           break
         case 240:
-          InstrumentData.Hour4 = prices
+          InstrumentData[PERIODS.HOUR_4] = prices
           break
         case 1440:
-          InstrumentData.Day = prices
+          InstrumentData[PERIODS.DAY] = prices
           break
         case 10080:
-          InstrumentData.Week = prices
+          InstrumentData[PERIODS.WEEK] = prices
           break
       }
       //delay making request to API
