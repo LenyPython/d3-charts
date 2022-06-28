@@ -5,7 +5,7 @@ const reducers = {
   setInstrumentPrice: (state: PriceStreamInterface, action: PayloadAction<TradePriceData>) => {
     const DepthOfMarket = action.payload
     const { level, symbol } = DepthOfMarket
-    state.currentPrices[symbol][`level${level}`] = DepthOfMarket
+    state.currentPrices[symbol][level] = DepthOfMarket
   },
   setPricesTicks: (
     state: PriceStreamInterface,
@@ -14,13 +14,7 @@ const reducers = {
     const prices = action.payload
     for (let symbol in action.payload) {
       const dummyLevel = createLevel(symbol, prices[symbol])
-      state.currentPrices[symbol] = {
-        level0: dummyLevel,
-        level1: dummyLevel,
-        level2: dummyLevel,
-        level3: dummyLevel,
-        level4: dummyLevel,
-      }
+      state.currentPrices[symbol] = [dummyLevel, dummyLevel, dummyLevel, dummyLevel, dummyLevel]
     }
   },
 }

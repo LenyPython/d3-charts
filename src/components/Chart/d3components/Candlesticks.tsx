@@ -10,15 +10,9 @@ const Candlesticks: React.FC<{
   rescaleX: (e: React.WheelEvent) => void
   size: { width: number; height: number } | undefined
 }> = ({ data, rescaleX, xScale, yScale, yVolumeScale, candlesRef, size }) => {
-  const svgRef = useRef<SVGSVGElement>(null)
-
   return (
     <div className="svg-container container" onWheel={rescaleX} ref={candlesRef}>
-      <svg
-        className="svg-main-chart"
-        viewBox={`0 0 ${size?.width ?? 500} ${size?.height ?? 300}`}
-        ref={svgRef}
-      >
+      <svg className="svg-main-chart" viewBox={`0 0 ${size?.width ?? 500} ${size?.height ?? 300}`}>
         {data.map((d: PriceData, i: number) => {
           return (
             <g key={`candleStick${i}-${d.ctmString}`}>

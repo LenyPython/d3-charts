@@ -10,7 +10,7 @@ const PendingOrderButtons: React.FC<{ transaction: TransactionInfoHook }> = ({ t
   const dispatch = useAppDispatch()
   const symbol = useAppSelector(getCurrentChartSymbol)
   const { sl, tp, vol: volume, price } = transaction
-  const { ask, bid } = useAppSelector(getInstrumentCurrentPrice)[symbol]['level0']
+  const { ask, bid } = useAppSelector(getInstrumentCurrentPrice)[symbol][0]
   const upDisabled = ask >= price
   const downDisabled = bid <= price
   const handlePlacePendingOrder = (cmd: CMD) => {

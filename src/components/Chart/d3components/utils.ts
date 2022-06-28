@@ -1,5 +1,7 @@
 import { PriceData } from './../../../types/index'
-import { min, max, scaleLinear, scaleBand } from 'd3'
+import { format, min, max, scaleLinear, scaleBand } from 'd3'
+
+export const priceFormat = format('.5f')
 
 const heightFromContainerSingleChart = 40
 const topSpacing = 25

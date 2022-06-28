@@ -1,0 +1,23 @@
+@use './../../scss/colors';
+
+#market-depth-container {
+  position: relative;
+  display: block;
+  width: 25%;
+  margin: 4px;
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  line {
+    opacity: 0.5;
+    stroke-width: 5px;
+    &.askers {
+      stroke: colors.$main-success-color;
+    }
+    &.biders {
+      stroke: colors.$main-error-color;
+    }
+  }
+}

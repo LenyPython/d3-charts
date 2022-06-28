@@ -1,5 +1,9 @@
+@use '../../scss/_colors.scss';
+
 #market-transaction-container {
-  text-align: center;
+  div {
+    position: relative;
+  }
   width: 100%;
   button {
     margin: 0.2em;
@@ -7,9 +11,40 @@
   input {
     width: 50%;
   }
+  span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    min-width: 1px;
+    &.askers {
+      top: unset;
+      color: colors.$main-error-color;
+    }
+    &.bidders {
+      left: 0;
+      right: unset;
+      color: colors.$main-success-color;
+    }
+    &.sellers {
+      background-color: colors.$main-error-color;
+    }
+    &.buyers {
+      background-color: colors.$main-success-color;
+    }
+  }
   .depth-container {
+    position: relative;
     width: 100%;
     padding: 3px;
     margin: 3px auto;
+    .price {
+      width: 30%;
+    }
+    .depth {
+      position: relative;
+      text-align: left;
+      width: 70%;
+    }
   }
 }
