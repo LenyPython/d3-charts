@@ -61,6 +61,9 @@ const MarketTransactionMenu = () => {
       <div>
         Daily High: {priceFormat(prices[0].high)} total: {volumeFormat(totalAsk)}
       </div>
+      <div>
+        Daily Low: {priceFormat(prices[0].low)} total: {volumeFormat(totalBid)}
+      </div>
       {asks.reverse()}
       <button className="btn buy" onClick={() => marketOpenOrderHandler(CMD.SELL)}>
         Buy {priceFormat(prices[0].ask)}
@@ -85,9 +88,6 @@ const MarketTransactionMenu = () => {
         Sell {priceFormat(prices[0].bid)}
       </button>
       {buys}
-      <div>
-        Daily Low: {priceFormat(prices[0].low)} total: {volumeFormat(totalBid)}
-      </div>
     </div>
   )
 }
