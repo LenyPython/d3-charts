@@ -5,7 +5,7 @@ export interface PriceStreamInterface {
   currentPrices: { [key: string]: PriceLevelsInterface }
 }
 
-type PriceLevelsInterface = TradePriceData[]
+export type PriceLevelsInterface = TradePriceData[]
 
 export interface TradePricesInterface {
   ask: number

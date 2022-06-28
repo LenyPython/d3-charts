@@ -4,6 +4,7 @@ import { format } from 'd3'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { CMD, TYPE } from '../../commands'
 import { sendMarketOrderRequest } from '../../store/UserTradesStream/actions'
+import { priceFormat } from '../Chart/d3components/utils'
 import { getCurrentChartSymbol } from '../../store/OpenedInstruments/selectors'
 import { getInstrumentCurrentPrice } from '../../store/OpenedInstrumentsStream/selectors'
 
@@ -13,7 +14,6 @@ const MarketTransactionMenu = () => {
   const symbol = useAppSelector(getCurrentChartSymbol)
   const prices = useAppSelector(getInstrumentCurrentPrice)[symbol]
   const volumeFormat = format('.2s')
-  const priceFormat = format('.5f')
   const asks = [] as JSX.Element[]
   const buys = [] as JSX.Element[]
   let totalAsk = 0
