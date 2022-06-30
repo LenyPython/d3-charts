@@ -15,10 +15,19 @@ const MainCharts = () => {
       <div className="df container">
         <MarketDepthChart />
         <div id="charts-container" className="container">
-          <Chart data={OpenedChartsData?.[symbol]?.[PERIODS.DAY]} title={symbol + ' Day'} />
-          <Chart data={OpenedChartsData?.[symbol]?.[PERIODS.HOUR_4]} title={symbol + ' Hour4'} />
-          <Chart data={OpenedChartsData?.[symbol]?.[PERIODS.HOUR_1]} title={symbol + ' Hour1'} />
-          <Chart data={OpenedChartsData?.[symbol]?.[PERIODS.MIN_15]} title={symbol + ' Min15'} />
+          <Chart data={OpenedChartsData?.[symbol]?.['data'][PERIODS.DAY]} title={symbol + ' Day'} />
+          <Chart
+            data={OpenedChartsData?.[symbol]?.['data'][PERIODS.HOUR_4]}
+            title={symbol + ' Hour4'}
+          />
+          <Chart
+            data={OpenedChartsData?.[symbol]?.['data'][PERIODS.HOUR_1]}
+            title={symbol + ' Hour1'}
+          />
+          <Chart
+            data={OpenedChartsData?.[symbol]?.['data'][PERIODS.MIN_15]}
+            title={symbol + ' Min15'}
+          />
         </div>
       </div>
     </div>

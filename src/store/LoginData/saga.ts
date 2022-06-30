@@ -1,6 +1,6 @@
 import { CREDENTIALS } from './../../constants'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { put, call, take, takeLeading, select } from 'redux-saga/effects'
+import { put, call, take, fork, takeLeading, select, race, delay, Effect } from 'redux-saga/effects'
 import { send } from '../../utils/websocket'
 import { LoginCredentials, USER_CONNECTION } from './types'
 import { Disconnect } from './commands'
@@ -11,21 +11,28 @@ import { getPassword, getUserId } from './selectors'
 import { resetChartDataTab } from '../OpenedInstruments/slice'
 import { LOG } from '../Logger/types'
 import { setMainSocketState } from '../SocketsStates/slice'
+import { ConnectMainSocketListeners } from './actions'
+import { DownloadChartDataListener } from '../OpenedInstruments/saga'
 
-export let WS: WebSocket | null = null
-const URL = process.env.REACT_APP_SOCKET_URL
+const DEMO_URL = process.env.REACT_APP_SOCKET_URL
+const REAL_URL = process.env.REACT_APP_SOCKET_URL
 
-export function* WebSocketAPIWatcher() {
+export function* WebSocketAPIListener() {
   const userId: string = yield select(getUserId)
   const password: string = yield select(getPassword)
+  const accType: boolean = false
   const payload = {
     userId,
     password,
   } as LoginCredentials
 
+  // TODO ?????????????????????????????
+  //implement state in store for switching account type
+  const URL = accType ? REAL_URL : DEMO_URL
+
   try {
     if (!URL) throw new Error('You forgot to declare REACT_APP_SOCKET_URL')
-    if (WS === null || WS.readyState !== WS.OPEN) WS = new WebSocket(URL)
+    const WS = new WebSocket(URL)
     yield put(
       addLog({
         class: LOG.info,
@@ -34,14 +41,20 @@ export function* WebSocketAPIWatcher() {
     )
     const socketChannel: ReturnType<typeof createWebSocketAPIChannel> = yield call(
       createWebSocketAPIChannel,
-      WS!,
+      WS,
       payload,
     )
 
+    //fork side generators to watch main socket responses
+    yield put(ConnectMainSocketListeners(WS))
+
     sessionStorage.setItem(CREDENTIALS, JSON.stringify(payload))
     while (WS.readyState !== WS.CLOSED) {
-      const action: PayloadAction = yield take(socketChannel)
-      yield put(action)
+      const { action }: { action: PayloadAction; timeout: any } = yield race({
+        action: take(socketChannel),
+        timeout: delay(1000),
+      })
+      if (action) yield put(action)
     }
     yield put(setMainSocketState(false))
   } catch (e) {
@@ -55,15 +68,26 @@ export function* WebSocketAPIWatcher() {
   }
 }
 
-export function* WebSocketDisconnectWorker() {
-  yield call(send, WS!, Disconnect())
-  yield put(resetChartDataTab())
-  yield put(setSessionId(''))
-  sessionStorage.removeItem(CREDENTIALS)
+function* MainSocketDispatcher({ payload: socket }: Effect<USER_CONNECTION, WebSocket>) {
+  yield fork(WebSocketDisconnectWorker, socket)
+  yield fork(DownloadChartDataListener, socket)
 }
+export function* WebSocketDisconnectWorker(socket: WebSocket) {
+  //TODO: add all reset actions to reset all data on logout
+  while (socket.readyState !== socket.CLOSED) {
+    const { disconnect }: { disconnect: PayloadAction } = yield race({
+      disconnect: take(USER_CONNECTION.disconnect),
+      timeout: delay(10000),
+    })
+    if (!disconnect) continue
+    yield call(send, socket, Disconnect())
+    yield put(resetChartDataTab())
+    yield put(setSessionId(''))
+    sessionStorage.removeItem(CREDENTIALS)
+  }
+}
+
 export default function* ConnectUserWatcherSaga() {
-  //Main WEbSocket connection
-  yield takeLeading(USER_CONNECTION.connect, WebSocketAPIWatcher)
-  //disconnect
-  yield takeLeading(USER_CONNECTION.disconnect, WebSocketDisconnectWorker)
+  yield takeLeading(USER_CONNECTION.connect, WebSocketAPIListener)
+  yield takeLeading(USER_CONNECTION.dispatchSocket, MainSocketDispatcher)
 }

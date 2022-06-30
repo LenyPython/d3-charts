@@ -7,7 +7,7 @@ export enum PERIODS {
   MIN_15 = 'MIN_15',
   MIN_30 = 'MIN_30',
   HOUR_1 = 'HOUR_1',
-  HOUR_4 = ' HOUR_4',
+  HOUR_4 = 'HOUR_4',
   DAY = 'DAY',
   WEEK = 'WEEK',
   MONTH = 'MONTH',
@@ -20,7 +20,7 @@ interface average {
   value: number
 }
 export interface ChartPriceDataWithObjects {
-  data: PriceData[]
+  data: SmallChartsData
   objects: {
     HIGH: number[]
     LOW: number[]
@@ -33,8 +33,8 @@ export type SmallChartsData = Record<PERIODS, PriceData[]>
 export interface OpenedInstrumentsInterface {
   indexes: HashedInstruments
   symbol: string
-  //hash symbol to array of smaller charts
-  openedChartsTabs: Record<string, SmallChartsData>
+  //symbol > data > PERIODS > PriceData[] and indicators in objects
+  openedChartsTabs: Record<string, ChartPriceDataWithObjects>
 }
 
 export interface ChartsDataPayload {

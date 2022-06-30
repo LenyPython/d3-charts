@@ -6,7 +6,8 @@ import { addLog } from '../Logger/slice'
 import { getSessionId } from '../LoginData/selectors'
 import createWebSocketSTREAMChannel from './StreamChannel'
 
-const URL = process.env.REACT_APP_SOCKET_STREAM_URL
+const REAL_URL = process.env.REACT_APP_SOCKET_STREAM_URL
+const DEMO_URL = process.env.REACT_APP_SOCKET_STREAM_URL
 
 export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
   const {
@@ -18,7 +19,11 @@ export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
     reconnect,
     title,
   } = handlers
+  const accType = false
   try {
+    // TODO ?????????????????????????????
+    //implement state in store for switching account type
+    const URL = accType ? REAL_URL : DEMO_URL
     if (!URL) throw new Error('You forgot to declare REACT_APP_SOCKET_STREAM_URL')
     const socket = new WebSocket(URL)
     yield put(

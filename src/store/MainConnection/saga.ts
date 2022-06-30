@@ -5,9 +5,8 @@ import { takeLeading, takeEvery, Effect, put, call, delay, take, select } from '
 import { send } from '../../utils/websocket'
 import { hashInstruments } from '../../utils/websocket/hashInstruments'
 import { setSessionId } from '../LoginData/slice'
-import { saveChartDataWorker } from '../OpenedInstruments/saga'
 import { setIndexes } from '../OpenedInstruments/slice'
-import { ConnectWebsockets } from './actions'
+import { ConnectWebsockets, dispatchChartDataToParsing } from './actions'
 import { DownloadAllSymbols, GetTradesHistory } from './commands'
 import {
   API_ACTION,
@@ -30,7 +29,7 @@ import { getSessionId } from '../LoginData/selectors'
 function* AccountDataDispatcher({ payload }: Effect<MAIN_SOCKET_ACTION, APIResponse>) {
   const returnData = payload
   if (isGetSymbolResponse(returnData)) yield put(sendOpenTransactionRequest(returnData))
-  else if (isPriceDataResponse(returnData)) yield call(saveChartDataWorker, returnData)
+  else if (isPriceDataResponse(returnData)) yield put(dispatchChartDataToParsing(returnData))
   else if (isUserTradesResponse(returnData)) yield put(setTrades(returnData))
   else if (isBalanceResponse(returnData)) yield put(setBalanceFromResponse(returnData))
   else if (isGetAllSymbolsResponse(returnData)) {

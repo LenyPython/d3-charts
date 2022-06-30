@@ -1,29 +1,51 @@
 import { TRADES_ACTIONS } from '../UserTradesStream/types'
-import { subscribeToPriceStream } from './../OpenedInstrumentsStream/actions'
-import { Effect, put, delay, call, take, takeLeading } from 'redux-saga/effects'
-import { PriceData } from '../../types'
+import {
+  Effect,
+  put,
+  delay,
+  call,
+  take,
+  race,
+  takeLeading,
+  actionChannel,
+} from 'redux-saga/effects'
+import { PriceData, wsRequest } from '../../types'
 import { send } from '../../utils/websocket'
-import { DownloadChartDataCommands } from './commands'
-import { WS } from '../LoginData/saga'
+import { CreateDownloadChartDataCommand, PERIOD } from './commands'
 import { saveChartData } from '../MainConnection/actions'
 import { MAIN_SOCKET_ACTION, PriceDataResponse } from '../MainConnection/types'
 import { addChartDataTab, setCurrentCharts } from './slice'
 import { INSTRUMENTS_ACTIONS, PERIODS, SmallChartsData } from './types'
+import { TakeableChannel } from 'redux-saga'
+import { subscribeToPriceStream } from '../OpenedInstrumentsStream/actions'
+import { parseJsonConfigFileContent } from 'typescript'
 
-export function* downloadChartDataWorker(action: Effect<MAIN_SOCKET_ACTION, string>) {
-  const symbol = action.payload
-  //get array of charts requests
-  const requests = DownloadChartDataCommands(symbol)
-  let InstrumentData: SmallChartsData = {} as SmallChartsData
+export function* DownloadChartDataListener(socket: WebSocket) {
+  const downloadChartChannel: TakeableChannel<string> = yield actionChannel(INSTRUMENTS_ACTIONS.downloadChartData)
+  while (socket.readyState !== socket.CLOSED) {
+    const { payload: symbol } = yield race({
+      action: take(downloadChartChannel),
+      timeout: delay(5000),
+    })
+    if (symbol) {
+      yield call(DownloadChartWorker, socket, symbol)
+    }
+  }
+}
+function* DownloadChartWorker(socket: WebSocket, symbol: string){
+  yield put(subscribeToPriceStream(symbol))
+  //implement array of timestamps to download in the future
+  for(let period of [PERIODS.MIN_15, PERIODS.HOUR_1, PERIODS.HOUR_4, PERIODS.DAY]){
+    const command: wsRequest = yield CreateDownloadChartDataCommand(symbol, PERIOD[period])
+    yield call(send, socket, command)
 
-  if (WS !== null) {
-    yield put(subscribeToPriceStream(symbol))
-    for (let request of requests) {
-      //get chart period from request
-      const period = request.arguments.info.period
+    const { payload } = yield take(MAIN_SOCKET_ACTION.saveChartData)
+  }
+
+}
+
       yield call(send, WS, request)
       //await for ws answer
-      const { payload } = yield take(MAIN_SOCKET_ACTION.saveChartData)
       const prices = payload
       switch (period) {
         case 1:
@@ -80,6 +102,5 @@ function* updateOpenedCharts({ payload }: Effect<TRADES_ACTIONS, PriceData>) {
 
 export default function* OpenedInstrumentsWatcherSaga() {
   //get API chart data worker
-  yield takeLeading(INSTRUMENTS_ACTIONS.downloadChartData, downloadChartDataWorker)
   yield takeLeading(TRADES_ACTIONS.updateAllCharts, updateOpenedCharts)
 }

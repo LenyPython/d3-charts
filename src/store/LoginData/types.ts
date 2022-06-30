@@ -1,8 +1,9 @@
 import { API_COMMANDS } from '../../commands'
 
 export enum USER_CONNECTION {
-  connect = 'user-connect',
-  disconnect = 'user-disconnect',
+  connect = 'LOGIN/user-connect',
+  disconnect = 'LOGIN/user-disconnect',
+  dispatchSocket = 'LOGIN/dispatch-socket',
 }
 
 // Define a type for the slice state

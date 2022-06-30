@@ -1,5 +1,5 @@
-import { RequiredConnectionData, MAIN_SOCKET_ACTION } from './types'
-import { actionType, selectorType, APIResponse, PriceData } from '../../types'
+import { RequiredConnectionData, MAIN_SOCKET_ACTION, PriceDataResponse } from './types'
+import { actionType, selectorType, APIResponse } from '../../types'
 import createAction from '../../utils/actionCreator'
 
 export const EstablishMainConnection = createAction<RequiredConnectionData>(
@@ -11,7 +11,9 @@ export const reconnectSocketIfRequired = createAction<{
   getSocketState: selectorType
 }>(MAIN_SOCKET_ACTION.reconnectSocket)
 export const getAccountData = createAction<WebSocket>(MAIN_SOCKET_ACTION.getAccountData)
-export const saveChartData = createAction<PriceData[]>(MAIN_SOCKET_ACTION.saveChartData)
+export const dispatchChartDataToParsing = createAction<PriceDataResponse>(
+  MAIN_SOCKET_ACTION.saveChartData,
+)
 export const sendResponseToTypeCheck = createAction<APIResponse>(
   MAIN_SOCKET_ACTION.checkMainSocketResponse,
 )

@@ -9,12 +9,12 @@ const reducers = {
     const { symbol, ask: price } = action.payload
     if (state.openedChartsTabs[symbol] === undefined) return
     const lowestTime = PERIODS.MIN_15
-    const last = state.openedChartsTabs[symbol][lowestTime].length - 1
-    const low = state.openedChartsTabs[symbol][lowestTime][last]!.low
-    const high = state.openedChartsTabs[symbol][lowestTime][last]!.high
-    if (low > price) state.openedChartsTabs[symbol][lowestTime][last]!.low = price
-    if (high < price) state.openedChartsTabs[symbol][lowestTime][last]!.high = price
-    state.openedChartsTabs[symbol][lowestTime][last]!.close = price
+    const last = state.openedChartsTabs[symbol]['data'][lowestTime].length - 1
+    const low = state.openedChartsTabs[symbol]['data'][lowestTime][last]!.low
+    const high = state.openedChartsTabs[symbol]['data'][lowestTime][last]!.high
+    if (low > price) state.openedChartsTabs[symbol]['data'][lowestTime][last]!.low = price
+    if (high < price) state.openedChartsTabs[symbol]['data'][lowestTime][last]!.high = price
+    state.openedChartsTabs[symbol]['data'][lowestTime][last]!.close = price
   },
   setCurrentCharts: (state: OpenedInstrumentsInterface, action: PayloadAction<string>) => {
     state.symbol = action.payload
@@ -27,7 +27,7 @@ const reducers = {
     action: PayloadAction<ChartsDataPayload>,
   ) => {
     const { symbol, data } = action.payload
-    state.openedChartsTabs[symbol] = data
+    state.openedChartsTabs[symbol]['data'] = data
   },
   resetChartDataTab: (state: OpenedInstrumentsInterface) => {
     state.openedChartsTabs = {}
