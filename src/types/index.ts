@@ -64,4 +64,10 @@ export interface PriceData {
   high: number
   low: number
   vol: number
+  indicators: {
+    HIGH: boolean
+    LOW: boolean
+    SMA: number
+  }
 }
+export type RawPriceData = Omit<PriceData, 'indicators'>

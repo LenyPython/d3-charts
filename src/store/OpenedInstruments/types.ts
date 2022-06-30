@@ -15,18 +15,10 @@ export enum PERIODS {
 export enum INSTRUMENTS_ACTIONS {
   downloadChartData = 'Instruments/get-main-chart-data',
 }
-interface average {
-  time: string
-  value: number
-}
+
 export interface ChartPriceDataWithObjects {
   data: SmallChartsData
-  objects: {
-    HIGH: number[]
-    LOW: number[]
-    SMA: average[]
-    consolidation: string[][] //array of start time and end time [started, ended]
-  }
+  consolidation?: string[][] //array of [top, bottom, start, stop] values
 }
 // Define a type for the slice state
 export type SmallChartsData = Record<PERIODS, PriceData[]>
