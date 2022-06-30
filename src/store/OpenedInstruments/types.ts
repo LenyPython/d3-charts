@@ -31,7 +31,8 @@ export interface OpenedInstrumentsInterface {
 
 export interface ChartsDataPayload {
   symbol: string
-  data: SmallChartsData
+  period: PERIODS
+  data: PriceData[]
 }
 export type HashedInstrument = Omit<IndexInterface, 'groupName' | 'categoryName' | 'ask' | 'bid'>
 export interface HashedInstruments {

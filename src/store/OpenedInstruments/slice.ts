@@ -20,7 +20,7 @@ export const {
   setCurrentCharts,
   resetChartDataTab,
   setIndexes,
-  addChartDataTab,
+  saveAnalyzedChart,
   updateLastCandlePrice,
 } = OpenedInstruments.actions
 

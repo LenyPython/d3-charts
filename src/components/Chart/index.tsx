@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { PriceData } from '../../types'
-import { createData } from '../../utils/mock'
-import './chart.css'
 import Candlesticks from './d3components/Candlesticks'
 import { useResizeObserver } from './d3components/hooks'
 import createScales from './d3components/utils'
 import AxisBottom from './d3components/AxisBottom'
 import AxisRight from './d3components/AxisRight'
+import './chart.css'
 
 const Chart: React.FC<{
   data: PriceData[]
@@ -22,7 +21,6 @@ const Chart: React.FC<{
     setXResize(0)
   }, [title])
 
-  if (process.env.REACT_DEBUG === 'true') data = createData(100)
   if (!data) data = []
   const length = data.length
   const { xScale, yScale, yVolumeScale } = createScales(data.slice(xResize), size)

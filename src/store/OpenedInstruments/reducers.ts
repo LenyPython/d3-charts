@@ -22,12 +22,19 @@ const reducers = {
   setIndexes: (state: OpenedInstrumentsInterface, action: PayloadAction<HashedInstruments>) => {
     state.indexes = action.payload
   },
-  addChartDataTab: (
+  saveAnalyzedChart: (
     state: OpenedInstrumentsInterface,
     action: PayloadAction<ChartsDataPayload>,
   ) => {
-    const { symbol, data } = action.payload
-    state.openedChartsTabs[symbol]['data'] = data
+    //TODO how to add complicated object to object
+    const { symbol, period, data } = action.payload
+    console.log('chart data: ', symbol, period)
+    const entry = {}
+    //TODO make this work for single chart
+    entry[period] = data
+    state.openedChartsTabs[symbol] = {
+      data: entry,
+    }
   },
   resetChartDataTab: (state: OpenedInstrumentsInterface) => {
     state.openedChartsTabs = {}
