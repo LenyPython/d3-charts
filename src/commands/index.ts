@@ -17,7 +17,6 @@ export enum STREAM_COMMANDS {
   getCandles = 'getCandles',
   getTrades = 'getTrades',
   getTickPrices = 'getTickPrices',
-  get1MinCandle = 'getCandle',
   ping = 'ping',
 }
 

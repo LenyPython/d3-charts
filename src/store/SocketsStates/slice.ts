@@ -9,6 +9,7 @@ const initialState: SocketsStateInterface = {
   BalanceSocket: false,
   TradesSocket: false,
   PriceSocket: false,
+  CandleSocket: false,
 }
 
 const SocketsState = createSlice({
@@ -22,6 +23,7 @@ export const {
   setMainSocketState,
   setPriceSocketState,
   setTradesSocketState,
+  setCandleSocketState,
 } = SocketsState.actions
 
 export default SocketsState.reducer

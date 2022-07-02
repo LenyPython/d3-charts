@@ -1,4 +1,3 @@
-import { TradePriceData } from './../OpenedInstrumentsStream/types'
 import { APIResponse, PriceData } from '../../types'
 
 export enum MAIN_SOCKET_ACTION {

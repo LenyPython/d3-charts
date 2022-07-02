@@ -5,3 +5,4 @@ export const getMainSocketState = (state: RootState) => state.SocketsState.MainS
 export const getBalanceSocketState = (state: RootState) => state.SocketsState.BalanceSocket
 export const getTradesSocketState = (state: RootState) => state.SocketsState.TradesSocket
 export const getPriceSocketState = (state: RootState) => state.SocketsState.PriceSocket
+export const getCandleSocketState = (state: RootState) => state.SocketsState.CandleSocket

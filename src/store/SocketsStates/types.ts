@@ -4,4 +4,5 @@ export interface SocketsStateInterface {
   BalanceSocket: boolean
   TradesSocket: boolean
   PriceSocket: boolean
+  CandleSocket: boolean
 }

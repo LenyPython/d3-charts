@@ -16,6 +16,7 @@ export enum TRADES_ACTIONS {
   createCommand = 'Trade/create-command',
   updatePriceFromTick = 'Trade/update-price-from-tick',
   updateAllCharts = 'Trade/update-all-charts',
+  connectCandleStream = 'Trade/connect-candle-stream',
 }
 
 // Define a type for the slice state

@@ -11,7 +11,7 @@ import {
   takeEvery,
 } from 'redux-saga/effects'
 import { TradePriceData } from './types'
-import { SubscribeToGet1MinCandle, SubscribeToDepthOfMarketStream } from './commands'
+import { SubscribeToDepthOfMarketStream } from './commands'
 import { PriceStreamHandlers } from './handler'
 import { TRADES_ACTIONS } from '../UserTradesStream/types'
 import { WebSocketStreamCreator } from '../channels/WebSocketConnection'
