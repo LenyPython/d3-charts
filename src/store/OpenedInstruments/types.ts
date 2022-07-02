@@ -39,4 +39,10 @@ export interface HashedInstruments {
   [key: string]: { [key: string]: HashedInstrument[] }
 }
 
-export type chartDataRequestPayload = string | { symbol: string; period: PERIODS }
+type singlePeriodChartRequest = { symbol: string; period: PERIODS }
+export type chartDataRequestPayload = string | string[] | singlePeriodChartRequest
+export const isSinglePeriodChartRequest = (
+  x?: chartDataRequestPayload,
+): x is singlePeriodChartRequest => {
+  return (x as singlePeriodChartRequest)?.period !== undefined
+}

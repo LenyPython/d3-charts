@@ -51,7 +51,7 @@ function* EstablishMainConnectionSaga({
   yield delay(200)
   yield call(send, socket, GetBalance())
   yield delay(200)
-  yield put(downloadChartData('EURUSD'))
+  yield put(downloadChartData(['EURUSD', 'EURJPY']))
   yield delay(1000)
   //open all websockets and subscriptions
   yield put(ConnectWebsockets(socket))

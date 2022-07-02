@@ -15,7 +15,12 @@ import { send } from '../../utils/websocket'
 import { CreateDownloadChartDataCommand, PERIOD } from './commands'
 import { MAIN_SOCKET_ACTION } from '../MainConnection/types'
 import { saveAnalyzedChart, setCurrentCharts } from './slice'
-import { chartDataRequestPayload, INSTRUMENTS_ACTIONS, PERIODS } from './types'
+import {
+  chartDataRequestPayload,
+  INSTRUMENTS_ACTIONS,
+  isSinglePeriodChartRequest,
+  PERIODS,
+} from './types'
 import { TakeableChannel } from 'redux-saga'
 import { subscribeToPriceStream } from '../OpenedInstrumentsStream/actions'
 import { analyzeChart, parseChartData } from './utils'
@@ -31,9 +36,14 @@ export function* DownloadChartDataListener(socket: WebSocket) {
       timeout: delay(5000),
     })
     if (typeof action?.payload === 'string') {
-      yield call(DownloadAllChartsWorker, socket, action.payload)
-    } else if (action?.payload) {
-      const { symbol, period } = action.payload
+      yield call(DownloadAllChartsWorker, socket, action!.payload)
+    }
+    if (Array.isArray(action?.payload)) {
+      for (let symbol of action!.payload) {
+        yield call(DownloadAllChartsWorker, socket, symbol)
+      }
+    } else if (isSinglePeriodChartRequest(action?.payload)) {
+      const { symbol, period } = action!.payload
       yield call(DownloadChartWorker, socket, symbol, period)
     }
   }
