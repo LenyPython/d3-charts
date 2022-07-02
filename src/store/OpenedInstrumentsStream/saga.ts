@@ -28,12 +28,11 @@ export function* PriceSubscribeRequestWorker(action: Effect<TRADES_ACTIONS, WebS
   const socket = action.payload
   const sessionId: string = yield select(getSessionId)
   while (socket.readyState !== socket.CLOSED) {
-    const command: { action: Effect<TRADES_ACTIONS, string>; timeout: number } = yield race({
+    const command: { action: Effect<TRADES_ACTIONS, string>; refresh: number } = yield race({
       action: take(TRADES_ACTIONS.subscribeToPriceStream),
-      timeout: delay(5000),
+      refresh: delay(5000),
     })
-
-    if (command.timeout) continue
+    if (command.refresh) continue
     const { payload: symbol } = command.action
     console.log('subscribing to price: ', symbol)
     yield delay(1000)
@@ -41,6 +40,7 @@ export function* PriceSubscribeRequestWorker(action: Effect<TRADES_ACTIONS, WebS
   }
 }
 
+//TODO 1min candle retrieval
 /*     yield delay(10000)
     yield call(send, socket, SubscribeToGet1MinCandle(sessionId, symbol)) */
 function* updateInstrumentPriceWorker(action: Effect<TRADES_ACTIONS, TradePriceData>) {

@@ -1,3 +1,4 @@
+import { TradePriceData } from './../OpenedInstrumentsStream/types'
 import { APIResponse, PriceData } from '../../types'
 
 export enum MAIN_SOCKET_ACTION {
@@ -18,6 +19,10 @@ export interface RequiredConnectionData {
   socket: WebSocket
 }
 
+/////////////////////////////////////////
+/************API RESPONSE TYPES*********/
+/////////////////////////////////////////
+
 export interface IndexInterface {
   ask: number
   bid: number
@@ -27,6 +32,15 @@ export interface IndexInterface {
   categoryName: string
   groupName: string
 }
+
+export interface PriceDataResponse {
+  digits: number
+  rateInfos: PriceData[]
+}
+
+//////////////////////////////////////////////////////
+//***************TYPE CHECKERS *********************//
+//////////////////////////////////////////////////////
 export const isGetSymbolResponse = (data: APIResponse): data is IndexInterface => {
   return (
     data !== undefined &&
@@ -41,10 +55,6 @@ export const isGetAllSymbolsResponse = (data: APIResponse): data is IndexInterfa
     (data[0] as IndexInterface).groupName !== undefined &&
     (data[1] as IndexInterface).categoryName !== undefined
   )
-}
-export interface PriceDataResponse {
-  digits: number
-  rateInfos: PriceData[]
 }
 export const isPriceDataResponse = (data: APIResponse): data is PriceDataResponse => {
   return (
