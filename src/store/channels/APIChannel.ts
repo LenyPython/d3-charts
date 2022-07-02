@@ -7,10 +7,17 @@ import { LoginCredentials } from '../LoginData/types'
 import { PING } from '../MainConnection/commands'
 import handleResponse from '../MainConnection/handler'
 import { setMainSocketState } from '../SocketsStates/slice'
+import { reconnectSocketIfRequired } from '../MainConnection/actions'
+import { actionType, selectorType } from '../../types'
 
 const appName = process.env.REACT_APP_APP_NAME
 
-const createWebSocketAPIChannel = (socket: WebSocket, { userId, password }: LoginCredentials) => {
+const createWebSocketAPIChannel = (
+  socket: WebSocket,
+  { userId, password }: LoginCredentials,
+  reconnect: actionType,
+  getSocketState: selectorType,
+) => {
   return eventChannel((emit) => {
     const errorHandler = (e: Event) =>
       emit(
@@ -26,6 +33,7 @@ const createWebSocketAPIChannel = (socket: WebSocket, { userId, password }: Logi
           msg: `[Main Close]: ${e.reason ? e.reason : `code: ${e.code}`}`,
         }),
       )
+      emit(reconnectSocketIfRequired({ reconnect, getSocketState }))
     }
     const pingAlive = (socket: WebSocket) => {
       if (socket.readyState === socket.OPEN) {

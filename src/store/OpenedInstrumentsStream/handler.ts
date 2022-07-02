@@ -4,13 +4,9 @@ import {
   updateAllCharts,
   updateInstrumentPriceFromTick,
 } from './actions'
-import { FIRST_SYMBOL } from './../../constants/index'
-import { SubscribeToDepthOfMarketStream } from './commands'
-import { Emitter, StreamHandlersInterface } from '../../types'
-import { wsResponse } from '../../types'
+import { wsResponse, Emitter, StreamHandlersInterface } from '../../types'
 import { TradePriceResponse, MinuteCandleResponse } from './types'
 import { STREAM_ANSWERS } from '../../commands'
-import { send } from '../../utils/websocket'
 import { setPriceSocketState } from '../SocketsStates/slice'
 import { getPriceSocketState } from '../SocketsStates/selectors'
 import { addLog } from '../Logger/slice'
@@ -30,7 +26,6 @@ const handlePriceStream = (emit: Emitter, response: wsResponse) => {
   }
 }
 const openHandler = (sessionId: string, title: string, socket: WebSocket, emit: Emitter) => {
-  send(socket, SubscribeToDepthOfMarketStream(sessionId, FIRST_SYMBOL))
   emit(OpenPriceStreamWorker(socket))
   emit(setPriceSocketState(true))
   emit(

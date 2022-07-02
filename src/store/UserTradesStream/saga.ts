@@ -1,7 +1,5 @@
 import { getInstrumentCurrentPrice } from '../OpenedInstrumentsStream/selectors'
-import { call, delay, fork, Effect, takeLeading, put, select } from 'redux-saga/effects'
-import { GetTrades } from '../MainConnection/commands'
-import { send } from '../../utils/websocket'
+import { fork, Effect, takeLeading, put, select } from 'redux-saga/effects'
 import { WebSocketStreamCreator } from '../channels/WebSocketConnection'
 import { UserTradesHandlers } from './handler'
 import { OrderInfo, TRADES_ACTIONS } from './types'
@@ -12,14 +10,6 @@ import { TradePricesInterface } from '../OpenedInstrumentsStream/types'
 
 function* CreateUserTradesSocketWorker() {
   yield fork(WebSocketStreamCreator, UserTradesHandlers)
-}
-
-//ping for open trades data
-export function* DownloadOpenTradesWorker(socket: WebSocket) {
-  while (socket.readyState !== socket.CLOSED) {
-    yield call(send, socket, GetTrades())
-    yield delay(3000)
-  }
 }
 
 export function* OpenTransactionWorker(action: Effect<TRADES_ACTIONS, OrderInfo>) {

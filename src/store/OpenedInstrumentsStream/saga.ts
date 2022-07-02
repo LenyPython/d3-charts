@@ -1,4 +1,15 @@
-import { delay, call, Effect, fork, put, select, take, takeLeading } from 'redux-saga/effects'
+import {
+  delay,
+  call,
+  Effect,
+  fork,
+  put,
+  select,
+  take,
+  race,
+  takeLeading,
+  takeEvery,
+} from 'redux-saga/effects'
 import { TradePriceData } from './types'
 import { SubscribeToGet1MinCandle, SubscribeToDepthOfMarketStream } from './commands'
 import { PriceStreamHandlers } from './handler'
@@ -17,14 +28,21 @@ export function* PriceSubscribeRequestWorker(action: Effect<TRADES_ACTIONS, WebS
   const socket = action.payload
   const sessionId: string = yield select(getSessionId)
   while (socket.readyState !== socket.CLOSED) {
-    const action: Effect<TRADES_ACTIONS, string> = yield take(TRADES_ACTIONS.subscribeToPriceStream)
-    const { payload: symbol } = action
+    const command: { action: Effect<TRADES_ACTIONS, string>; timeout: number } = yield race({
+      action: take(TRADES_ACTIONS.subscribeToPriceStream),
+      timeout: delay(5000),
+    })
+
+    if (command.timeout) continue
+    const { payload: symbol } = command.action
+    console.log('subscribing to price: ', symbol)
     yield delay(1000)
     yield call(send, socket, SubscribeToDepthOfMarketStream(sessionId, symbol))
-    yield delay(500)
-    yield call(send, socket, SubscribeToGet1MinCandle(sessionId, symbol))
   }
 }
+
+/*     yield delay(10000)
+    yield call(send, socket, SubscribeToGet1MinCandle(sessionId, symbol)) */
 function* updateInstrumentPriceWorker(action: Effect<TRADES_ACTIONS, TradePriceData>) {
   const DepthOfMarket = action.payload
   yield put(setInstrumentPrice(DepthOfMarket))
@@ -35,6 +53,6 @@ function* updateInstrumentPriceWorker(action: Effect<TRADES_ACTIONS, TradePriceD
 
 export default function* InstrumentPriceStreamWatcher() {
   yield takeLeading(TRADES_ACTIONS.connectPriceStream, CreateInstrumentPriceWorker)
-  yield takeLeading(TRADES_ACTIONS.OpenPriceStreamWorker, PriceSubscribeRequestWorker)
+  yield takeEvery(TRADES_ACTIONS.OpenPriceStreamWorker, PriceSubscribeRequestWorker)
   yield takeLeading(TRADES_ACTIONS.updatePriceFromTick, updateInstrumentPriceWorker)
 }

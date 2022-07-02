@@ -1,3 +1,4 @@
+import { getMainSocketState } from './../SocketsStates/selectors'
 import { CREDENTIALS } from './../../constants'
 import { PayloadAction } from '@reduxjs/toolkit'
 import { put, call, take, fork, takeLeading, select, race, delay, Effect } from 'redux-saga/effects'
@@ -11,7 +12,7 @@ import { getPassword, getUserId } from './selectors'
 import { resetChartDataTab } from '../OpenedInstruments/slice'
 import { LOG } from '../Logger/types'
 import { setMainSocketState } from '../SocketsStates/slice'
-import { ConnectMainSocketListeners } from './actions'
+import { ConnectMainSocketListeners, LoginUser } from './actions'
 import { DownloadChartDataListener } from '../OpenedInstruments/saga'
 
 const DEMO_URL = process.env.REACT_APP_SOCKET_URL
@@ -43,6 +44,8 @@ export function* WebSocketAPIListener() {
       createWebSocketAPIChannel,
       WS,
       payload,
+      LoginUser,
+      getMainSocketState,
     )
 
     //fork side generators to watch main socket responses

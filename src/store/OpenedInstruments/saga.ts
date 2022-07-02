@@ -66,16 +66,19 @@ function* DownloadChartWorker(socket: WebSocket, symbol: string, period: PERIODS
     yield put(saveAnalyzedChart({ symbol, period, data: indicatorsChart }))
     chartNotSaved = false
     yield delay(200)
-    yield put(subscribeToPriceStream(symbol))
     yield put(setCurrentCharts(symbol))
   }
 }
 
 function* DownloadAllChartsWorker(socket: WebSocket, symbol: string) {
+  ////////////////////////////////////////////////
+  //TODO
   //implement array of timestamps to download in the future
+  //////////////////////////////////////////////
   for (let period of [PERIODS.MIN_15, PERIODS.HOUR_1, PERIODS.HOUR_4, PERIODS.DAY]) {
     yield call(DownloadChartWorker, socket, symbol, PERIODS[period])
   }
+  yield put(subscribeToPriceStream(symbol))
 }
 
 function* updateOpenedCharts({ payload }: Effect<TRADES_ACTIONS, PriceData>) {

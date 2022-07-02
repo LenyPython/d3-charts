@@ -1,13 +1,23 @@
 import { sendOpenTransactionRequest } from '../UserTradesStream/actions'
 import { wsRequest } from './../../types'
 import { isBalanceResponse } from '../BalanceStream/types'
-import { takeLeading, takeEvery, Effect, put, call, delay, take, select } from 'redux-saga/effects'
+import {
+  takeLeading,
+  race,
+  takeEvery,
+  Effect,
+  put,
+  call,
+  delay,
+  take,
+  select,
+} from 'redux-saga/effects'
 import { send } from '../../utils/websocket'
 import { hashInstruments } from '../../utils/websocket/hashInstruments'
 import { setSessionId } from '../LoginData/slice'
 import { setIndexes } from '../OpenedInstruments/slice'
 import { ConnectWebsockets, dispatchChartDataToParsing } from './actions'
-import { DownloadAllSymbols, GetTradesHistory } from './commands'
+import { DownloadAllSymbols, GetTrades, GetTradesHistory } from './commands'
 import {
   API_ACTION,
   isGetAllSymbolsResponse,
@@ -51,14 +61,23 @@ function* EstablishMainConnectionSaga({
   yield delay(200)
   yield call(send, socket, GetBalance())
   yield delay(200)
-  yield put(downloadChartData(['EURUSD', 'EURJPY']))
+  yield put(downloadChartData('EURUSD'))
   yield delay(1000)
   //open all websockets and subscriptions
   yield put(ConnectWebsockets(socket))
 }
 export function* ApiRequestWorker(socket: WebSocket) {
   while (socket.readyState !== socket.CLOSED) {
-    const action: Effect<API_ACTION, wsRequest> = yield take(API_ACTION.makeRequest)
+    const { action, timeout }: { action: Effect<API_ACTION, wsRequest>; timeout: number } =
+      yield race({
+        action: take(API_ACTION.makeRequest),
+        timeout: delay(3000),
+      })
+
+    if (timeout) {
+      yield call(send, socket, GetTrades())
+      continue
+    }
     const { payload: request } = action
     yield call(send, socket, request)
   }
