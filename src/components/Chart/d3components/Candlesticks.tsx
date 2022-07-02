@@ -25,23 +25,12 @@ const Candlesticks: React.FC<{
                 Volume: ${d.vol}
                 `}
               </title>
-              {/* High and lows
-                             {i >= 2 &&
-                i < data.length - 3 &&
-                data[i - 1].low > d.low &&
-                data[i - 2].low > d.low &&
-                data[i + 1].low > d.low &&
-                data[i + 2].low > d.low && (
-                  <circle cx={xScale(d.ctmString)} cy={yScale(d.low) + 5} r={2} fill={'blue'} />
-                )}
-              {i >= 2 &&
-                i < data.length - 3 &&
-                data[i - 1].high < d.high &&
-                data[i - 2].high < d.high &&
-                data[i + 1].high < d.high &&
-                data[i + 2].high < d.high && (
-                  <circle cx={xScale(d.ctmString)} cy={yScale(d.high) - 5} r={2} fill={'orange'} />
-                )} */}
+              {d.indicators.LOW && (
+                <circle cx={xScale(d.ctmString)} cy={yScale(d.low) + 5} r={2} fill={'blue'} />
+              )}
+              {d.indicators.HIGH && (
+                <circle cx={xScale(d.ctmString)} cy={yScale(d.high) - 5} r={2} fill={'orange'} />
+              )}
               <line
                 className={d.open < d.close ? 'bull-candle' : 'bear-candle'}
                 x1={xScale(d.ctmString)}
