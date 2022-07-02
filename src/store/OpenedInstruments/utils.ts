@@ -1,5 +1,6 @@
 import { PriceData, RawPriceData } from '../../types'
 import { PriceDataResponse } from '../MainConnection/types'
+import { ChartPriceDataWithObjects, PERIODS, SmallChartsData } from './types'
 
 export const analyzeChart = (data: RawPriceData[]) => {
   let windowSMA = 0
@@ -60,4 +61,26 @@ export const parseChartData = (returnData: PriceDataResponse): RawPriceData[] =>
     vol: item.vol,
   }))
   return data
+}
+
+export const createChartDataObject = (
+  period: PERIODS,
+  periodData: PriceData[],
+): ChartPriceDataWithObjects => {
+  let data: SmallChartsData = {
+    MIN_1: [],
+    MIN_5: [],
+    MIN_15: [],
+    MIN_30: [],
+    HOUR_1: [],
+    HOUR_4: [],
+    DAY: [],
+    WEEK: [],
+    MONTH: [],
+  }
+  data[period] = periodData
+  return {
+    data,
+    consolidation: [] as string[][],
+  }
 }

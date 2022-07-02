@@ -1,5 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { ChartsDataPayload, HashedInstruments, OpenedInstrumentsInterface, PERIODS } from './types'
+import { createChartDataObject } from './utils'
 
 const reducers = {
   updateLastCandlePrice: (
@@ -26,14 +27,11 @@ const reducers = {
     state: OpenedInstrumentsInterface,
     action: PayloadAction<ChartsDataPayload>,
   ) => {
-    //TODO how to add complicated object to object
     const { symbol, period, data } = action.payload
-    console.log('chart data: ', symbol, period)
-    const entry = {}
-    //TODO make this work for single chart
-    entry[period] = data
-    state.openedChartsTabs[symbol] = {
-      data: entry,
+    if (state.openedChartsTabs[symbol]) {
+      state.openedChartsTabs[symbol]['data'][period] = data
+    } else {
+      state.openedChartsTabs[symbol] = createChartDataObject(period, data)
     }
   },
   resetChartDataTab: (state: OpenedInstrumentsInterface) => {

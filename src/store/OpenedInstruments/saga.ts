@@ -15,7 +15,7 @@ import { send } from '../../utils/websocket'
 import { CreateDownloadChartDataCommand, PERIOD } from './commands'
 import { MAIN_SOCKET_ACTION } from '../MainConnection/types'
 import { saveAnalyzedChart, setCurrentCharts } from './slice'
-import { INSTRUMENTS_ACTIONS, PERIODS } from './types'
+import { chartDataRequestPayload, INSTRUMENTS_ACTIONS, PERIODS } from './types'
 import { TakeableChannel } from 'redux-saga'
 import { subscribeToPriceStream } from '../OpenedInstrumentsStream/actions'
 import { analyzeChart, parseChartData } from './utils'
@@ -26,37 +26,45 @@ export function* DownloadChartDataListener(socket: WebSocket) {
     INSTRUMENTS_ACTIONS.downloadChartData,
   )
   while (socket.readyState !== socket.CLOSED) {
-    const { action }: { action?: PayloadAction<string> } = yield race({
+    const { action }: { action?: PayloadAction<chartDataRequestPayload> } = yield race({
       action: take(downloadChartChannel),
       timeout: delay(5000),
     })
-    if (action) {
-      yield call(DownloadChartWorker, socket, action.payload)
+    if (typeof action?.payload === 'string') {
+      yield call(DownloadAllChartsWorker, socket, action.payload)
+    } else if (action?.payload) {
+      const { symbol, period } = action.payload
+      yield call(DownloadChartWorker, socket, symbol, period)
     }
   }
 }
-function* DownloadChartWorker(socket: WebSocket, symbol: string) {
+function* DownloadChartWorker(socket: WebSocket, symbol: string, period: PERIODS) {
+  const command: wsRequest = yield CreateDownloadChartDataCommand(symbol, PERIOD[period])
+  let chartNotSaved = true
+  while (chartNotSaved) {
+    yield call(send, socket, command)
+    const { action }: { action?: PayloadAction<PriceDataResponse> } = yield race({
+      action: take(MAIN_SOCKET_ACTION.saveChartData),
+      timeout: delay(7000),
+    })
+    if (!action) {
+      yield delay(200)
+      continue
+    }
+    const chartData: RawPriceData[] = yield call(parseChartData, action.payload)
+    const indicatorsChart: PriceData[] = yield call(analyzeChart, chartData)
+    yield put(saveAnalyzedChart({ symbol, period, data: indicatorsChart }))
+    chartNotSaved = false
+    yield delay(200)
+    yield put(subscribeToPriceStream(symbol))
+    yield put(setCurrentCharts(symbol))
+  }
+}
+
+function* DownloadAllChartsWorker(socket: WebSocket, symbol: string) {
   //implement array of timestamps to download in the future
   for (let period of [PERIODS.MIN_15, PERIODS.HOUR_1, PERIODS.HOUR_4, PERIODS.DAY]) {
-    const command: wsRequest = yield CreateDownloadChartDataCommand(symbol, PERIOD[period])
-    let chartNotSaved = true
-    while (chartNotSaved) {
-      yield call(send, socket, command)
-      const { action }: { action?: PayloadAction<PriceDataResponse> } = yield race({
-        action: take(MAIN_SOCKET_ACTION.saveChartData),
-        timeout: delay(7000),
-      })
-      if (!action) {
-        yield delay(200)
-        continue
-      }
-      const chartData: RawPriceData[] = yield call(parseChartData, action.payload)
-      const indicatorsChart: PriceData[] = yield call(analyzeChart, chartData)
-      yield put(saveAnalyzedChart({ symbol, period, data: indicatorsChart }))
-      yield delay(200)
-      yield put(subscribeToPriceStream(symbol))
-      yield put(setCurrentCharts(symbol))
-    }
+    yield call(DownloadChartWorker, socket, symbol, PERIODS[period])
   }
 }
 

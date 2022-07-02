@@ -38,3 +38,5 @@ export type HashedInstrument = Omit<IndexInterface, 'groupName' | 'categoryName'
 export interface HashedInstruments {
   [key: string]: { [key: string]: HashedInstrument[] }
 }
+
+export type chartDataRequestPayload = string | { symbol: string; period: PERIODS }
