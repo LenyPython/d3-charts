@@ -1,24 +1,17 @@
 import { ConnectPriceStream } from './../../store/OpenedInstrumentsStream/actions'
-import { Effect, takeLeading, put, delay, fork } from 'redux-saga/effects'
+import { takeLeading, put } from 'redux-saga/effects'
 import { ConnectBalanceStream } from '../../store/BalanceStream/actions'
-import { ApiRequestWorker } from '../../store/MainConnection/saga'
 import { MAIN_SOCKET_ACTION } from '../../store/MainConnection/types'
 import { ConnectTradesStream } from '../../store/UserTradesStream/actions'
 import { ConnectCandleStream } from '../../store/CandleStream/actions'
 
 //used to connect all websockets live data, sends connection request
 //with 200ms delay to not disconnect from server
-function* ConnectWebsocketsStreamsWorker(action: Effect<MAIN_SOCKET_ACTION, WebSocket>) {
-  const socket = action.payload
+function* ConnectWebsocketsStreamsWorker() {
   yield put(ConnectBalanceStream())
-  yield delay(200)
   yield put(ConnectTradesStream())
-  yield delay(200)
   yield put(ConnectPriceStream())
-  yield delay(200)
   yield put(ConnectCandleStream())
-  yield delay(200)
-  yield fork(ApiRequestWorker, socket)
 }
 export default function* ConnectStreamsWatcherSaga() {
   //WebSocket data stream

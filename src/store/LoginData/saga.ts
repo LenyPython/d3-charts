@@ -14,6 +14,7 @@ import { LOG } from '../Logger/types'
 import { setMainSocketState } from '../SocketsStates/slice'
 import { ConnectMainSocketListeners, LoginUser } from './actions'
 import { DownloadChartDataListener } from '../OpenedInstruments/saga'
+import { ApiRequestWorker } from '../../store/MainConnection/saga'
 
 const DEMO_URL = process.env.REACT_APP_SOCKET_URL
 const REAL_URL = process.env.REACT_APP_SOCKET_URL
@@ -74,6 +75,7 @@ export function* WebSocketAPIListener() {
 function* MainSocketDispatcher({ payload: socket }: Effect<USER_CONNECTION, WebSocket>) {
   yield fork(WebSocketDisconnectWorker, socket)
   yield fork(DownloadChartDataListener, socket)
+  yield fork(ApiRequestWorker, socket)
 }
 export function* WebSocketDisconnectWorker(socket: WebSocket) {
   //TODO: add all reset actions to reset all data on logout

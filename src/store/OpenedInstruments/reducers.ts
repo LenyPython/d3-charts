@@ -9,7 +9,7 @@ const reducers = {
   ) => {
     const { symbol, ask: price } = action.payload
     if (state.openedChartsTabs[symbol] === undefined) return
-    const lowestTime = PERIODS.MIN_15
+    const lowestTime = PERIODS.MIN_1
     const last = state.openedChartsTabs[symbol]['data'][lowestTime].length - 1
     const low = state.openedChartsTabs[symbol]['data'][lowestTime][last]!.low
     const high = state.openedChartsTabs[symbol]['data'][lowestTime][last]!.high

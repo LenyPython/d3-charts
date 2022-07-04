@@ -8,6 +8,7 @@ export const analyzeChart = (data: RawPriceData[]) => {
   const analyzed = data.map((item: RawPriceData, i: number) => {
     let analyzedItem: PriceData = {
       ...item,
+      ctm: new Date(item.ctm),
       indicators: {
         HIGH: false,
         LOW: false,
@@ -53,11 +54,12 @@ export const parseChartData = (returnData: PriceDataResponse): RawPriceData[] =>
   const { digits, rateInfos } = returnData
   const correct = Math.pow(10, digits)
   const data = rateInfos.map((item: RawPriceData) => ({
+    symbol: item.symbol,
     close: (item.open + item.close) / correct,
     open: item.open / correct,
     high: (item.open + item.high) / correct,
     low: (item.open + item.low) / correct,
-    ctm: new Date(item.ctm),
+    ctm: item.ctm,
     ctmString: item.ctmString,
     vol: item.vol,
   }))

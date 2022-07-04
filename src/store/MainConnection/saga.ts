@@ -54,6 +54,9 @@ function* EstablishMainConnectionSaga({
 }: Effect<MAIN_SOCKET_ACTION, RequiredConnectionData>) {
   const { sessionId, socket } = payload
   yield put(setSessionId(sessionId))
+  //open all websockets and subscriptions
+  yield put(ConnectWebsockets())
+  yield delay(200)
   //send request for all indexes
   yield call(send, socket, DownloadAllSymbols())
   yield delay(200)
@@ -62,9 +65,6 @@ function* EstablishMainConnectionSaga({
   yield call(send, socket, GetBalance())
   yield delay(200)
   yield put(downloadChartData('EURUSD'))
-  yield delay(1000)
-  //open all websockets and subscriptions
-  yield put(ConnectWebsockets(socket))
 }
 export function* ApiRequestWorker(socket: WebSocket) {
   while (socket.readyState !== socket.CLOSED) {

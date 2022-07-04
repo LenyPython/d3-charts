@@ -17,7 +17,7 @@ import { subscribeToPriceStream } from '../OpenedInstrumentsStream/actions'
 import { analyzeChart, parseChartData } from './utils'
 import { PayloadAction } from '@reduxjs/toolkit'
 
-export const CHARTS = [PERIODS.HOUR_4, PERIODS.HOUR_1, PERIODS.MIN_15, PERIODS.MIN_1]
+export const CHARTS = [PERIODS.HOUR_1, PERIODS.MIN_15, PERIODS.MIN_5, PERIODS.MIN_1]
 
 export function* DownloadChartDataListener(socket: WebSocket) {
   const downloadChartChannel: TakeableChannel<string> = yield actionChannel(
@@ -29,7 +29,11 @@ export function* DownloadChartDataListener(socket: WebSocket) {
       timeout: delay(5000),
     })
     if (typeof action?.payload === 'string') {
-      yield call(DownloadAllChartsWorker, socket, action!.payload)
+      const symbol = action!.payload
+      yield call(DownloadAllChartsWorker, socket, symbol)
+      yield put(setCurrentCharts(symbol))
+      yield put(subscribeToPriceStream(symbol))
+      yield put(subscribeToCandleStream(symbol))
     }
     if (Array.isArray(action?.payload)) {
       for (let symbol of action!.payload) {
@@ -42,7 +46,7 @@ export function* DownloadChartDataListener(socket: WebSocket) {
   }
 }
 function* DownloadChartWorker(socket: WebSocket, symbol: string, period: PERIODS) {
-  const command: wsRequest = yield CreateDownloadChartDataCommand(symbol, PERIOD[period])
+  const command = CreateDownloadChartDataCommand(symbol, PERIOD[period])
   let chartNotSaved = true
   while (chartNotSaved) {
     yield call(send, socket, command)
@@ -59,7 +63,6 @@ function* DownloadChartWorker(socket: WebSocket, symbol: string, period: PERIODS
     yield put(saveAnalyzedChart({ symbol, period, data: indicatorsChart }))
     chartNotSaved = false
     yield delay(200)
-    yield put(setCurrentCharts(symbol))
   }
 }
 
@@ -71,6 +74,4 @@ function* DownloadAllChartsWorker(socket: WebSocket, symbol: string) {
   for (let period of CHARTS) {
     yield call(DownloadChartWorker, socket, symbol, PERIODS[period])
   }
-  yield put(subscribeToPriceStream(symbol))
-  yield put(subscribeToCandleStream(symbol))
 }

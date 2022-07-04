@@ -56,18 +56,21 @@ export interface wsResponse {
   errorCode?: string
   errorDescr?: string
 }
-export interface PriceData {
+export interface RawPriceData {
+  symbol: string
   ctmString: string
-  ctm: Date
+  ctm: number
   open: number
   close: number
   high: number
   low: number
   vol: number
+}
+export interface PriceData extends Omit<RawPriceData, 'ctm'> {
+  ctm: Date
   indicators: {
     HIGH: boolean
     LOW: boolean
     SMA: number
   }
 }
-export type RawPriceData = Omit<PriceData, 'indicators'>

@@ -1,4 +1,5 @@
-import { call, delay, Effect, fork, race, select, take, takeEvery } from 'redux-saga/effects'
+import { getOpenedChartsData } from './../OpenedInstruments/selectors'
+import { call, delay, Effect, fork, put, race, select, take, takeEvery } from 'redux-saga/effects'
 import { RawPriceData } from '../../types'
 import { send } from '../../utils/websocket'
 import { WebSocketStreamCreator } from '../channels/WebSocketConnection'
@@ -6,6 +7,10 @@ import { getSessionId } from '../LoginData/selectors'
 import { TRADES_ACTIONS } from '../UserTradesStream/types'
 import { CreateCandleStreamConnectCommand } from './commands'
 import { CandleHandlers } from './handler'
+import { ChartPriceDataWithObjects } from '../OpenedInstruments/types'
+import { CHARTS } from '../OpenedInstruments/saga'
+import { PERIOD } from '../OpenedInstruments/commands'
+import { downloadChartData } from '../OpenedInstruments/actions'
 
 function* CreateCandleSocketWorker() {
   yield fork(WebSocketStreamCreator, CandleHandlers)
@@ -26,10 +31,21 @@ export function* CandleRequestWorker(action: Effect<TRADES_ACTIONS, WebSocket>) 
   }
 }
 function* updateOpenedCharts({ payload }: Effect<TRADES_ACTIONS, RawPriceData>) {
-  console.log(payload)
-  /*********************************
-   * *
-   * * implement this feature to update Daily, 4h, 1h chart */
+  const { symbol } = payload
+  console.log(symbol, Date.now())
+  const charts: Record<string, ChartPriceDataWithObjects> = yield select(getOpenedChartsData)
+  const indexData = charts[symbol].data
+  for (let period of CHARTS) {
+    const chart = indexData[period]
+    const last = chart.length - 1
+    const diff = PERIOD[period] * 60000
+    const timeElapsed = payload.ctm - chart[last].ctm.getTime()
+    console.log(diff, timeElapsed)
+    console.log(diff <= timeElapsed)
+    if (diff <= timeElapsed) {
+      yield put(downloadChartData({ symbol, period }))
+    }
+  }
 }
 
 export default function* CandleWatcherSaga() {

@@ -5,7 +5,7 @@ import createAction from '../../utils/actionCreator'
 export const EstablishMainConnection = createAction<RequiredConnectionData>(
   MAIN_SOCKET_ACTION.establishMainConnection,
 )
-export const ConnectWebsockets = createAction<WebSocket>(MAIN_SOCKET_ACTION.connectStream)
+export const ConnectWebsockets = createAction(MAIN_SOCKET_ACTION.connectStream)
 export const reconnectSocketIfRequired = createAction<{
   reconnect: actionType
   getSocketState: selectorType

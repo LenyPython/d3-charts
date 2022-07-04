@@ -1,4 +1,4 @@
-import { APIResponse, PriceData } from '../../types'
+import { APIResponse, RawPriceData } from '../../types'
 
 export enum MAIN_SOCKET_ACTION {
   reconnectSocket = 'Main/reconnect-socket-if-required',
@@ -34,7 +34,7 @@ export interface IndexInterface {
 
 export interface PriceDataResponse {
   digits: number
-  rateInfos: PriceData[]
+  rateInfos: RawPriceData[]
 }
 
 //////////////////////////////////////////////////////
