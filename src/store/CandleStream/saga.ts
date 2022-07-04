@@ -40,8 +40,6 @@ function* updateOpenedCharts({ payload }: Effect<TRADES_ACTIONS, RawPriceData>) 
     const last = chart.length - 1
     const diff = PERIOD[period] * 60000
     const timeElapsed = payload.ctm - chart[last].ctm.getTime()
-    console.log(diff, timeElapsed)
-    console.log(diff <= timeElapsed)
     if (diff <= timeElapsed) {
       yield put(downloadChartData({ symbol, period }))
     }
