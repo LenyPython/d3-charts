@@ -1,7 +1,7 @@
 import { subscribeToCandleStream } from './../CandleStream/actions'
 import { PriceDataResponse } from './../MainConnection/types'
 import { put, delay, call, take, race, actionChannel } from 'redux-saga/effects'
-import { PriceData, RawPriceData, wsRequest } from '../../types'
+import { PriceData, RawPriceData } from '../../types'
 import { send } from '../../utils/websocket'
 import { CreateDownloadChartDataCommand, PERIOD } from './commands'
 import { MAIN_SOCKET_ACTION } from '../MainConnection/types'
