@@ -1,15 +1,24 @@
+import { STREAM_ANSWERS } from '../../commands'
 import { Emitter, StreamHandlersInterface, wsResponse } from '../../types'
 import { addLog } from '../Logger/slice'
 import { LOG } from '../Logger/types'
+import { MinuteCandleResponse } from './types'
 import { getCandleSocketState } from '../SocketsStates/selectors'
 import { setCandleSocketState } from '../SocketsStates/slice'
-import { ConnectCandleStream } from './actions'
+import { ConnectCandleStream, OpenCandleStreamWorker } from './actions'
+import { updateAllCharts } from '../OpenedInstrumentsStream/actions'
 
+const is1MinCandleResponse = (data: wsResponse): data is MinuteCandleResponse => {
+  return data.command === STREAM_ANSWERS.getCandleResponse && data.data !== undefined
+}
 const handleCandleStream = (emit: Emitter, response: wsResponse) => {
-  //emit(updateAllCharts(response))
+  if (is1MinCandleResponse(response)) {
+    emit(updateAllCharts(response.data))
+  }
 }
 const openHandler = (sessionId: string, title: string, socket: WebSocket, emit: Emitter) => {
   emit(setCandleSocketState(true))
+  emit(OpenCandleStreamWorker(socket))
   emit(
     addLog({
       class: LOG.success,

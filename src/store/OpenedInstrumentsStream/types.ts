@@ -1,4 +1,3 @@
-import { PriceData } from './../../types/index'
 import { STREAM_ANSWERS } from './../../commands/index'
 
 export interface PriceStreamInterface {
@@ -26,9 +25,4 @@ export interface TradePriceData extends TradePricesInterface {
 export interface TradePriceResponse {
   command: STREAM_ANSWERS.tickPrices
   data: TradePriceData
-}
-
-export interface MinuteCandleResponse {
-  command: STREAM_ANSWERS.getCandleResponse
-  data: PriceData
 }

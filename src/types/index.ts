@@ -30,7 +30,7 @@ export type APIResponse =
   | TradeDataInterface[]
   | IndexInterface
 
-export type StreamResponse = TradeDataInterface | UserBalanceData | TradePriceData | PriceData
+export type StreamResponse = TradeDataInterface | UserBalanceData | TradePriceData | RawPriceData
 
 export interface StreamHandlersInterface {
   openHandler?: OpenHandlerType

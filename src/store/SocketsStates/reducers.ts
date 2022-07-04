@@ -12,7 +12,7 @@ const reducers = {
     state.TradesSocket = action.payload
   },
   setCandleSocketState: (state: SocketsStateInterface, action: PayloadAction<boolean>) => {
-    state.PriceSocket = action.payload
+    state.CandleSocket = action.payload
   },
   setPriceSocketState: (state: SocketsStateInterface, action: PayloadAction<boolean>) => {
     state.PriceSocket = action.payload

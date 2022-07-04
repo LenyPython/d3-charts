@@ -5,6 +5,7 @@ import { useAppSelector } from '../../app/hooks'
 import { getCurrentChartSymbol, getOpenedChartsData } from '../../store/OpenedInstruments/selectors'
 import { PERIODS } from '../../store/OpenedInstruments/types'
 import './maincharts.css'
+import { CHARTS } from '../../store/OpenedInstruments/saga'
 
 const MainCharts = () => {
   const symbol = useAppSelector(getCurrentChartSymbol)
@@ -15,19 +16,15 @@ const MainCharts = () => {
       <div className="df container">
         <MarketDepthChart />
         <div id="charts-container" className="container">
-          <Chart data={OpenedChartsData?.[symbol]?.['data'][PERIODS.DAY]} title={symbol + ' Day'} />
-          <Chart
-            data={OpenedChartsData?.[symbol]?.['data'][PERIODS.HOUR_4]}
-            title={symbol + ' Hour4'}
-          />
-          <Chart
-            data={OpenedChartsData?.[symbol]?.['data'][PERIODS.HOUR_1]}
-            title={symbol + ' Hour1'}
-          />
-          <Chart
-            data={OpenedChartsData?.[symbol]?.['data'][PERIODS.MIN_15]}
-            title={symbol + ' Min15'}
-          />
+          {CHARTS.map((period: PERIODS, i: number) => {
+            return (
+              <Chart
+                key={`chart-${period}-${symbol}-${i}`}
+                data={OpenedChartsData?.[symbol]?.['data'][period]}
+                title={symbol + ' ' + period}
+              />
+            )
+          })}
         </div>
       </div>
     </div>

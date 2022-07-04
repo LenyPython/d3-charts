@@ -1,6 +1,6 @@
 import { LOG } from './../Logger/types'
 import { PayloadAction } from '@reduxjs/toolkit'
-import { put, take, select, call } from 'redux-saga/effects'
+import { put, race, take, select, call, delay } from 'redux-saga/effects'
 import { StreamHandlersInterface } from '../../types'
 import { addLog } from '../Logger/slice'
 import { getSessionId } from '../LoginData/selectors'
@@ -46,8 +46,11 @@ export function* WebSocketStreamCreator(handlers: StreamHandlersInterface) {
     )
 
     while (socket.readyState !== socket.CLOSED) {
-      const action: PayloadAction = yield take(socketChannel)
-      yield put(action)
+      const { action }: { action: PayloadAction } = yield race({
+        action: take(socketChannel),
+        timeout: delay(3000),
+      })
+      if (action) yield put(action)
     }
     //set socket state to disconnected
     yield put(setSocketState(false))

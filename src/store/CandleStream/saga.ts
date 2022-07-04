@@ -1,4 +1,5 @@
 import { call, delay, Effect, fork, race, select, take, takeEvery } from 'redux-saga/effects'
+import { RawPriceData } from '../../types'
 import { send } from '../../utils/websocket'
 import { WebSocketStreamCreator } from '../channels/WebSocketConnection'
 import { getSessionId } from '../LoginData/selectors'
@@ -24,9 +25,16 @@ export function* CandleRequestWorker(action: Effect<TRADES_ACTIONS, WebSocket>) 
     yield call(send, socket, CreateCandleStreamConnectCommand(sessionId, symbol))
   }
 }
+function* updateOpenedCharts({ payload }: Effect<TRADES_ACTIONS, RawPriceData>) {
+  console.log(payload)
+  /*********************************
+   * *
+   * * implement this feature to update Daily, 4h, 1h chart */
+}
 
 export default function* CandleWatcherSaga() {
   //WebSocket data stream
   yield takeEvery(TRADES_ACTIONS.connectCandleStream, CreateCandleSocketWorker)
-  //yield takeEvery(TRADES_ACTIONS.connectCandleStream, CreateCandleSocketWorker)
+  yield takeEvery(TRADES_ACTIONS.OpenCandleStreamWorker, CandleRequestWorker)
+  yield takeEvery(TRADES_ACTIONS.updateAllCharts, updateOpenedCharts)
 }

@@ -1,11 +1,6 @@
-import {
-  ConnectPriceStream,
-  OpenPriceStreamWorker,
-  updateAllCharts,
-  updateInstrumentPriceFromTick,
-} from './actions'
+import { ConnectPriceStream, OpenPriceStreamWorker, updateInstrumentPriceFromTick } from './actions'
 import { wsResponse, Emitter, StreamHandlersInterface } from '../../types'
-import { TradePriceResponse, MinuteCandleResponse } from './types'
+import { TradePriceResponse } from './types'
 import { STREAM_ANSWERS } from '../../commands'
 import { setPriceSocketState } from '../SocketsStates/slice'
 import { getPriceSocketState } from '../SocketsStates/selectors'
@@ -15,14 +10,9 @@ import { LOG } from '../Logger/types'
 const isTradePriceResponse = (data: wsResponse): data is TradePriceResponse => {
   return data.command === STREAM_ANSWERS.tickPrices && data.data !== undefined
 }
-const is1MinCandleResponse = (data: wsResponse): data is MinuteCandleResponse => {
-  return data.command === STREAM_ANSWERS.getCandleResponse && data.data !== undefined
-}
 const handlePriceStream = (emit: Emitter, response: wsResponse) => {
   if (isTradePriceResponse(response)) {
     emit(updateInstrumentPriceFromTick(response.data))
-  } else if (is1MinCandleResponse(response)) {
-    emit(updateAllCharts(response.data))
   }
 }
 const openHandler = (sessionId: string, title: string, socket: WebSocket, emit: Emitter) => {

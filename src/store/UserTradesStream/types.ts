@@ -14,6 +14,7 @@ export enum TRADES_ACTIONS {
   subscribeToPriceStream = 'Trades/subscribe-to-price-stream',
   subscribeCandleStream = 'Trades/subscribe-candle-stream',
   OpenPriceStreamWorker = 'Trades/open-price-stream',
+  OpenCandleStreamWorker = 'Trades/open-candle-stream',
   orderTransaction = 'Trades/open-transaction',
   createCommand = 'Trade/create-command',
   updatePriceFromTick = 'Trade/update-price-from-tick',

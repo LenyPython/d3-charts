@@ -3,3 +3,4 @@ import createAction from '../../utils/actionCreator'
 
 export const ConnectCandleStream = createAction(TRADES_ACTIONS.connectCandleStream)
 export const subscribeToCandleStream = createAction<string>(TRADES_ACTIONS.subscribeCandleStream)
+export const OpenCandleStreamWorker = createAction<WebSocket>(TRADES_ACTIONS.OpenCandleStreamWorker)
