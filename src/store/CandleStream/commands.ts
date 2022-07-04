@@ -1,11 +1,11 @@
 import { STREAM_COMMANDS } from '../../commands'
 import { wsRequest } from '../../types'
 
-export const SubscribeToDepthOfMarketStream = (
+export const CreateCandleStreamConnectCommand = (
   streamSessionId: string,
   symbol: string,
 ): wsRequest => ({
-  command: STREAM_COMMANDS.getTickPrices,
+  command: STREAM_COMMANDS.getCandles,
   streamSessionId,
   symbol,
 })

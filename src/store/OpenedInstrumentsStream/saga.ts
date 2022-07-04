@@ -34,15 +34,11 @@ export function* PriceSubscribeRequestWorker(action: Effect<TRADES_ACTIONS, WebS
     })
     if (command.refresh) continue
     const { payload: symbol } = command.action
-    console.log('subscribing to price: ', symbol)
     yield delay(1000)
     yield call(send, socket, SubscribeToDepthOfMarketStream(sessionId, symbol))
   }
 }
 
-//TODO 1min candle retrieval
-/*     yield delay(10000)
-    yield call(send, socket, SubscribeToGet1MinCandle(sessionId, symbol)) */
 function* updateInstrumentPriceWorker(action: Effect<TRADES_ACTIONS, TradePriceData>) {
   const DepthOfMarket = action.payload
   yield put(setInstrumentPrice(DepthOfMarket))

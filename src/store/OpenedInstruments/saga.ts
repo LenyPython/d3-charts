@@ -1,3 +1,4 @@
+import { subscribeToCandleStream } from './../CandleStream/actions'
 import { PriceDataResponse } from './../MainConnection/types'
 import { TRADES_ACTIONS } from '../UserTradesStream/types'
 import {
@@ -79,6 +80,7 @@ function* DownloadAllChartsWorker(socket: WebSocket, symbol: string) {
     yield call(DownloadChartWorker, socket, symbol, PERIODS[period])
   }
   yield put(subscribeToPriceStream(symbol))
+  yield put(subscribeToCandleStream(symbol))
 }
 
 function* updateOpenedCharts({ payload }: Effect<TRADES_ACTIONS, PriceData>) {

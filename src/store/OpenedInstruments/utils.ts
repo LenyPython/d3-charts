@@ -2,6 +2,7 @@ import { PriceData, RawPriceData } from '../../types'
 import { PriceDataResponse } from '../MainConnection/types'
 import { ChartPriceDataWithObjects, PERIODS, SmallChartsData } from './types'
 
+const AVERAGE = 12
 export const analyzeChart = (data: RawPriceData[]) => {
   let windowSMA = 0
   const analyzed = data.map((item: RawPriceData, i: number) => {
@@ -22,9 +23,9 @@ export const analyzeChart = (data: RawPriceData[]) => {
       }
     }
     windowSMA += item.close
-    if (i >= 7) {
-      windowSMA -= data[i - 7].close
-      const SMA = windowSMA / 7
+    if (i >= AVERAGE) {
+      windowSMA -= data[i - AVERAGE].close
+      const SMA = windowSMA / AVERAGE
       analyzedItem.indicators.SMA = SMA
     }
     return analyzedItem
